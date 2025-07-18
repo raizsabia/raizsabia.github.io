@@ -1077,60 +1077,39 @@
         updateUserStats();
         
         // Función mejorada para el botón de WhatsApp
-        /*function contactWhatsApp() {
+        function contactWhatsApp() {
             // Crear mensaje personalizado basado en la experiencia del usuario
             let message = "¡Hola! Me interesa Raíz Sabia 🌿✨\n\n";
-            
+
             if (userPreferences.completedQuizzes > 0) {
                 message += "He completado la consulta personalizada en su página web y me encantó la experiencia interactiva. ";
             }
-            
+
             if (userPreferences.favoriteIngredients.length > 0) {
                 message += `Me interesa especialmente: ${userPreferences.favoriteIngredients.join(', ')}. `;
             }
-            
+
             message += "\nMe gustaría hacer mi pedido y conocer más sobre sus productos naturales.";
-            
+
             const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/573108463165?text=${encodedMessage}`, '_blank');
-            
-            // Mostrar notificación de acción
+            const phone = "573108463165";
+
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // Redirige usando el esquema URI directo
+                window.location.href = `whatsapp://send?phone=${phone}&text=${encodedMessage}`;
+            } else {
+                // Redirige a WhatsApp Web en escritorio
+                window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`, '_blank');
+            }
+
+            // Notificación y efecto
             showNotification("¡Redirigiendo a WhatsApp! 📱", 'success');
             playClickSound();
-        }*/
-       function contactWhatsApp() {
-            const message = encodeURIComponent("¡Hola! Me interesa Raíz Sabia 🌿");
-            const phoneNumber = "573108463165"; // Cambia por tu número real
-            
-            // Intentar múltiples métodos
-            const methods = [
-                `whatsapp://send?phone=${phoneNumber}&text=${message}`,
-                `https://wa.me/${phoneNumber}?text=${message}`,
-                `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`
-            ];
-            
-            let methodIndex = 0;
-            
-            function tryNextMethod() {
-                if (methodIndex < methods.length) {
-                    try {
-                        if (methodIndex === 0) {
-                            window.location.href = methods[methodIndex];
-                        } else {
-                            window.open(methods[methodIndex], '_blank');
-                        }
-                    } catch (error) {
-                        methodIndex++;
-                        tryNextMethod();
-                    }
-                } else {
-                    // Último recurso: mostrar el número
-                    showNotification(`Llama o escribe a: ${phoneNumber}`, 'success');
-                }
-            }
-            
-            tryNextMethod();
         }
+
+       
     </script>
 </body>
 </html>
