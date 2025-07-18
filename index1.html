@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -341,21 +342,21 @@
         
         <div class="main-content">
             <div class="card" onclick="startPersonalizedQuiz()">
-                <h3>🧙‍♀️ Consulta Ancestral Personalizada</h3>
-                <p>Déjanos conocerte a través de nuestro ritual de consulta. Te guiaremos para descubrir exactamente cómo Raíz Sabia puede transformar tu bienestar diario.</p>
-                <button class="btn">Comenzar Mi Ritual</button>
+                <h3>🧙‍♀️ Consulta Personalizada</h3>
+                <p>Responde unas preguntas y recibe recomendaciones únicas sobre cómo usar Raíz Sabia según tus necesidades específicas.</p>
+                <button class="btn">Comenzar Consulta</button>
+            </div>
+            
+            <div class="card" onclick="showIngredientExplorer()">
+                <h3>🌱 Explorar Ingredientes</h3>
+                <p>Descubre los beneficios únicos de cada ingrediente en nuestro tónico y cómo pueden ayudarte.</p>
+                <button class="btn">Explorar Plantas</button>
             </div>
             
             <div class="card" onclick="showQuickUses()">
-                <h3>⚡ Guía de Alivio Inmediato</h3>
-                <p>¿Necesitas alivio ahora? Encuentra formas instantáneas de usar tu tónico según la situación que estés viviendo.</p>
-                <button class="btn">Ver Guía Rápida</button>
-            </div>
-            
-            <div class="card" onclick="showWisdomStories()">
-                <h3>📖 Historias de Sabiduría</h3>
-                <p>Descubre testimonios reales de personas que han encontrado su bienestar con Raíz Sabia y la medicina ancestral.</p>
-                <button class="btn">Leer Historias</button>
+                <h3>⚡ Usos Rápidos</h3>
+                <p>Necesitas alivio inmediato? Encuentra formas instantáneas de usar tu tónico según la situación.</p>
+                <button class="btn">Ver Usos</button>
             </div>
         </div>
         
@@ -417,123 +418,60 @@
             }, 300);
         }
         
-        // Quiz personalizado extendido
+        // Quiz personalizado
         let currentQuestion = 0;
         let answers = {};
-        let userName = "";
         
         const questions = [
             {
-                id: 'name',
-                type: 'input',
-                text: 'Antes de comenzar, comparte tu nombre conmigo para personalizar tu experiencia',
-                placeholder: 'Escribe tu nombre aquí...',
-                validation: (value) => value.trim().length > 0
-            },
-            {
-                id: 'age_range',
-                text: '¿En qué etapa de la vida te encuentras?',
+                id: 'situation',
+                text: '¿En qué momento del día necesitas más bienestar?',
                 options: [
-                    { value: 'young', text: '🌱 18-25 años - Explorando y construyendo mi camino' },
-                    { value: 'adult', text: '🌿 26-35 años - Estableciendo mi estilo de vida' },
-                    { value: 'mature', text: '🌳 36-50 años - Priorizando mi bienestar y equilibrio' },
-                    { value: 'wise', text: '🍃 51+ años - Valorando la sabiduría y cuidado personal' }
+                    { value: 'morning', text: '🌅 Al despertar - Necesito energía para comenzar el día' },
+                    { value: 'work', text: '💻 Durante el trabajo - Busco concentración y claridad mental' },
+                    { value: 'evening', text: '🌙 Al finalizar el día - Quiero relajarme y desestresarme' },
+                    { value: 'night', text: '🛏️ Antes de dormir - Necesito calma y paz interior' }
                 ]
             },
             {
-                id: 'daily_routine',
-                text: '¿Cómo describirías tu rutina diaria típica?',
+                id: 'symptom',
+                text: '¿Cuál es tu principal molestia o necesidad?',
                 options: [
-                    { value: 'structured', text: '⏰ Muy estructurada - Horarios fijos y planificación detallada' },
-                    { value: 'flexible', text: '🌊 Flexible - Me adapto según las circunstancias del día' },
-                    { value: 'chaotic', text: '🌪️ Caótica - Cada día es diferente y lleno de sorpresas' },
-                    { value: 'relaxed', text: '🧘‍♀️ Relajada - Tomo las cosas con calma y sin prisa' }
+                    { value: 'headache', text: '🤕 Dolores de cabeza o migrañas frecuentes' },
+                    { value: 'respiratory', text: '🫁 Problemas respiratorios o congestión' },
+                    { value: 'muscle', text: '💪 Dolores musculares o tensión física' },
+                    { value: 'stress', text: '😰 Estrés, ansiedad o agotamiento mental' },
+                    { value: 'energy', text: '⚡ Falta de energía o fatiga constante' }
                 ]
             },
             {
-                id: 'main_challenge',
-                text: '¿Cuál es tu mayor desafío de bienestar actualmente?',
+                id: 'lifestyle',
+                text: '¿Cómo describirías tu estilo de vida?',
                 options: [
-                    { value: 'stress_work', text: '💼 Estrés laboral - Presión, deadlines y responsabilidades' },
-                    { value: 'sleep_quality', text: '😴 Calidad del sueño - Dificultad para dormir o descansar' },
-                    { value: 'physical_pain', text: '🤕 Dolores físicos - Tensión, migrañas o molestias musculares' },
-                    { value: 'energy_fatigue', text: '⚡ Falta de energía - Cansancio constante y agotamiento' },
-                    { value: 'emotional_balance', text: '😌 Equilibrio emocional - Ansiedad, irritabilidad o cambios de humor' },
-                    { value: 'focus_concentration', text: '🎯 Concentración - Dificultad para mantener el foco y claridad mental' }
+                    { value: 'active', text: '🏃‍♀️ Muy activo - Deportes, ejercicio regular' },
+                    { value: 'sedentary', text: '💻 Sedentario - Mucho tiempo frente al computador' },
+                    { value: 'social', text: '👥 Social - Interacción constante con personas' },
+                    { value: 'balanced', text: '⚖️ Equilibrado - Mezcla de actividad y descanso' }
                 ]
             },
             {
-                id: 'symptoms_frequency',
-                text: '¿Con qué frecuencia experimentas estas molestias?',
+                id: 'preference',
+                text: '¿Cómo prefieres usar productos naturales?',
                 options: [
-                    { value: 'daily', text: '🔄 Diariamente - Es parte constante de mi vida' },
-                    { value: 'weekly', text: '📅 Varias veces por semana - Afecta mi rutina regularmente' },
-                    { value: 'monthly', text: '🌙 Algunas veces al mes - Aparece en momentos específicos' },
-                    { value: 'occasional', text: '✨ Ocasionalmente - Solo en situaciones particulares' }
+                    { value: 'direct', text: '🎯 Aplicación directa - En la zona que necesito' },
+                    { value: 'aromatherapy', text: '🌸 Aromaterapia - Inhalando los aromas' },
+                    { value: 'environment', text: '🏠 Ambientación - Perfumando mi espacio' },
+                    { value: 'ritual', text: '🧘‍♀️ Ritual de bienestar - Momento especial para mí' }
                 ]
             },
             {
-                id: 'preferred_timing',
-                text: '¿En qué momentos del día sientes que más necesitas bienestar?',
+                id: 'intensity',
+                text: '¿Qué intensidad de efecto buscas?',
                 options: [
-                    { value: 'morning_start', text: '🌅 Al despertar - Para comenzar el día con energía' },
-                    { value: 'midday_boost', text: '☀️ A media mañana - Cuando pierdo el ritmo inicial' },
-                    { value: 'afternoon_crash', text: '🌤️ Media tarde - Durante la típica bajada de energía' },
-                    { value: 'evening_wind', text: '🌆 Al llegar a casa - Para desconectar del día' },
-                    { value: 'night_ritual', text: '🌙 Antes de dormir - Para relajarme y preparar el descanso' },
-                    { value: 'anytime_needed', text: '🎯 Cuando surja la necesidad - Según lo que esté sintiendo' }
-                ]
-            },
-            {
-                id: 'environment_preference',
-                text: '¿Dónde te sientes más cómodo/a realizando rituales de bienestar?',
-                options: [
-                    { value: 'home_sanctuary', text: '🏡 Mi hogar - Es mi santuario personal' },
-                    { value: 'office_space', text: '💼 Mi oficina/trabajo - Donde paso la mayor parte del día' },
-                    { value: 'outdoor_nature', text: '🌳 Al aire libre - Conectando con la naturaleza' },
-                    { value: 'private_room', text: '🚪 Un espacio privado - Donde pueda estar solo/a' },
-                    { value: 'anywhere_flexible', text: '🌍 Cualquier lugar - Me adapto a cualquier ambiente' }
-                ]
-            },
-            {
-                id: 'wellness_experience',
-                text: '¿Qué experiencia tienes con productos naturales y medicina alternativa?',
-                options: [
-                    { value: 'beginner', text: '🌱 Principiante - Estoy empezando a explorar lo natural' },
-                    { value: 'curious', text: '🔍 Curioso/a - He probado algunas cosas pero quiero aprender más' },
-                    { value: 'experienced', text: '🌿 Experimentado/a - Uso varios productos naturales regularmente' },
-                    { value: 'expert', text: '🧙‍♀️ Experto/a - La medicina natural es parte integral de mi vida' }
-                ]
-            },
-            {
-                id: 'ritual_intensity',
-                text: '¿Qué tipo de ritual de bienestar prefieres?',
-                options: [
-                    { value: 'quick_effective', text: '⚡ Rápido y efectivo - Soluciones inmediatas en pocos minutos' },
-                    { value: 'mindful_present', text: '🧘‍♀️ Mindful y presente - Tomándome tiempo para estar consciente' },
-                    { value: 'ceremonial_special', text: '🕯️ Ceremonial y especial - Creando momentos sagrados' },
-                    { value: 'integrated_daily', text: '🌊 Integrado al día - Que fluya naturalmente con mi rutina' }
-                ]
-            },
-            {
-                id: 'desired_outcome',
-                text: '¿Cuál es tu objetivo principal al usar Raíz Sabia?',
-                options: [
-                    { value: 'immediate_relief', text: '🎯 Alivio inmediato - Solucionar molestias puntuales' },
-                    { value: 'preventive_care', text: '🛡️ Cuidado preventivo - Mantener mi bienestar diario' },
-                    { value: 'emotional_support', text: '💚 Apoyo emocional - Equilibrar mi estado de ánimo' },
-                    { value: 'spiritual_connection', text: '✨ Conexión espiritual - Conectar con lo ancestral y natural' },
-                    { value: 'lifestyle_integration', text: '🌿 Integración de estilo de vida - Hacer lo natural parte de mi día' }
-                ]
-            },
-            {
-                id: 'sensitivity_level',
-                text: '¿Cómo es tu sensibilidad a aromas y texturas?',
-                options: [
-                    { value: 'highly_sensitive', text: '🌸 Muy sensible - Noto inmediatamente cambios sutiles' },
-                    { value: 'moderate_sensitive', text: '🌿 Moderadamente sensible - Aprecio los matices gradualmente' },
-                    { value: 'low_sensitive', text: '🌊 Poco sensible - Prefiero efectos más intensos y notorios' },
-                    { value: 'adaptive', text: '🎭 Adaptable - Depende del momento y mi estado' }
+                    { value: 'gentle', text: '🌸 Suave y gradual - Efecto prolongado y sutil' },
+                    { value: 'moderate', text: '🌿 Moderado - Balance entre suavidad y efectividad' },
+                    { value: 'strong', text: '🌊 Intenso - Efecto inmediato y poderoso' },
+                    { value: 'variable', text: '🎛️ Variable - Según el momento y necesidad' }
                 ]
             }
         ];
@@ -553,87 +491,15 @@
             const optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '';
             
-            if (question.type === 'input') {
-                const inputDiv = document.createElement('div');
-                inputDiv.className = 'input-container';
-                inputDiv.innerHTML = `
-                    <input type="text" id="nameInput" placeholder="${question.placeholder}" 
-                           style="width: 100%; padding: 20px; border: 2px solid #dee2e6; border-radius: 15px; 
-                                  font-size: 1.1rem; margin-bottom: 20px; background: white; 
-                                  transition: border-color 0.3s ease;">
-                    <button class="btn" onclick="handleNameInput()" style="width: 100%;">Continuar</button>
-                `;
-                optionsContainer.appendChild(inputDiv);
-                
-                // Focus en el input
-                setTimeout(() => {
-                    document.getElementById('nameInput').focus();
-                }, 100);
-                
-                // Enter para continuar
-                document.getElementById('nameInput').addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        handleNameInput();
-                    }
-                });
-            } else {
-                question.options.forEach(option => {
-                    const optionDiv = document.createElement('div');
-                    optionDiv.className = 'option';
-                    optionDiv.textContent = option.text;
-                    optionDiv.onclick = () => selectOption(option.value, optionDiv);
-                    optionsContainer.appendChild(optionDiv);
-                });
-            }
+            question.options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option.text;
+                optionDiv.onclick = () => selectOption(option.value, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
             
             updateProgressBar();
-        }
-
-
-        function showWisdomStories() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            document.getElementById('resultTitle').textContent = "📖 Historias de Transformación";
-            document.getElementById('resultDescription').textContent = "Conoce testimonios reales de personas que han encontrado su bienestar con Raíz Sabia y la sabiduría ancestral.";
-            
-            const stepsContainer = document.getElementById('usageSteps');
-            stepsContainer.innerHTML = `
-                <h4>✨ Testimonios que inspiran:</h4>
-                <div class="step">💼 <strong>María, 34 años:</strong> "Raíz Sabia transformó mis días de trabajo. Ya no sufro de migrañas por estrés."</div>
-                <div class="step">🏃‍♀️ <strong>Carlos, 28 años:</strong> "Como deportista, el alivio muscular que me da es increíble. Es mi compañero de entrenamiento."</div>
-                <div class="step">👩‍🎓 <strong>Ana, 22 años:</strong> "Durante mis estudios universitarios, me ayuda muchísimo con la concentración. El romero es mágico."</div>
-                <div class="step">🧘‍♀️ <strong>Luis, 45 años:</strong> "Sufría de ansiedad y insomnio. Ahora tengo mis noches de paz gracias a la salvia."</div>
-                <div class="step">👵 <strong>Rosa, 58 años:</strong> "A mi edad, los dolores eran constantes. Este tónico natural me devolvió la comodidad."</div>
-            `;
-        }
-
-        function handleNameInput() {
-            const nameInput = document.getElementById('nameInput');
-            const name = nameInput.value.trim();
-            
-            if (name.length < 2) {
-                nameInput.style.borderColor = '#dc3545';
-                showNotification('Por favor ingresa un nombre válido (mínimo 2 caracteres)', 'error');
-                nameInput.focus();
-                return;
-            }
-            
-            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(name)) {
-                nameInput.style.borderColor = '#dc3545';
-                showNotification('Por favor usa solo letras en tu nombre', 'error');
-                nameInput.focus();
-                return;
-            }
-            
-            userName = name;
-            answers[questions[currentQuestion].id] = name;
-            nameInput.style.borderColor = '#4a7c59';
-            showNotification(`¡Hola ${name}! Es un placer conocerte 🌿`, 'success');
-            
-            setTimeout(() => {
-                nextQuestion();
-            }, 1000);
         }
         
         function selectOption(value, element) {
@@ -674,92 +540,69 @@
                 <h4>🌿 Tu ritual personalizado con Raíz Sabia:</h4>
                 ${result.steps.map(step => `<div class="step">${step}</div>`).join('')}
             `;
-
-            userPreferences.completedQuizzes++;
-                showNotification(`¡Felicitaciones ${userName}! Has completado tu consulta personalizada 🌿`, 'success');
         }
         
         function generatePersonalizedResult() {
-            const challenge = answers.main_challenge;
-            const timing = answers.preferred_timing;
-            const intensity = answers.ritual_intensity;
-            const outcome = answers.desired_outcome;
+            const { situation, symptom, lifestyle, preference, intensity } = answers;
             
-            let title = `🌿 ${userName}, tu fórmula personalizada`;
+            // Lógica personalizada basada en las respuestas
+            let title = "Tu fórmula personalizada";
             let description = "";
             let steps = [];
             
-            // Personalización basada en el desafío principal
-            if (challenge === 'stress_work') {
-                title = `🧘‍♀️ ${userName}, tu ritual anti-estrés laboral`;
-                description = "La salvia y romero crearán un ambiente de calma y equilibrio emocional perfecto para tu vida profesional.";
+            // Personalización basada en síntomas
+            if (symptom === 'headache') {
+                title = "🤕 Ritual anti-migraña";
+                description = "Tu fórmula está diseñada para aliviar dolores de cabeza con la sabiduría del romero y mentol.";
                 steps = [
-                    "🌸 Pulveriza en tu espacio de trabajo cada mañana",
-                    "🧘‍♀️ Toma 5 respiraciones profundas inhalando el aroma",
-                    "💆‍♀️ Aplica en muñecas y sienes durante reuniones estresantes",
-                    "🕯️ Úsalo como ritual de transición al llegar a casa"
+                    "💧 Aplica 2-3 pulverizaciones en las sienes con movimientos circulares suaves",
+                    "🧘‍♀️ Respira profundamente el aroma por 30 segundos",
+                    "👐 Masajea suavemente la nuca y base del cuello",
+                    "🌿 Repite cada 2 horas si es necesario"
                 ];
-            } else if (challenge === 'sleep_quality') {
-                title = `😴 ${userName}, tu ritual para el descanso reparador`;
-                description = "Una combinación perfecta de salvia y mentol para preparar tu mente y cuerpo para un sueño profundo.";
+            } else if (symptom === 'respiratory') {
+                title = "🫁 Ritual respiratorio";
+                description = "El eucalipto y mentol trabajarán juntos para despejar tus vías respiratorias naturalmente.";
                 steps = [
-                    "🌙 Pulveriza en tu almohada 15 minutos antes de dormir",
-                    "🛀 Aplica en muñecas durante tu rutina nocturna",
-                    "🧘‍♀️ Practica respiraciones profundas con el aroma",
-                    "📱 Combínalo con desconexión digital para mejor efecto"
+                    "🌬️ Pulveriza 2-3 veces sobre un pañuelo o directamente en el aire",
+                    "🫁 Inhala profundamente por 10 respiraciones lentas",
+                    "💨 Aplica en el pecho y frota suavemente",
+                    "🛏️ Usa antes de dormir para respirar mejor toda la noche"
                 ];
-            } else if (challenge === 'physical_pain') {
-                title = `💪 ${userName}, tu ritual para alivio muscular`;
-                description = "El mentol y esencias naturales proporcionarán alivio inmediato y duradero a tus tensiones físicas.";
+            } else if (symptom === 'muscle') {
+                title = "💪 Ritual relajante muscular";
+                description = "El mentol y las esencias naturales proporcionarán alivio inmediato a tus músculos tensos.";
                 steps = [
-                    "🎯 Aplica directamente sobre músculos tensos",
-                    "👐 Masajea en círculos por 3-5 minutos",
+                    "🎯 Aplica directamente sobre el músculo afectado",
+                    "👐 Masajea en movimientos circulares por 2-3 minutos",
                     "❄️ Siente la frescura del mentol aliviando la tensión",
-                    "🔄 Repite 2-3 veces al día según necesidad"
+                    "🔄 Repite 3 veces al día para mejor efecto"
                 ];
-            } else if (challenge === 'energy_fatigue') {
-                title = `⚡ ${userName}, tu ritual energizante natural`;
-                description = "El romero activará tu mente mientras el mentol despertará todos tus sentidos para el día.";
+            } else if (symptom === 'stress') {
+                title = "😌 Ritual anti-estrés";
+                description = "La salvia y romero crearán un ambiente de calma y equilibrio emocional.";
+                steps = [
+                    "🌸 Pulveriza en tu espacio de trabajo o relajación",
+                    "🧘‍♀️ Toma 5 respiraciones profundas inhalando el aroma",
+                    "💆‍♀️ Aplica en muñecas y sienes con toques suaves",
+                    "🕯️ Úsalo durante tu ritual de meditación o relajación"
+                ];
+            } else if (symptom === 'energy') {
+                title = "⚡ Ritual energizante";
+                description = "El romero activará tu mente mientras el mentol despertará tus sentidos.";
                 steps = [
                     "🌅 Úsalo al despertar para activar tu energía",
                     "💨 Inhala profundamente para despertar los sentidos",
                     "👐 Aplica en nuca y muñecas para efecto duradero",
-                    "🍃 Repite en media tarde para combatir la fatiga"
-                ];
-            } else if (challenge === 'emotional_balance') {
-                title = `😌 ${userName}, tu ritual de equilibrio emocional`;
-                description = "La sabiduría ancestral de la salvia te ayudará a encontrar calma y estabilidad emocional.";
-                steps = [
-                    "🌸 Crea un momento sagrado en tu espacio personal",
-                    "🧘‍♀️ Aplica en muñecas y respira conscientemente",
-                    "💚 Úsalo cuando sientas cambios emocionales intensos",
-                    "🌙 Inclúyelo en tu rutina de autocuidado diario"
-                ];
-            } else if (challenge === 'focus_concentration') {
-                title = `🎯 ${userName}, tu ritual de claridad mental`;
-                description = "El romero, conocido como la hierba de la memoria, potenciará tu concentración y claridad mental.";
-                steps = [
-                    "📚 Aplica en sienes antes de estudiar o trabajar",
-                    "🧠 Inhala profundamente para activar la concentración",
-                    "💭 Usa durante sesiones de trabajo mental intenso",
-                    "🔄 Repite cada 2 horas para mantener el foco"
+                    "🔄 Repite en la tarde si sientes fatiga"
                 ];
             }
             
-            // Ajustes según momento preferido
-            if (timing === 'morning_start') {
-                steps.push("☀️ Perfecto para tu rutina matutina - úsalo después de despertar");
-            } else if (timing === 'evening_wind') {
-                steps.push("🌆 Ideal para tu momento de desconexión - úsalo al llegar a casa");
-            } else if (timing === 'night_ritual') {
-                steps.push("🌙 Perfecto para tu ritual nocturno - úsalo antes de tu rutina de sueño");
-            }
-            
-            // Ajuste según intensidad preferida
-            if (intensity === 'quick_effective') {
-                steps.push("⚡ Diseñado para resultados rápidos - efectos en 2-3 minutos");
-            } else if (intensity === 'ceremonial_special') {
-                steps.push("🕯️ Crea un momento especial - combínalo con música suave o meditación");
+            // Ajustes según momento del día
+            if (situation === 'morning') {
+                steps.push("☀️ Ideal para tu rutina matutina - úsalo después del desayuno");
+            } else if (situation === 'night') {
+                steps.push("🌙 Perfecto para tu ritual nocturno - úsalo 30 minutos antes de dormir");
             }
             
             return { title, description, steps };
@@ -1047,8 +890,6 @@
                 }, 2000);
             }
         }
-
-        
         
         // Función para mostrar progreso del usuario
         function showUserProgress() {
