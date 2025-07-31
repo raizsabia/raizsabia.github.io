@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raíz Sabia - Tónicos y Macerados Naturales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        /* Hero animation */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.7;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Tooltip styles */
+        .benefit-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            width: 200px;
+            background-color: white;
+            color: #333;
+            text-align: center;
+            border-radius: 8px;
+            padding: 15px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover .benefit-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Gallery styles */
+        .gallery-container {
+            scroll-snap-type: x mandatory;
+        }
+        
+        .gallery-item {
+            scroll-snap-align: start;
+            flex: 0 0 auto;
+        }
+        
+        /* Flip card styles */
+        .flip-card {
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        /* Chatbot styles */
+        .chatbot-container {
+            transition: all 0.3s ease;
+            transform: translateY(100%);
+        }
+        
+        .chatbot-container.open {
+            transform: translateY(0);
+        }
+        
+        .chat-message {
+            max-width: 80%;
+        }
+        
+        /* WhatsApp button */
+        .whatsapp-button {
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4ade80;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22c55e;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+    <!-- WhatsApp Floating Button -->
+    <div class="fixed bottom-6 right-6 z-50 whatsapp-button">
+        <a href="https://wa.me/1234567890" target="_blank" class="bg-green-500 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+    </div>
+    
+    <!-- Chatbot Button -->
+    <div class="fixed bottom-24 right-6 z-50">
+        <button id="chatbot-toggle" class="bg-green-100 text-green-800 p-4 rounded-full shadow-lg flex items-center justify-center border-2 border-green-300 hover:bg-green-200 transition-colors">
+            <i class="fas fa-comment-medical text-2xl"></i>
+        </button>
+    </div>
+    
+    <!-- Chatbot Container -->
+    <div id="chatbot-container" class="chatbot-container fixed bottom-0 right-6 w-96 bg-white rounded-t-lg shadow-xl z-40 border-t-2 border-l-2 border-r-2 border-green-200 max-h-[70vh] flex flex-col">
+        <div class="bg-green-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <h3 class="font-semibold">Consulta Experta</h3>
+            <button id="chatbot-close" class="text-white hover:text-green-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3">
+            <div class="chat-message bg-green-100 text-green-800 rounded-lg p-3 self-start">
+                ¡Hola! Soy tu asesor experto en tónicos naturales. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+        
+        <div id="chat-questions" class="p-4 border-t border-gray-200">
+            <div class="space-y-2">
+                <button class="chat-question-btn w-full text-left bg-white border border-green-300 rounded-lg p-2 hover:bg-green-50 transition-colors">
+                    Quiero saber sobre los beneficios del tónico
+                </button>
+                <button class="chat-question-btn w-full text-left bg-white border border-green-300 rounded-lg p-2 hover:bg-green-50 transition-colors">
+                    ¿Cómo uso el tónico correctamente?
+                </button>
+                <button class="chat-question-btn w-full text-left bg-white border border-green-300 rounded-lg p-2 hover:bg-green-50 transition-colors">
+                    Quiero información sobre los próximos macerados
+                </button>
+            </div>
+            
+            <div id="chat-form" class="hidden mt-4">
+                <input type="email" id="user-email" placeholder="Ingresa tu email para recibir la respuesta" class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+                <button id="chat-submit" class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    Enviar consulta
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="fixed w-full bg-white bg-opacity-90 z-30 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                <span class="text-xl font-semibold text-green-800">Raíz Sabia</span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-green-700 hover:text-green-500 transition-colors">Inicio</a>
+                <a href="#tonico" class="text-gray-600 hover:text-green-500 transition-colors">El Tónico</a>
+                <a href="#galeria" class="text-gray-600 hover:text-green-500 transition-colors">Galería</a>
+                <a href="#proximamente" class="text-gray-600 hover:text-green-500 transition-colors">Próximamente</a>
+            </nav>
+            
+            <button class="md:hidden text-gray-600">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-green-50 to-white">
+        <canvas id="hero-canvas" class="w-full h-full"></canvas>
+        
+        <div class="hero-content container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-green-800 mb-6 animate-fade-in">
+                Descubre el Poder de lo Natural
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-700 mb-10 max-w-3xl mx-auto">
+                Nuestro tónico corporal revitalizante, creado con extractos puros de plantas medicinales.
+            </p>
+            <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-colors transform hover:scale-105">
+                Empieza tu experiencia
+            </button>
+        </div>
+    </section>
+    
+    <!-- Benefits Section -->
+    <section id="tonico" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Explora el Tónico</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Un elixir de bienestar que nutre tu piel y revitaliza tu energía con ingredientes 100% naturales.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="benefit-item p-8 rounded-xl bg-green-50 text-center relative">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-2">Revitalizante</h3>
+                    <p class="text-gray-600">Activa tu circulación y energía vital</p>
+                    
+                    <div class="benefit-tooltip">
+                        <img src="https://cdn.pixabay.com/photo/2017/01/10/03/06/ginger-1967904_640.jpg" alt="Jengibre" class="w-full h-24 object-cover rounded-t-lg mb-2">
+                        <p class="text-sm">Contiene jengibre silvestre para estimular tu energía</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item p-8 rounded-xl bg-green-50 text-center relative">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-spa text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-2">Relajante</h3>
+                    <p class="text-gray-600">Alivia tensiones musculares y estrés</p>
+                    
+                    <div class="benefit-tooltip">
+                        <img src="https://cdn.pixabay.com/photo/2018/02/25/21/57/lavender-3181759_640.jpg" alt="Lavanda" class="w-full h-24 object-cover rounded-t-lg mb-2">
+                        <p class="text-sm">Infusión de lavanda orgánica para calmar la mente</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item p-8 rounded-xl bg-green-50 text-center relative">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-green-800 mb-2">Nutritivo</h3>
+                    <p class="text-gray-600">Hidrata y nutre profundamente</p>
+                    
+                    <div class="benefit-tooltip">
+                        <img src="https://cdn.pixabay.com/photo/2017/01/06/19/17/aloevera-1958776_640.jpg" alt="Aloe Vera" class="w-full h-24 object-cover rounded-t-lg mb-2">
+                        <p class="text-sm">Aloe vera puro para hidratación profunda</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="galeria" class="py-20 bg-green-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Galería Inmersiva</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Descubre cada detalle de nuestro proceso artesanal y los ingredientes seleccionados.
+                </p>
+            </div>
+            
+            <div class="gallery-container flex overflow-x-auto pb-8 space-x-6">
+                <div class="gallery-item w-80 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://cdn.pixabay.com/photo/2017/07/03/17/36/essential-oil-2468424_640.jpg" alt="Botella de tónico" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-2">Presentación Exclusiva</h3>
+                        <p class="text-gray-600">Botella de vidrio con cuentagotas para dosificación precisa.</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item w-80 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://cdn.pixabay.com/photo/2016/11/29/08/42/herbs-1869218_640.jpg" alt="Ingredientes naturales" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-2">Ingredientes Puros</h3>
+                        <p class="text-gray-600">Selección de plantas medicinales cultivadas sin pesticidas.</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item w-80 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/10/03/54/plant-1968908_640.jpg" alt="Proceso artesanal" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-2">Proceso Artesanal</h3>
+                        <p class="text-gray-600">Extracción en frío para preservar todas las propiedades.</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item w-80 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/06/17/49/honey-1958464_640.jpg" alt="Uso del producto" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-green-800 mb-2">Ritual de Aplicación</h3>
+                        <p class="text-gray-600">Masaje circular para activar la absorción y circulación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Coming Soon Section -->
+    <section id="proximamente" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-green-800 mb-4">Descubre lo que viene</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Nuestra próxima línea de macerados alcohólicos con propiedades únicas.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Cannabis Card -->
+                <div class="flip-card" id="cannabis-card">
+                    <div class="flip-card-inner bg-white rounded-xl shadow-lg h-full">
+                        <div class="flip-card-front p-8 text-center flex flex-col items-center justify-center h-full">
+                            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-cannabis text-green-600 text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-green-800 mb-2">Macerado de Cannabis</h3>
+                            <p class="text-gray-600 mb-6">Próximamente</p>
+                            <button onclick="flipCard('cannabis-card')" class="text-green-600 font-semibold hover:text-green-800 transition-colors">
+                                Más información <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flip-card-back p-8 bg-green-50 rounded-xl flex flex-col justify-center h-full">
+                            <h3 class="text-xl font-semibold text-green-800 mb-4">Cannabis Medicinal</h3>
+                            <p class="text-gray-600 mb-4 text-sm">Extracción en alcohol de cepa rica en CBD para alivio de dolores musculares y relajación profunda.</p>
+                            <ul class="text-left text-sm text-gray-600 mb-6 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Antiinflamatorio natural</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Promueve el sueño reparador</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Alivia tensiones crónicas</span>
+                                </li>
+                            </ul>
+                            <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm transition-colors">
+                                Notificarme cuando esté disponible
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Romero Card -->
+                <div class="flip-card" id="romero-card">
+                    <div class="flip-card-inner bg-white rounded-xl shadow-lg h-full">
+                        <div class="flip-card-front p-8 text-center flex flex-col items-center justify-center h-full">
+                            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-seedling text-green-600 text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-green-800 mb-2">Macerado de Romero</h3>
+                            <p class="text-gray-600 mb-6">Próximamente</p>
+                            <button onclick="flipCard('romero-card')" class="text-green-600 font-semibold hover:text-green-800 transition-colors">
+                                Más información <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flip-card-back p-8 bg-green-50 rounded-xl flex flex-col justify-center h-full">
+                            <h3 class="text-xl font-semibold text-green-800 mb-4">Romero Silvestre</h3>
+                            <p class="text-gray-600 mb-4 text-sm">Macerado de romero de alta montaña para estimular la circulación y claridad mental.</p>
+                            <ul class="text-left text-sm text-gray-600 mb-6 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Mejora la memoria y concentración</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Estimula el crecimiento capilar</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Antioxidante natural</span>
+                                </li>
+                            </ul>
+                            <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm transition-colors">
+                                Notificarme cuando esté disponible
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Eucalipto Card -->
+                <div class="flip-card" id="eucalipto-card">
+                    <div class="flip-card-inner bg-white rounded-xl shadow-lg h-full">
+                        <div class="flip-card-front p-8 text-center flex flex-col items-center justify-center h-full">
+                            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-tree text-green-600 text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-green-800 mb-2">Macerado de Eucalipto</h3>
+                            <p class="text-gray-600 mb-6">Próximamente</p>
+                            <button onclick="flipCard('eucalipto-card')" class="text-green-600 font-semibold hover:text-green-800 transition-colors">
+                                Más información <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="flip-card-back p-8 bg-green-50 rounded-xl flex flex-col justify-center h-full">
+                            <h3 class="text-xl font-semibold text-green-800 mb-4">Eucalipto Azul</h3>
+                            <p class="text-gray-600 mb-4 text-sm">Extracto de hojas frescas para aliviar problemas respiratorios y purificar el ambiente.</p>
+                            <ul class="text-left text-sm text-gray-600 mb-6 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Descongestionante natural</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Alivia sinusitis y alergias</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                    <span>Repelente de insectos</span>
+                                </li>
+                            </ul>
+                            <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm transition-colors">
+                                Notificarme cuando esté disponible
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-green-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Únete a nuestra comunidad</h2>
+            <p class="max-w-2xl mx-auto mb-8">Recibe consejos de bienestar, descuentos exclusivos y avisos de nuevos productos.</p>
+            
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Tu email" class="flex-1 px-4 py-3 rounded-l-lg focus:outline-none text-gray-800">
+                <button class="bg-green-800 hover:bg-green-900 px-6 py-3 rounded-r-lg font-semibold transition-colors">
+                    Suscribirme
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-leaf text-2xl"></i>
+                        <span class="text-xl font-semibold">Raíz Sabia</span>
+                    </div>
+                    <p class="text-green-100">Productos naturales para una vida en equilibrio.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Productos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Tónico Corporal</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Próximos Macerados</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Accesorios</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Recursos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Guías de Uso</a></li>
+                        <li><a href="#" class="text-green-100 hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>hola@raizsabia.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span>+1 234 567 890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-instagram mr-2"></i>
+                            <span>@raizsabia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-700 mt-12 pt-8 text-center text-green-100">
+                <p>&copy; 2023 Raíz Sabia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Hero Canvas Animation
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        class Drop {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 3 + 2;
+                this.speed = Math.random() * 3 + 2;
+                this.opacity = Math.random() * 0.6 + 0.4;
+            }
+            
+            update() {
+                this.y += this.speed;
+                
+                // Draw leaf when drop reaches certain position
+                if (this.y > canvas.height * 0.6 && !this.leafDrawn) {
+                    this.drawLeaf();
+                    this.leafDrawn = true;
+                }
+                
+                if (this.y > canvas.height) {
+                    this.reset();
+                    this.leafDrawn = false;
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(74, 222, 128, ${this.opacity})`;
+                ctx.fill();
+                
+                // Draw tail
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x - this.size * 0.7, this.y - this.size * 3);
+                ctx.strokeStyle = `rgba(74, 222, 128, ${this.opacity * 0.7})`;
+                ctx.lineWidth = this.size * 0.5;
+                ctx.stroke();
+            }
+            
+            drawLeaf() {
+                const leafSize = Math.random() * 30 + 20;
+                const rotation = Math.random() * Math.PI * 2;
+                
+                ctx.save();
+                ctx.translate(this.x, canvas.height * 0.7);
+                ctx.rotate(rotation);
+                
+                // Draw leaf shape
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(
+                    leafSize * 0.5, -leafSize * 0.3,
+                    leafSize * 0.8, leafSize * 0.1,
+                    0, leafSize
+                );
+                ctx.bezierCurveTo(
+                    -leafSize * 0.8, leafSize * 0.1,
+                    -leafSize * 0.5, -leafSize * 0.3,
+                    0, 0
+                );
+                
+                ctx.fillStyle = `rgba(34, 197, 94, ${Math.random() * 0.3 + 0.2})`;
+                ctx.fill();
+                
+                // Draw leaf veins
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(0, leafSize);
+                ctx.strokeStyle = `rgba(22, 163, 74, ${Math.random() * 0.5 + 0.3})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+        }
+        
+        const drops = [];
+        for (let i = 0; i < 30; i++) {
+            drops.push(new Drop());
+            // Stagger initial positions
+            drops[i].y = Math.random() * -canvas.height;
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drops.forEach(drop => {
+                drop.update();
+                drop.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Flip Card Functionality
+        function flipCard(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.toggle('flipped');
+        }
+        
+        // Chatbot Functionality
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotClose = document.getElementById('chatbot-close');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.classList.add('open');
+        });
+        
+        chatbotClose.addEventListener('click', () => {
+            chatbotContainer.classList.remove('open');
+        });
+        
+        // Chatbot questions
+        const chatMessages = document.getElementById('chat-messages');
+        const chatQuestions = document.getElementById('chat-questions');
+        const chatForm = document.getElementById('chat-form');
+        
+        document.querySelectorAll('.chat-question-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const question = e.target.textContent.trim();
+                
+                // Add user question to chat
+                const userMsg = document.createElement('div');
+                userMsg.className = 'chat-message bg-gray-100 text-gray-800 rounded-lg p-3 self-end ml-auto';
+                userMsg.textContent = question;
+                chatMessages.appendChild(userMsg);
+                
+                // Bot response based on question
+                let botResponse = '';
+                if (question.includes('beneficios')) {
+                    botResponse = 'Nuestro tónico corporal ofrece múltiples beneficios: revitaliza la piel, mejora la circulación y promueve la relajación muscular. ¿Te gustaría saber sobre algún beneficio en particular?';
+                } else if (question.includes('correctamente')) {
+                    botResponse = 'Para usar el tónico: aplica unas gotas en las palmas y masajea suavemente sobre la piel limpia. Ideal después de la ducha. ¿Necesitas consejos para zonas específicas?';
+                } else if (question.includes('próximos macerados')) {
+                    botResponse = 'Pronto lanzaremos macerados de cannabis, romero y eucalipto. Cada uno con propiedades únicas. ¿Quieres que te envíe más detalles por email?';
+                    // Show email form
+                    chatForm.classList.remove('hidden');
+                }
+                
+                // Add bot response after a small delay
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-message bg-green-100 text-green-800 rounded-lg p-3 self-start';
+                    botMsg.textContent = botResponse;
+                    chatMessages.appendChild(botMsg);
+                    
+                    // Scroll to bottom
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 800);
+            });
+        });
+        
+        // Handle form submission
+        document.getElementById('chat-submit').addEventListener('click', () => {
+            const email = document.getElementById('user-email').value;
+            if (email) {
+                // Add confirmation message
+                const confirmMsg = document.createElement('div');
+                confirmMsg.className = 'chat-message bg-green-100 text-green-800 rounded-lg p-3 self-start';
+                confirmMsg.textContent = `Gracias! Te enviaremos la información a ${email}. También recibirás nuestro boletín con consejos de bienestar.`;
+                chatMessages.appendChild(confirmMsg);
+                
+                // Reset form
+                document.getElementById('user-email').value = '';
+                chatForm.classList.add('hidden');
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // In a real app, you would send this to your backend
+                console.log('Email submitted:', email);
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

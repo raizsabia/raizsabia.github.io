@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raíz Sabia - Salud Natural Ancestral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f8f5f0',
+                            100: '#e8e0d1',
+                            200: '#d4c7a8',
+                            300: '#bca876',
+                            400: '#a68b4d',
+                            500: '#957a3f',
+                            600: '#7f6234',
+                            700: '#654a2d',
+                            800: '#553e2a',
+                            900: '#4a3628',
+                        },
+                        secondary: {
+                            50: '#f3f8f4',
+                            100: '#e1eee2',
+                            200: '#c3ddc6',
+                            300: '#97c39d',
+                            400: '#65a06e',
+                            500: '#4a8554',
+                            600: '#396a43',
+                            700: '#2f5438',
+                            800: '#27432e',
+                            900: '#203727',
+                        },
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Open Sans"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f8f5f0;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(74, 54, 40, 0.7), rgba(74, 54, 40, 0.7)), url('https://images.unsplash.com/photo-1605210053947-ee6a872b44eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 70vh;
+        }
+        
+        .callout-box {
+            border-left: 4px solid #4a8554;
+            background-color: rgba(232, 224, 209, 0.5);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(74, 133, 84, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(74, 133, 84, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(74, 133, 84, 0);
+            }
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-serif font-bold text-primary-700">RAÍZ SABIA</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#tonico" class="text-primary-700 hover:text-secondary-500">TÓNICO HERBAL</a>
+                    <a href="#proximos" class="text-primary-700 hover:text-secondary-500">PRÓXIMOS</a>
+                    <a href="#diagnostico" class="text-primary-700 hover:text-secondary-500">DIAGNÓSTICO</a>
+                    <a href="#nosotros" class="text-primary-700 hover:text-secondary-500">NOSOTROS</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-primary-700 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="#tonico" class="block py-2 text-primary-700 hover:text-secondary-500">TÓNICO HERBAL</a>
+                <a href="#proximos" class="block py-2 text-primary-700 hover:text-secondary-500">PRÓXIMOS</a>
+                <a href="#diagnostico" class="block py-2 text-primary-700 hover:text-secondary-500">DIAGNÓSTICO</a>
+                <a href="#nosotros" class="block py-2 text-primary-700 hover:text-secondary-500">NOSOTROS</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section flex items-center justify-center text-center text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">EL TÓNICO CORPORAL QUE REVITALIZA</h1>
+                <p class="text-xl md:text-2xl mb-10 font-light">DESCUBRE EL PODER ANCESTRAL DE LAS PLANTAS</p>
+                <a href="#tonico" class="bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block">CONOCE MÁS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content - Two Columns -->
+    <section id="tonico" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Left Column - Editorial Content -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-serif font-bold text-primary-700 mb-6">LA SABIDURÍA DE LA TIERRA EN CADA APLICACIÓN</h2>
+                    <p class="text-gray-700 mb-6">En Raíz Sabia, hemos rescatado fórmulas ancestrales para crear un tónico corporal que no solo nutre tu piel, sino que reconecta tu ser con los ciclos naturales de la tierra. Cada ingrediente ha sido seleccionado por sus propiedades curativas y su sinergia con el organismo humano.</p>
+                    
+                    <div class="callout-box p-6 mb-8">
+                        <h3 class="font-serif font-bold text-xl text-primary-700 mb-3">HISTORIA DE UNA TRANSFORMACIÓN</h3>
+                        <p class="text-gray-700 italic">"Después de años lidiando con piel sensible y erupciones, el tónico herbal de Raíz Sabia cambió mi vida. En solo dos semanas, mi piel recuperó su equilibrio natural. Ahora lo uso como parte de mi ritual matutino." - Ana M., 34 años</p>
+                    </div>
+                    
+                    <h3 class="font-serif font-bold text-2xl text-primary-700 mb-4 mt-8">BENEFICIOS PRINCIPALES</h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start">
+                            <span class="text-secondary-500 mr-2 mt-1"><i class="fas fa-leaf"></i></span>
+                            <span class="text-gray-700">Equilibra el pH natural de la piel gracias a sus propiedades alcalinizantes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary-500 mr-2 mt-1"><i class="fas fa-leaf"></i></span>
+                            <span class="text-gray-700">Reduce inflamaciones y rojeces con sus componentes antiinflamatorios</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary-500 mr-2 mt-1"><i class="fas fa-leaf"></i></span>
+                            <span class="text-gray-700">Estimula la regeneración celular por su alta concentración de antioxidantes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary-500 mr-2 mt-1"><i class="fas fa-leaf"></i></span>
+                            <span class="text-gray-700">Fortalece la barrera cutánea con ácidos grasos esenciales</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="bg-primary-50 p-6 rounded-lg mb-8">
+                        <h4 class="font-serif font-bold text-xl text-primary-700 mb-3">DATOS BOTÁNICOS</h4>
+                        <p class="text-gray-700 mb-4">Nuestro tónico contiene extractos de:</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="font-medium text-primary-700">Caléndula officinalis</p>
+                                <p class="text-sm text-gray-600">Antiinflamatorio, cicatrizante, rica en flavonoides</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-primary-700">Aloe barbadensis</p>
+                                <p class="text-sm text-gray-600">Hidratante profundo, regenerador celular</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-primary-700">Hamamelis virginiana</p>
+                                <p class="text-sm text-gray-600">Astringente natural, reduce poros dilatados</p>
+                            </div>
+                            <div>
+                                <p class="font-medium text-primary-700">Lavandula angustifolia</p>
+                                <p class="text-sm text-gray-600">Antiséptico, calmante para pieles sensibles</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <a href="#diagnostico" class="bg-primary-700 hover:bg-primary-800 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block">QUIERO MI DIAGNÓSTICO</a>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Image Gallery -->
+                <div class="lg:w-1/2">
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="col-span-2">
+                            <img src="https://images.unsplash.com/photo-1595345260932-35e73f7f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tónico herbal en uso" class="w-full h-64 object-cover rounded-lg shadow-md">
+                        </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1574323347407-f5e1cf0f1476?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ingredientes naturales" class="w-full h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1519735777090-ec97162dc266?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="Proceso artesanal" class="w-full h-48 object-cover rounded-lg shadow-md">
+                        </div>
+                    </div>
+                    
+                    <div class="bg-secondary-50 p-6 rounded-lg mb-8">
+                        <h4 class="font-serif font-bold text-xl text-primary-700 mb-3">CÓMO USAR EL TÓNICO</h4>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                            <li>Agitar suavemente antes de cada uso</li>
+                            <li>Aplicar sobre piel limpia con un algodón o directamente con las manos</li>
+                            <li>Masajear con movimientos circulares hasta su completa absorción</li>
+                            <li>Usar mañana y noche para mejores resultados</li>
+                            <li>Complementar con protección solar durante el día</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="callout-box p-6">
+                        <h4 class="font-serif font-bold text-xl text-primary-700 mb-3">¿SABÍAS QUE?</h4>
+                        <p class="text-gray-700 mb-3">La caléndula puede aumentar la producción de colágeno en un 30% cuando se aplica tópicamente de forma regular, según estudios de la Universidad de Parma.</p>
+                        <p class="text-gray-700">Nuestro tónico contiene un 87% más de principios activos que los productos convencionales al no someterse a procesos de desnaturalización térmica.</p>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <a href="#" class="bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block">COMPRA TU TÓNICO</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Products Section -->
+    <section id="proximos" class="py-16 bg-primary-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-serif font-bold text-primary-700 mb-12 text-center">NEXT IN RAÍZ SABIA</h2>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Carousel -->
+                <div class="carousel relative overflow-hidden">
+                    <div class="carousel-inner flex transition-transform duration-300 ease-in-out">
+                        <!-- Cannabis Macerate -->
+                        <div class="carousel-item w-full flex-shrink-0 px-4">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                <div class="md:flex">
+                                    <div class="md:w-1/2">
+                                        <img src="https://images.unsplash.com/photo-1587486913049-53fc88980cfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Macerado de Cannabis" class="w-full h-64 md:h-full object-cover">
+                                    </div>
+                                    <div class="p-6 md:w-1/2">
+                                        <span class="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-medium mb-2">PRÓXIMAMENTE</span>
+                                        <h3 class="font-serif font-bold text-2xl text-primary-700 mb-3">MACERADO DE CANNABIS</h3>
+                                        <p class="text-gray-700 mb-4">Una sinergia única de cannabinoides y terpenos en base alcohólica para alivio muscular y relajación profunda. Formulado con cepas ricas en CBD para uso tópico.</p>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Efecto analgésico comprobado</span>
+                                        </div>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Sin efectos psicoactivos</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Cultivo orgánico certificado</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rosemary Macerate -->
+                        <div class="carousel-item w-full flex-shrink-0 px-4">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                <div class="md:flex">
+                                    <div class="md:w-1/2">
+                                        <img src="https://images.unsplash.com/photo-1594282416549-65a70fc0746f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Macerado de Romero" class="w-full h-64 md:h-full object-cover">
+                                    </div>
+                                    <div class="p-6 md:w-1/2">
+                                        <span class="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-medium mb-2">PRÓXIMAMENTE</span>
+                                        <h3 class="font-serif font-bold text-2xl text-primary-700 mb-3">MACERADO DE ROMERO</h3>
+                                        <p class="text-gray-700 mb-4">Estimulante circulatorio y revitalizante capilar. Nuestra fórmula potencia los beneficios del romero silvestre mediante maceración en frío por 60 días.</p>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Mejora la microcirculación</span>
+                                        </div>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Fortalece el folículo piloso</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Aumenta la oxigenación tisular</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Eucalyptus Macerate -->
+                        <div class="carousel-item w-full flex-shrink-0 px-4">
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                <div class="md:flex">
+                                    <div class="md:w-1/2">
+                                        <img src="https://images.unsplash.com/photo-1516404730705-5f0a288d1289?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Macerado de Eucalipto" class="w-full h-64 md:h-full object-cover">
+                                    </div>
+                                    <div class="p-6 md:w-1/2">
+                                        <span class="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-medium mb-2">PRÓXIMAMENTE</span>
+                                        <h3 class="font-serif font-bold text-2xl text-primary-700 mb-3">MACERADO DE EUCALIPTO</h3>
+                                        <p class="text-gray-700 mb-4">Descongestionante natural y purificador ambiental. Extraído de hojas jóvenes para maximizar el contenido de cineol, el componente activo más valioso.</p>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Alivia vías respiratorias</span>
+                                        </div>
+                                        <div class="flex items-center mb-4">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Propiedades antisépticas</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-secondary-500 mr-2"><i class="fas fa-check-circle"></i></span>
+                                            <span class="text-sm text-gray-700">Repelente natural de insectos</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carousel Controls -->
+                <button class="carousel-prev absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 bg-white rounded-full p-2 shadow-md text-primary-700 hover:text-secondary-500 z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-next absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 bg-white rounded-full p-2 shadow-md text-primary-700 hover:text-secondary-500 z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Subscription Form -->
+            <div class="max-w-2xl mx-auto mt-16 bg-white rounded-lg shadow-md overflow-hidden p-8">
+                <h3 class="font-serif font-bold text-2xl text-primary-700 mb-4 text-center">SÉ EL PRIMERO EN PROBARLOS</h3>
+                <p class="text-gray-700 mb-6 text-center">Suscríbete para recibir acceso anticipado, descuentos exclusivos y contenido sobre el poder curativo de las plantas.</p>
+                
+                <form class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-secondary-500 focus:border-secondary-500" placeholder="Tu nombre">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-secondary-500 focus:border-secondary-500" placeholder="tu@email.com">
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="consent" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                        <label for="consent" class="ml-2 block text-sm text-gray-700">Acepto recibir comunicaciones de Raíz Sabia</label>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block">SUSCRIBIRME</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botanical Diagnosis Section -->
+    <section id="diagnostico" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-serif font-bold text-primary-700 mb-6 text-center">DIAGNÓSTICO BOTÁNICO PERSONALIZADO</h2>
+                <p class="text-gray-700 mb-10 text-center">Responda este breve cuestionario inspirado en la medicina tradicional para recibir recomendaciones herbales específicas para sus necesidades.</p>
+                
+                <div class="bg-primary-50 rounded-lg shadow-inner p-8">
+                    <form id="diagnosis-form">
+                        <!-- Step 1 -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="font-serif font-bold text-xl text-primary-700 mb-6">1. SOBRE TU CONSTITUCIÓN</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Cómo describirías tu energía general?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="energy-high" name="energy" value="alta" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="energy-high" class="ml-3 block text-sm text-gray-700">Alta - Siempre activo/a, difícil relajarse</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="energy-medium" name="energy" value="media" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="energy-medium" class="ml-3 block text-sm text-gray-700">Media - Equilibrada con altibajos</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="energy-low" name="energy" value="baja" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="energy-low" class="ml-3 block text-sm text-gray-700">Baja - Fácil fatiga, necesita estimulantes</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Cómo es tu tolerancia al clima?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="climate-hot" name="climate" value="calor" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="climate-hot" class="ml-3 block text-sm text-gray-700">Prefiero el frío - El calor me agota</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="climate-cold" name="climate" value="frio" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="climate-cold" class="ml-3 block text-sm text-gray-700">Prefiero el calor - El frío me afecta</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="climate-balanced" name="climate" value="equilibrado" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="climate-balanced" class="ml-3 block text-sm text-gray-700">Me adapto bien a ambos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end mt-8">
+                                <button type="button" class="next-step bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-md font-medium transition duration-300">Siguiente</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="font-serif font-bold text-xl text-primary-700 mb-6">2. SOBRE TU PIEL</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Cómo describirías tu tipo de piel?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="skin-oily" name="skin" value="grasa" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="skin-oily" class="ml-3 block text-sm text-gray-700">Grasa - Brillo frecuente, poros dilatados</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="skin-dry" name="skin" value="seca" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="skin-dry" class="ml-3 block text-sm text-gray-700">Seca - Tirantez, descamación</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="skin-mixed" name="skin" value="mixta" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="skin-mixed" class="ml-3 block text-sm text-gray-700">Mixta - Zonas grasas y secas</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="skin-sensitive" name="skin" value="sensible" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="skin-sensitive" class="ml-3 block text-sm text-gray-700">Sensible - Rojeces, irritación fácil</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Qué preocupaciones cutáneas son prioritarias para ti?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start">
+                                            <input type="checkbox" id="concern-acne" name="concerns[]" value="acne" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                                            <label for="concern-acne" class="ml-3 block text-sm text-gray-700">Acné o imperfecciones</label>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <input type="checkbox" id="concern-aging" name="concerns[]" value="envejecimiento" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                                            <label for="concern-aging" class="ml-3 block text-sm text-gray-700">Signos de envejecimiento</label>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <input type="checkbox" id="concern-hyperpigmentation" name="concerns[]" value="manchas" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                                            <label for="concern-hyperpigmentation" class="ml-3 block text-sm text-gray-700">Manchas o hiperpigmentación</label>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <input type="checkbox" id="concern-redness" name="concerns[]" value="rojeces" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                                            <label for="concern-redness" class="ml-3 block text-sm text-gray-700">Rojeces o capilares visibles</label>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <input type="checkbox" id="concern-dehydration" name="concerns[]" value="deshidratacion" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded">
+                                            <label for="concern-dehydration" class="ml-3 block text-sm text-gray-700">Deshidratación</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mt-8">
+                                <button type="button" class="prev-step bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-md font-medium transition duration-300">Anterior</button>
+                                <button type="button" class="next-step bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-md font-medium transition duration-300">Siguiente</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="font-serif font-bold text-xl text-primary-700 mb-6">3. SOBRE TUS HÁBITOS</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Cómo es tu rutina de sueño?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="sleep-good" name="sleep" value="bueno" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="sleep-good" class="ml-3 block text-sm text-gray-700">Buena - Duermo 7-8 horas profundamente</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="sleep-light" name="sleep" value="ligero" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="sleep-light" class="ml-3 block text-sm text-gray-700">Sueño ligero - Me despierto fácil</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="sleep-bad" name="sleep" value="insomnio" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="sleep-bad" class="ml-3 block text-sm text-gray-700">Insomnio - Dificultad para dormir</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">¿Qué nivel de estrés manejas actualmente?</label>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="stress-low" name="stress" value="bajo" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="stress-low" class="ml-3 block text-sm text-gray-700">Bajo - Manejo bien las presiones</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="stress-medium" name="stress" value="moderado" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="stress-medium" class="ml-3 block text-sm text-gray-700">Moderado - Alguna tensión ocasional</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="radio" id="stress-high" name="stress" value="alto" class="h-4 w-4 text-secondary-500 focus:ring-secondary-500 border-gray-300">
+                                            <label for="stress-high" class="ml-3 block text-sm text-gray-700">Alto - Estrés constante, ansiedad</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="diet" class="block text-sm font-medium text-gray-700 mb-2">¿Cómo describirías tu alimentación?</label>
+                                    <select id="diet" name="diet" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-secondary-500 focus:border-secondary-500">
+                                        <option value="">Selecciona una opción</option>
+                                        <option value="balanceada">Balanceada - Variedad de alimentos frescos</option>
+                                        <option value="vegetariana">Vegetariana - Sin carne, con lácteos/huevos</option>
+                                        <option value="vegana">Vegana - Sin productos animales</option>
+                                        <option value="procesados">Alta en procesados - Comida rápida/empaquetada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mt-8">
+                                <button type="button" class="prev-step bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-md font-medium transition duration-300">Anterior</button>
+                                <button type="button" class="next-step bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-md font-medium transition duration-300">Siguiente</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 - Final -->
+                        <div class="form-step" data-step="4">
+                            <h3 class="font-serif font-bold text-xl text-primary-700 mb-6">4. TUS DATOS</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label for="name-diagnosis" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                                    <input type="text" id="name-diagnosis" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-secondary-500 focus:border-secondary-500" placeholder="Cómo prefieres que te llamemos">
+                                </div>
+                                <div>
+                                    <label for="email-diagnosis" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                                    <input type="email" id="email-diagnosis" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-secondary-500 focus:border-secondary-500" placeholder="Para enviarte tu diagnóstico">
+                                </div>
+                                <div class="flex items-start">
+                                    <input type="checkbox" id="privacy" name="privacy" class="h-4 w-4 mt-1 text-secondary-500 focus:ring-secondary-500 border-gray-300 rounded" required>
+                                    <label for="privacy" class="ml-3 block text-sm text-gray-700">Acepto la política de privacidad y el tratamiento de mis datos para recibir el diagnóstico</label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mt-8">
+                                <button type="button" class="prev-step bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-md font-medium transition duration-300">Anterior</button>
+                                <button type="submit" class="bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-2 rounded-md font-medium transition duration-300">OBTENER DIAGNÓSTICO</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Success Message (hidden by default) -->
+                        <div id="success-message" class="hidden text-center py-8">
+                            <div class="text-green-600 text-5xl mb-4">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-2xl text-primary-700 mb-3">¡DIAGNÓSTICO COMPLETO!</h3>
+                            <p class="text-gray-700 mb-6">Hemos analizado tus respuestas y creado un plan herbal personalizado. Descarga tu PDF con recomendaciones específicas.</p>
+                            <a href="#" class="bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block" download="Diagnostico_RaizSabia.pdf">DESCARGAR PDF</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="py-16 bg-primary-800 text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-serif font-bold mb-6">LA ESENCIA DE RAÍZ SABIA</h2>
+                <p class="text-lg mb-8">En un mundo acelerado y artificial, volvemos a lo esencial. Nuestros productos nacen de la observación paciente de los ciclos naturales, el respeto por los tiempos de la tierra y la sabiduría acumulada por generaciones de herbolarios y curanderos.</p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div>
+                        <div class="text-4xl text-secondary-400 mb-4">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl mb-3">ORIGEN</h3>
+                        <p class="text-primary-100">Ingredientes silvestres o cultivados con métodos regenerativos que mejoran el ecosistema.</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl text-secondary-400 mb-4">
+                            <i class="fas fa-mortar-pestle"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl mb-3">ELABORACIÓN</h3>
+                        <p class="text-primary-100">Procesos manuales que preservan los principios activos sin adulterar su esencia.</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl text-secondary-400 mb-4">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-xl mb-3">PROPÓSITO</h3>
+                        <p class="text-primary-100">Restaurar el vínculo sagrado entre las personas y las plantas medicinales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-serif font-bold text-xl mb-4">RAÍZ SABIA</h3>
+                    <p class="text-primary-200 mb-4">Salud natural arraigada en la sabiduría ancestral.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-primary-200 hover:text-white"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold mb-4">PRODUCTOS</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-primary-200 hover:text-white">Tónico Herbal</a></li>
+                        <li><a href="#" class="text-primary-200 hover:text-white">Próximos Macerados</a></li>
+                        <li><a href="#" class="text-primary-200 hover:text-white">Kits de Iniciación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold mb-4">RECURSOS</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-primary-200 hover:text-white">Blog Herbolaria</a></li>
+                        <li><a href="#" class="text-primary-200 hover:text-white">Guía de Uso</a></li>
+                        <li><a href="#" class="text-primary-200 hover:text-white">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold mb-4">CONTACTO</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <span class="mr-2 mt-1"><i class="fas fa-envelope"></i></span>
+                            <span>hola@raizsabia.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 mt-1"><i class="fas fa-phone"></i></span>
+                            <span>+52 55 1234 5678</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="mr-2 mt-1"><i class="fas fa-map-marker-alt"></i></span>
+                            <span>Oaxaca, México</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-primary-700 mt-12 pt-8 text-center text-primary-300 text-sm">
+                <p>© 2023 Raíz Sabia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/525512345678" target="_blank" class="floating-btn bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition duration-300">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // Carousel Functionality
+        const carousel = document.querySelector('.carousel-inner');
+        const items = document.querySelectorAll('.carousel-item');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        let currentIndex = 0;
+        const itemWidth = 100; // 100%
+        
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * itemWidth}%)`;
+        }
+        
+        nextBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % items.length;
+            updateCarousel();
+        });
+        
+        prevBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            updateCarousel();
+        });
+        
+        // Form Steps Functionality
+        const formSteps = document.querySelectorAll('.form-step');
+        const nextButtons = document.querySelectorAll('.next-step');
+        const prevButtons = document.querySelectorAll('.prev-step');
+        const form = document.getElementById('diagnosis-form');
+        const successMessage = document.getElementById('success-message');
+        
+        nextButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentStep = document.querySelector('.form-step.active');
+                const nextStep = currentStep.nextElementSibling;
+                
+                currentStep.classList.remove('active');
+                nextStep.classList.add('active');
+            });
+        });
+        
+        prevButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const currentStep = document.querySelector('.form-step.active');
+                const prevStep = currentStep.previousElementSibling;
+                
+                currentStep.classList.remove('active');
+                prevStep.classList.add('active');
+            });
+        });
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Hide all form steps
+            document.querySelector('.form-step.active').classList.remove('active');
+            
+            // Show success message
+            successMessage.classList.remove('hidden');
+            
+            // In a real scenario, you would send the form data to a server here
+            // and generate the PDF based on the responses
+        });
+    </script>
+</body>
+</html>     
