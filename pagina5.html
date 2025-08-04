@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raíz Sabia - Tónico Herbal Artesanal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f7f3;
+            color: #4a4a4a;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(249, 247, 243, 0.7), rgba(249, 247, 243, 0.7)), url('https://images.unsplash.com/photo-1518492104633-130d0cc84637?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .btn-primary {
+            transition: all 0.3s ease;
+            background-color: #6b8e6b;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a7a5a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            transition: all 0.3s ease;
+            background-color: #d4a59a;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #c08b80;
+            transform: translateY(-2px);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .custom-radio input:checked + label {
+            background-color: #f0e6dd;
+            border-color: #6b8e6b;
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5491234567890?text=Hola%20Raíz%20Sabia,%20me%20interesa%20conocer%20más%20sobre%20el%20tónico%20herbal" 
+       class="fixed bottom-6 right-6 bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-green-700 transition-all z-50">
+       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    </a>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#f9f7f3] z-0"></div>
+        <div class="container mx-auto px-6 z-10 text-center fade-in">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-[#4a4a4a]">Desde la sabiduría de la tierra,<br>nace tu momento de alivio.</h1>
+            <p class="text-xl md:text-2xl mb-10 text-[#5a5a5a] max-w-3xl mx-auto">Un tónico herbal artesanal para reconectar con tu bienestar</p>
+            <button onclick="startPersonalizedAdvice()" class="btn-primary px-8 py-4 rounded-full text-lg font-medium mx-auto pulse">Descubre tu ritual personalizado</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 bg-[#f9f7f3]">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 slide-up">
+                    <h2 class="text-4xl font-bold mb-6 text-[#5a7a5a]">¿Qué es Raíz Sabia?</h2>
+                    <p class="text-lg mb-6 italic">"Creemos en la medicina que nace de la tierra."</p>
+                    <p class="mb-6">Raíz Sabia nació de la conexión profunda con la sabiduría ancestral y el deseo de ofrecer alivio natural en un mundo acelerado. Cada frasco es creado con plantas cuidadosamente seleccionadas, intención y respeto por los ciclos naturales.</p>
+                    <p class="mb-6">No vendemos productos, compartimos saberes que han acompañado a la humanidad por generaciones, ahora en un formato práctico para tu vida moderna.</p>
+                    <p class="italic">"Cada gota está hecha con intención."</p>
+                </div>
+                <div class="md:w-1/2 flex justify-center slide-up">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1587854692152-cf060db85d01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Plantas medicinales" class="rounded-lg shadow-lg w-full max-w-md">
+                        <div class="absolute -bottom-6 -right-6 bg-[#d4a59a] p-4 rounded-lg shadow-lg">
+                            <p class="text-white text-sm italic">"El conocimiento ancestral<br>en tu vida diaria"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center text-[#5a7a5a]">Tónico Herbal Frío</h2>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0 flex justify-center">
+                    <div class="relative floating">
+                        <img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Tónico herbal Raíz Sabia" class="w-64 h-auto rounded-lg shadow-xl">
+                        <div class="absolute -bottom-4 -left-4 bg-[#6b8e6b] text-white px-4 py-2 rounded-lg shadow-md">
+                            <p class="text-sm">Uso externo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 md:pl-10">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="product-card p-6 rounded-lg border border-[#e8e3dc] hover:shadow-md">
+                            <div class="text-3xl mb-3 text-[#6b8e6b]">🌿</div>
+                            <h3 class="font-semibold mb-2">Ingredientes naturales</h3>
+                            <p class="text-sm">Romero, eucalipto, salvia y mentol en base de alcohol medicinal.</p>
+                        </div>
+                        
+                        <div class="product-card p-6 rounded-lg border border-[#e8e3dc] hover:shadow-md">
+                            <div class="text-3xl mb-3 text-[#6b8e6b]">🧴</div>
+                            <h3 class="font-semibold mb-2">Spray de uso externo</h3>
+                            <p class="text-sm">Práctico formato en spray para aplicación directa donde necesites.</p>
+                        </div>
+                        
+                        <div class="product-card p-6 rounded-lg border border-[#e8e3dc] hover:shadow-md">
+                            <div class="text-3xl mb-3 text-[#6b8e6b]">🧠</div>
+                            <h3 class="font-semibold mb-2">Alivia migrañas</h3>
+                            <p class="text-sm">Frescura inmediata para aliviar tensiones y dolores de cabeza.</p>
+                        </div>
+                        
+                        <div class="product-card p-6 rounded-lg border border-[#e8e3dc] hover:shadow-md">
+                            <div class="text-3xl mb-3 text-[#6b8e6b]">💪</div>
+                            <h3 class="font-semibold mb-2">Relaja músculos</h3>
+                            <p class="text-sm">Propiedades calmantes para después del ejercicio o días intensos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 text-center">
+                        <a href="https://wa.me/5491234567890?text=Hola%20Raíz%20Sabia,%20quiero%20pedir%20el%20tónico%20herbal" class="btn-primary px-8 py-3 rounded-full text-lg font-medium inline-block">Pedir por WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personalized Advice Section -->
+    <section id="adviceSection" class="py-20 bg-[#f0e6dd] hidden">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                <div id="step1" class="advice-step">
+                    <h2 class="text-3xl font-bold mb-6 text-[#5a7a5a] text-center">Hola, soy Raíz Sabia. ¿Cómo te llamas?</h2>
+                    <div class="flex flex-col items-center">
+                        <input type="text" id="userName" class="w-full max-w-md px-4 py-3 border border-[#d4a59a] rounded-lg mb-6 focus:outline-none focus:ring-2 focus:ring-[#6b8e6b]" placeholder="Tu nombre">
+                        <button onclick="nextStep(1)" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Continuar</button>
+                    </div>
+                </div>
+                
+                <div id="step2" class="advice-step hidden">
+                    <h2 class="text-3xl font-bold mb-6 text-[#5a7a5a] text-center"><span id="greetingName"></span>, ¿qué te trae por aquí hoy?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="custom-radio">
+                            <input type="radio" id="reason1" name="reason" value="dolor muscular" class="hidden">
+                            <label for="reason1" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">💪</div>
+                                    <div>Tengo dolor muscular</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="reason2" name="reason" value="migraña" class="hidden">
+                            <label for="reason2" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🧠</div>
+                                    <div>Tengo migraña o dolor de cabeza</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="reason3" name="reason" value="estrés" class="hidden">
+                            <label for="reason3" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">😔</div>
+                                    <div>Me siento cansado/a o estresado/a</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="reason4" name="reason" value="respiratorios" class="hidden">
+                            <label for="reason4" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🌬️</div>
+                                    <div>Tengo síntomas respiratorios</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="nextStep(2)" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Siguiente</button>
+                    </div>
+                </div>
+                
+                <div id="step3" class="advice-step hidden">
+                    <h2 class="text-3xl font-bold mb-6 text-[#5a7a5a] text-center">¿Dónde estás ahora?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="custom-radio">
+                            <input type="radio" id="place1" name="place" value="en casa" class="hidden">
+                            <label for="place1" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🏠</div>
+                                    <div>En casa</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="place2" name="place" value="en el trabajo" class="hidden">
+                            <label for="place2" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">💼</div>
+                                    <div>En el trabajo</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="place3" name="place" value="antes de dormir" class="hidden">
+                            <label for="place3" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🌙</div>
+                                    <div>Antes de dormir</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="place4" name="place" value="en la naturaleza" class="hidden">
+                            <label for="place4" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🌳</div>
+                                    <div>Caminando o en la naturaleza</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="nextStep(3)" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Siguiente</button>
+                    </div>
+                </div>
+                
+                <div id="step4" class="advice-step hidden">
+                    <h2 class="text-3xl font-bold mb-6 text-[#5a7a5a] text-center">¿Cómo quieres sentirte después?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="custom-radio">
+                            <input type="radio" id="feeling1" name="feeling" value="liviano/a y fresco/a" class="hidden">
+                            <label for="feeling1" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🍃</div>
+                                    <div>Liviano/a y fresco/a</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="feeling2" name="feeling" value="tranquilo/a y relajado/a" class="hidden">
+                            <label for="feeling2" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">🧘</div>
+                                    <div>Tranquilo/a y relajado/a</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="feeling3" name="feeling" value="con más energía" class="hidden">
+                            <label for="feeling3" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">⚡</div>
+                                    <div>Con más energía</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="custom-radio">
+                            <input type="radio" id="feeling4" name="feeling" value="más conectado/a contigo" class="hidden">
+                            <label for="feeling4" class="block p-4 border border-[#d4a59a] rounded-lg cursor-pointer hover:bg-[#f0e6dd] transition">
+                                <div class="flex items-center">
+                                    <div class="mr-3 text-xl">💖</div>
+                                    <div>Más conectado/a contigo</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="showResult()" class="btn-primary px-8 py-3 rounded-full text-lg font-medium">Ver mi ritual</button>
+                    </div>
+                </div>
+                
+                <div id="resultStep" class="hidden">
+                    <div class="text-center mb-8">
+                        <div class="text-6xl mb-4">🌿</div>
+                        <h2 class="text-3xl font-bold mb-4 text-[#5a7a5a]" id="finalGreeting"></h2>
+                        <p class="text-lg italic mb-6" id="ritualDescription"></p>
+                        <div class="bg-[#f0e6dd] p-6 rounded-lg mb-8">
+                            <p class="font-medium" id="ritualInstructions"></p>
+                        </div>
+                        <a href="#" id="whatsappLink" class="btn-primary px-8 py-3 rounded-full text-lg font-medium inline-block mb-6">Quiero este ritual</a>
+                        <button onclick="resetAdvice()" class="text-[#6b8e6b] underline">Volver a empezar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-[#f9f7f3]">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center text-[#5a7a5a]">Voces que nos acompañan</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-[#d4a59a] flex items-center justify-center text-white font-bold text-xl mr-4">A</div>
+                        <div>
+                            <h4 class="font-semibold">Ana María</h4>
+                            <p class="text-sm text-gray-600">Terapeuta holística</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"El tónico de Raíz Sabia es mi compañero en las sesiones. Ayuda a mis clientes a relajarse profundamente y conectarse con el momento presente."</p>
+                    <div class="text-[#d4a59a]">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-[#d4a59a] flex items-center justify-center text-white font-bold text-xl mr-4">J</div>
+                        <div>
+                            <h4 class="font-semibold">Juan Pablo</h4>
+                            <p class="text-sm text-gray-600">Entrenador personal</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"Después de entrenar, aplico el spray en mis músculos y siento un alivio inmediato. La combinación de plantas es perfecta para la recuperación."</p>
+                    <div class="text-[#d4a59a]">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-[#d4a59a] flex items-center justify-center text-white font-bold text-xl mr-4">M</div>
+                        <div>
+                            <h4 class="font-semibold">Mariana</h4>
+                            <p class="text-sm text-gray-600">Madre de dos niños</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"En los días de estrés, unas rociadas de Raíz Sabia me devuelven la calma. Es como un abrazo de la naturaleza en medio del caos diario."</p>
+                    <div class="text-[#d4a59a]">★★★★★</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="btn-secondary px-6 py-3 rounded-full text-lg font-medium" onclick="document.getElementById('testimonialModal').classList.remove('hidden')">Compartir mi experiencia</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Products -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-16 text-center text-[#5a7a5a]">Próximamente en Raíz Sabia</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+                <div class="product-card bg-[#f9f7f3] p-8 rounded-lg shadow-md text-center">
+                    <div class="text-5xl mb-6">🌱</div>
+                    <h3 class="text-2xl font-semibold mb-4">Alcohol con Romero</h3>
+                    <p class="mb-6">Una fórmula concentrada para alivio muscular profundo y activación circulatoria.</p>
+                    <button class="btn-secondary px-6 py-2 rounded-full text-sm font-medium">Avísame cuando esté disponible</button>
+                </div>
+                
+                <div class="product-card bg-[#f9f7f3] p-8 rounded-lg shadow-md text-center">
+                    <div class="text-5xl mb-6">🍃</div>
+                    <h3 class="text-2xl font-semibold mb-4">Alcohol con Cannabis</h3>
+                    <p class="mb-6">Propiedades relajantes y antiinflamatorias en un spray de aplicación tópica.</p>
+                    <button class="btn-secondary px-6 py-2 rounded-full text-sm font-medium">Avísame cuando esté disponible</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#5a7a5a] text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-4">Raíz Sabia</h3>
+                    <p class="max-w-xs">Tónico herbal artesanal para reconectar con tu bienestar.</p>
+                </div>
+                
+                <div class="mb-6 md:mb-0">
+                    <h4 class="font-semibold mb-4">Contacto</h4>
+                    <p class="mb-2">info@raizsabia.com</p>
+                    <p>+54 9 11 2345-6789</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Síguenos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-[#d4a59a] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="text-white hover:text-[#d4a59a] transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-[#6b8e6b] mt-8 pt-8 text-center text-sm">
+                <p>© 2023 Raíz Sabia. Todos los derechos reservados.</p>
+                <p class="mt-2">Producto de uso externo exclusivamente. No ingerir.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Testimonial Modal -->
+    <div id="testimonialModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h3 class="text-2xl font-bold mb-6 text-[#5a7a5a]">Comparte tu experiencia</h3>
+            <form>
+                <div class="mb-4">
+                    <label for="testimonialName" class="block mb-2">Tu nombre</label>
+                    <input type="text" id="testimonialName" class="w-full px-4 py-2 border border-[#d4a59a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6b8e6b]">
+                </div>
+                <div class="mb-4">
+                    <label for="testimonialRole" class="block mb-2">¿Qué haces? (opcional)</label>
+                    <input type="text" id="testimonialRole" class="w-full px-4 py-2 border border-[#d4a59a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6b8e6b]">
+                </div>
+                <div class="mb-6">
+                    <label for="testimonialText" class="block mb-2">Tu experiencia con Raíz Sabia</label>
+                    <textarea id="testimonialText" rows="4" class="w-full px-4 py-2 border border-[#d4a59a] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6b8e6b]"></textarea>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="document.getElementById('testimonialModal').classList.add('hidden')" class="px-4 py-2 border border-[#d4a59a] rounded-lg text-[#5a7a5a]">Cancelar</button>
+                    <button type="button" onclick="submitTestimonial()" class="btn-primary px-6 py-2 rounded-lg">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Personalized Advice Flow
+        function startPersonalizedAdvice() {
+            document.getElementById('adviceSection').classList.remove('hidden');
+            window.scrollTo({
+                top: document.getElementById('adviceSection').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+        
+        function nextStep(currentStep) {
+            if (currentStep === 1) {
+                const name = document.getElementById('userName').value.trim();
+                if (name === '') {
+                    alert('Por favor ingresa tu nombre');
+                    return;
+                }
+                document.getElementById('greetingName').textContent = 'Encantada, ' + name + '. Hoy quiero ayudarte a sentirte mejor.';
+            }
+            
+            if (currentStep === 2) {
+                const reasonSelected = document.querySelector('input[name="reason"]:checked');
+                if (!reasonSelected) {
+                    alert('Por favor selecciona una opción');
+                    return;
+                }
+            }
+            
+            if (currentStep === 3) {
+                const placeSelected = document.querySelector('input[name="place"]:checked');
+                if (!placeSelected) {
+                    alert('Por favor selecciona una opción');
+                    return;
+                }
+            }
+            
+            document.getElementById('step' + currentStep).classList.add('hidden');
+            document.getElementById('step' + (currentStep + 1)).classList.remove('hidden');
+        }
+        
+        function showResult() {
+            const feelingSelected = document.querySelector('input[name="feeling"]:checked');
+            if (!feelingSelected) {
+                alert('Por favor selecciona una opción');
+                return;
+            }
+            
+            const name = document.getElementById('userName').value.trim();
+            const reason = document.querySelector('input[name="reason"]:checked').value;
+            const place = document.querySelector('input[name="place"]:checked').value;
+            const feeling = feelingSelected.value;
+            
+            document.getElementById('finalGreeting').textContent = name + ', este es tu momento:';
+            
+            let description = '';
+            let instructions = '';
+            
+            if (reason.includes('muscular')) {
+                description = 'Para aliviar la tensión muscular y recuperar tu movilidad con la frescura de las plantas.';
+                instructions = 'Rocía Raíz Sabia en las zonas de tensión y masajea suavemente. Respira profundamente y deja que el eucalipto y el romero actúen.';
+            } else if (reason.includes('migraña')) {
+                description = 'Para calmar el dolor de cabeza y recuperar la claridad mental.';
+                instructions = 'Rocía Raíz Sabia en tus sienes y en la nuca. Cierra los ojos y respira profundamente 3 veces. Deja que la menta y la salvia te alivien.';
+            } else if (reason.includes('estrés')) {
+                description = 'Para liberar el estrés y encontrar tu centro nuevamente.';
+                instructions = 'Rocía Raíz Sabia en tus muñecas y en el pecho. Lleva tus manos a tu corazón y respira profundamente. Siente cómo la tensión se disipa.';
+            } else if (reason.includes('respiratorios')) {
+                description = 'Para aliviar la congestión y respirar con mayor facilidad.';
+                instructions = 'Rocía Raíz Sabia en el aire frente a ti e inhala profundamente. También puedes aplicarlo en el pecho para mayor alivio.';
+            } else {
+                description = 'Para crear un momento de conexión contigo mismo/a y con la naturaleza.';
+                instructions = 'Rocía Raíz Sabia en tu entorno y en tus manos. Frota suavemente y lleva las palmas a tu rostro para inhalar profundamente.';
+            }
+            
+            if (place.includes('trabajo')) {
+                instructions += ' Este ritual es perfecto para una pausa en tu jornada laboral.';
+            } else if (place.includes('dormir')) {
+                instructions += ' Realiza este ritual como parte de tu rutina nocturna para un descanso más profundo.';
+            } else if (place.includes('naturaleza')) {
+                instructions += ' Aprovecha estar en contacto con la naturaleza para potenciar los efectos del tónico.';
+            }
+            
+            document.getElementById('ritualDescription').textContent = description;
+            document.getElementById('ritualInstructions').textContent = instructions;
+            
+            // Set WhatsApp link with personalized message
+            const whatsappMessage = `Hola Raíz Sabia, soy ${name}. Quiero el tónico herbal para ${reason}.\n\nMe gustaría sentirme ${feeling}.\n\n${instructions}`;
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            document.getElementById('whatsappLink').href = `https://wa.me/5491234567890?text=${encodedMessage}`;
+            
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('resultStep').classList.remove('hidden');
+        }
+        
+        function resetAdvice() {
+            document.getElementById('userName').value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            document.getElementById('resultStep').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+            
+            // Reset all radio labels
+            document.querySelectorAll('.custom-radio label').forEach(label => {
+                label.style.backgroundColor = '';
+                label.style.borderColor = '';
+            });
+        }
+        
+        function submitTestimonial() {
+            const name = document.getElementById('testimonialName').value.trim();
+            const text = document.getElementById('testimonialText').value.trim();
+            
+            if (name === '' || text === '') {
+                alert('Por favor completa tu nombre y testimonio');
+                return;
+            }
+            
+            alert('¡Gracias por compartir tu experiencia con Raíz Sabia!');
+            document.getElementById('testimonialModal').classList.add('hidden');
+            document.getElementById('testimonialName').value = '';
+            document.getElementById('testimonialRole').value = '';
+            document.getElementById('testimonialText').value = '';
+        }
+        
+        // Highlight selected radio button
+        document.querySelectorAll('.custom-radio input').forEach(input => {
+            input.addEventListener('change', function() {
+                // Reset all labels in this group
+                const name = this.getAttribute('name');
+                document.querySelectorAll(`input[name="${name}"] + label`).forEach(label => {
+                    label.style.backgroundColor = '';
+                    label.style.borderColor = '';
+                });
+                
+                // Highlight selected
+                if (this.checked) {
+                    const label = this.nextElementSibling;
+                    label.style.backgroundColor = '#f0e6dd';
+                    label.style.borderColor = '#6b8e6b';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
