@@ -1,1125 +1,645 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raíz Sabia - Sabiduría Ancestral</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <title>Raíz Sabia - Productos Herbal Naturales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F772D',
+                        secondary: '#90A955',
+                        accent: '#ECF39E',
+                        light: '#F8F9FA',
+                        dark: '#2F3E46',
+                        herbal: '#31572C'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
         }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
         
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #6b8e5a 100%);
-            color: #2c3e50;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
         
-        .floating-leaves {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
+            background-size: cover;
+            background-position: center;
         }
         
-        .leaf {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #7BA05B;
-            border-radius: 0 100% 0 100%;
-            animation: fall 8s linear infinite;
-            opacity: 0.7;
+        .herbal-card {
+            transition: all 0.3s ease;
         }
         
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-        
-        .logo {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #2d5a27;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            color: #4a7c59;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        
-        .main-content {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            flex: 1;
-            min-width: 300px;
-            max-width: 400px;
-        }
-        
-        .card:hover {
+        .herbal-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        
-        .card h3 {
-            color: #2d5a27;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .card p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #4a7c59, #2d5a27);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        
-        .quiz-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            display: none;
-        }
-        
-        .question {
-            font-size: 1.3rem;
-            color: #2d5a27;
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-        
-        .options {
-            display: grid;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .option {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid #dee2e6;
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .option:hover {
-            border-color: #4a7c59;
-            background: linear-gradient(135deg, #e8f5e8, #d4edda);
-            transform: translateY(-2px);
-        }
-        
-        .option.selected {
-            border-color: #2d5a27;
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            box-shadow: 0 5px 15px rgba(45, 90, 39, 0.2);
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4a7c59, #2d5a27);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .result-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            display: none;
-        }
-        
-        .result-title {
-            font-size: 2rem;
-            color: #2d5a27;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .result-description {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 25px;
-        }
-        
-        .usage-steps {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-        }
-        
-        .usage-steps h4 {
-            color: #2d5a27;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-        
-        .step {
-            margin: 15px 0;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            border-left: 4px solid #4a7c59;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
         .whatsapp-btn {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        
+        .consultation-step {
+            display: none;
+        }
+        
+        .consultation-step.active {
             display: block;
-            margin: 30px auto 0;
+            animation: fadeIn 0.5s ease;
         }
         
-        .whatsapp-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .ingredient-selector {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-            display: none;
-        }
-        
-        .ingredient-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .ingredient-card:hover {
-            border-color: #4a7c59;
-            background: #e8f5e8;
-        }
-        
-        .ingredient-card.selected {
-            border-color: #2d5a27;
-            background: #d4edda;
-        }
-        
-        .ingredient-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #2d5a27;
-            margin-bottom: 10px;
-        }
-        
-        .ingredient-benefit {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .card {
-                max-width: 100%;
-            }
-            
-            .logo {
-                font-size: 2rem;
-            }
+        .ingredient-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #ECF39E;
+            margin: 0 auto;
+            font-size: 2rem;
+            color: #4F772D;
         }
     </style>
 </head>
-<body>
-    <div class="floating-leaves" id="floatingLeaves"></div>
-    
-    <div class="container">
-        <header>
-            <div class="logo">🌿 Raíz Sabia</div>
-            <div class="tagline">Sabiduría ancestral que sana desde lo natural</div>
-            <p>Descubre el poder sanador de las plantas con nuestro tónico herbal artesanal</p>
-        </header>
-        
-        <div class="main-content">
-            <div class="card" onclick="startPersonalizedQuiz()">
-                <h3>🧙‍♀️ Modo de uso Personalizado</h3>
-                <p>Déjanos conocerte a través de nuestro ritual de consulta. Te guiaremos para descubrir exactamente cómo Raíz Sabia puede transformar tu bienestar diario.</p>
-                <button class="btn">Comenzar Mi Ritual</button>
-            </div>
-            
-            <div class="card" onclick="showQuickUses()">
-                <h3>⚡ Guía de Alivio Inmediato</h3>
-                <p>¿Necesitas alivio ahora? Encuentra formas instantáneas de usar tu tónico según la situación que estés viviendo.</p>
-                <button class="btn">Ver Guía Rápida</button>
-            </div>
-            
-            <div class="card" onclick="showWisdomStories()">
-                <h3>📖 Historias de Sabiduría</h3>
-                <p>Descubre testimonios reales de personas que han encontrado su bienestar con Raíz Sabia y la medicina ancestral.</p>
-                <button class="btn">Leer Historias</button>
-            </div>
-        </div>
-        
-        <div class="quiz-container" id="quizContainer">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="question" id="questionText"></div>
-            <div class="options" id="optionsContainer"></div>
-            <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Siguiente</button>
-        </div>
-        
-        <div class="ingredient-selector" id="ingredientSelector">
-            <h3 style="color: #2d5a27; margin-bottom: 20px; text-align: center;">🌿 Conoce nuestros ingredientes sagrados</h3>
-            <div class="ingredient-card" onclick="selectIngredient('romero')">
-                <div class="ingredient-name">🌿 Romero</div>
-                <div class="ingredient-benefit">Estimula la concentración y mejora la memoria. Ideal para estudiar o trabajar.</div>
-            </div>
-            <div class="ingredient-card" onclick="selectIngredient('eucalipto')">
-                <div class="ingredient-name">🍃 Eucalipto</div>
-                <div class="ingredient-benefit">Despeja las vías respiratorias y purifica el ambiente. Perfecto para la gripe.</div>
-            </div>
-            <div class="ingredient-card" onclick="selectIngredient('salvia')">
-                <div class="ingredient-name">🌱 Salvia</div>
-                <div class="ingredient-benefit">Calma la ansiedad y equilibra las emociones. Tu aliada en momentos de estrés.</div>
-            </div>
-            <div class="ingredient-card" onclick="selectIngredient('mentol')">
-                <div class="ingredient-name">❄️ Mentol</div>
-                <div class="ingredient-benefit">Refresca y alivia dolores musculares. Sensación de frescura instantánea.</div>
-            </div>
-            <button class="btn" onclick="hideIngredientSelector()" style="margin-top: 20px;">Volver</button>
-        </div>
-        
-        <div class="result-container" id="resultContainer">
-            <div class="result-title" id="resultTitle"></div>
-            <div class="result-description" id="resultDescription"></div>
-            <div class="usage-steps" id="usageSteps"></div>
-            <button class="whatsapp-btn" onclick="contactWhatsApp()">💬 Pedir mi Raíz Sabia</button>
-            <button class="btn" onclick="restartExperience()" style="margin-top: 15px;">🔄 Nueva Consulta</button>
-        </div>
+<body class="bg-light text-dark">
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/549TU_NUMERO" target="_blank" class="whatsapp-btn bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-xl">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-        <section style="margin-top:60px; text-align:center;">
-            <h2 style="color:#2d5a27;">🌿 Momentos con Raíz Sabia</h2>
-            <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:20px;">
-                <img src="imagenes/bosque1.png" style="width:200px; border-radius:15px; object-fit:cover;">
-                <img src="imagenes/pareja1.png" style="width:200px; border-radius:15px; object-fit:cover;">
-                <img src="imagenes/casa1.png" style="width:200px; border-radius:15px; object-fit:cover;">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://via.placeholder.com/50" alt="Raíz Sabia Logo" class="h-10 mr-3">
+                <a href="#" class="text-2xl font-bold text-primary font-serif">Raíz Sabia</a>
             </div>
-</section>
+            <div class="hidden md:flex space-x-8">
+                <a href="#inicio" class="text-dark hover:text-primary transition">Inicio</a>
+                <a href="#productos" class="text-dark hover:text-primary transition">Productos</a>
+                <a href="#ingredientes" class="text-dark hover:text-primary transition">Ingredientes</a>
+                <a href="#asesoria" class="text-dark hover:text-primary transition">Asesoría</a>
+                <a href="#contacto" class="text-dark hover:text-primary transition">Contacto</a>
+            </div>
+            <button class="md:hidden text-dark text-2xl" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white w-full px-4 py-2 shadow-md" id="mobileMenu">
+            <a href="#inicio" class="block py-2 hover:text-primary transition">Inicio</a>
+            <a href="#productos" class="block py-2 hover:text-primary transition">Productos</a>
+            <a href="#ingredientes" class="block py-2 hover:text-primary transition">Ingredientes</a>
+            <a href="#asesoria" class="block py-2 hover:text-primary transition">Asesoría</a>
+            <a href="#contacto" class="block py-2 hover:text-primary transition">Contacto</a>
+        </div>
+    </nav>
 
-    </div>
-    
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-bg text-white py-20 md:py-32">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 font-serif">Raíz Sabia</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Descubre el poder curativo de la naturaleza con nuestros productos herbal artesanales</p>
+            <a href="#productos" class="bg-primary hover:bg-secondary text-white px-8 py-3 rounded-full font-medium transition shadow-lg">Ver Productos</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-3xl font-bold mb-6 text-primary font-serif">Nuestra Filosofía</h2>
+                    <p class="text-lg mb-6">En Raíz Sabia creemos en la sabiduría ancestral de las plantas y su poder para sanar y equilibrar nuestro cuerpo y mente.</p>
+                    <p class="text-lg">Cada uno de nuestros productos es elaborado artesanalmente con ingredientes 100% naturales, cuidando cada detalle para ofrecerte lo mejor de la naturaleza.</p>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Hierbas naturales" class="rounded-lg shadow-xl w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-primary font-serif">Nuestros Productos</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Tónico Corporal Herbal -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg herbal-card">
+                    <img src="https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tónico Corporal Herbal" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">Tónico Corporal Herbal</h3>
+                        <p class="text-gray-600 mb-4">Nuestro producto estrella, elaborado con eucalipto, romero, salvia y menta para revitalizar tu cuerpo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-primary">$3.500</span>
+                            <button class="bg-primary hover:bg-secondary text-white px-4 py-2 rounded-full transition">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alcohol con Cannabis (Próximamente) -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg herbal-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1598802614286-2f505e8471e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Alcohol con Cannabis" class="w-full h-64 object-cover">
+                        <div class="absolute top-0 left-0 bg-primary text-white px-4 py-1 rounded-br-lg">Próximamente</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">Alcohol con Cannabis</h3>
+                        <p class="text-gray-600 mb-4">Macerado herbal con propiedades relajantes y antiinflamatorias.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-gray-400">Próximamente</span>
+                            <button class="bg-gray-400 text-white px-4 py-2 rounded-full cursor-not-allowed" disabled>Próximamente</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alcohol con Romero (Próximamente) -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg herbal-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1605001291125-1c659afe8e2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Alcohol con Romero" class="w-full h-64 object-cover">
+                        <div class="absolute top-0 left-0 bg-primary text-white px-4 py-1 rounded-br-lg">Próximamente</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">Alcohol con Romero</h3>
+                        <p class="text-gray-600 mb-4">Ideal para mejorar la circulación y aliviar dolores musculares.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg text-gray-400">Próximamente</span>
+                            <button class="bg-gray-400 text-white px-4 py-2 rounded-full cursor-not-allowed" disabled>Próximamente</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ingredients Section -->
+    <section id="ingredientes" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-primary font-serif">Ingredientes Principales</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Eucalipto -->
+                <div class="text-center">
+                    <div class="ingredient-icon mb-4">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-primary">Eucalipto</h3>
+                    <p class="text-gray-600">Descongestionante natural, ideal para problemas respiratorios y purificación del aire.</p>
+                </div>
+                
+                <!-- Romero -->
+                <div class="text-center">
+                    <div class="ingredient-icon mb-4">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-primary">Romero</h3>
+                    <p class="text-gray-600">Estimula la circulación, mejora la memoria y tiene propiedades antiinflamatorias.</p>
+                </div>
+                
+                <!-- Salvia -->
+                <div class="text-center">
+                    <div class="ingredient-icon mb-4">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-primary">Salvia</h3>
+                    <p class="text-gray-600">Antiséptico natural, regula la sudoración y ayuda en problemas digestivos.</p>
+                </div>
+                
+                <!-- Menta -->
+                <div class="text-center">
+                    <div class="ingredient-icon mb-4">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-primary">Menta</h3>
+                    <p class="text-gray-600">Refrescante, alivia náuseas y dolores de cabeza, mejora la digestión.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section id="asesoria" class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6 text-center font-serif">Asesoría Personalizada Gratuita</h2>
+            <p class="text-xl mb-12 text-center max-w-2xl mx-auto">Responda estas preguntas y reciba recomendaciones personalizadas para mejorar su bienestar con nuestros productos naturales.</p>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-xl p-8 text-dark">
+                <div id="consultationForm">
+                    <!-- Step 1: Name -->
+                    <div class="consultation-step active" id="step1">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">Paso 1: ¿Cuál es tu nombre?</h3>
+                        <input type="text" id="userName" class="w-full px-4 py-3 border border-gray-300 rounded-lg mb-4" placeholder="Ingresa tu nombre">
+                        <button onclick="nextStep(1, 2)" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition w-full md:w-auto">Siguiente</button>
+                    </div>
+                    
+                    <!-- Step 2: Daily Routine -->
+                    <div class="consultation-step" id="step2">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">Hola <span id="displayName"></span>, ¿Cómo describirías tu rutina diaria?</h3>
+                        <div class="space-y-4 mb-6">
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="routine" value="sedentaria" class="form-radio text-primary">
+                                <span>Sedentaria (mucho tiempo sentado/a)</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="routine" value="activa" class="form-radio text-primary">
+                                <span>Activa (mucho movimiento y ejercicio)</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="routine" value="estresante" class="form-radio text-primary">
+                                <span>Estresante (muchas responsabilidades)</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="routine" value="equilibrada" class="form-radio text-primary">
+                                <span>Equilibrada (buena combinación de actividades)</span>
+                            </label>
+                        </div>
+                        <div class="flex justify-between">
+                            <button onclick="prevStep(2, 1)" class="bg-gray-300 hover:bg-gray-400 text-dark px-6 py-3 rounded-full transition">Anterior</button>
+                            <button onclick="nextStep(2, 3)" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition">Siguiente</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Sleep Quality -->
+                    <div class="consultation-step" id="step3">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">¿Cómo calificarías tu calidad de sueño?</h3>
+                        <div class="space-y-4 mb-6">
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="sleep" value="excelente" class="form-radio text-primary">
+                                <span>Excelente - Duermo profundamente y me despierto descansado/a</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="sleep" value="regular" class="form-radio text-primary">
+                                <span>Regular - A veces tengo problemas para dormir</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="radio" name="sleep" value="mala" class="form-radio text-primary">
+                                <span>Mala - Tengo insomnio frecuente o sueño interrumpido</span>
+                            </label>
+                        </div>
+                        <div class="flex justify-between">
+                            <button onclick="prevStep(3, 2)" class="bg-gray-300 hover:bg-gray-400 text-dark px-6 py-3 rounded-full transition">Anterior</button>
+                            <button onclick="nextStep(3, 4)" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition">Siguiente</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Main Concerns -->
+                    <div class="consultation-step" id="step4">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">¿Cuáles son tus principales preocupaciones de salud?</h3>
+                        <div class="space-y-4 mb-6">
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" name="concerns" value="estres" class="form-checkbox text-primary">
+                                <span>Estrés y ansiedad</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" name="concerns" value="dolor" class="form-checkbox text-primary">
+                                <span>Dolores musculares o articulares</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" name="concerns" value="respiratorio" class="form-checkbox text-primary">
+                                <span>Problemas respiratorios</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" name="concerns" value="digestivo" class="form-checkbox text-primary">
+                                <span>Problemas digestivos</span>
+                            </label>
+                            <label class="flex items-center space-x-3">
+                                <input type="checkbox" name="concerns" value="energia" class="form-checkbox text-primary">
+                                <span>Falta de energía</span>
+                            </label>
+                        </div>
+                        <div class="flex justify-between">
+                            <button onclick="prevStep(4, 3)" class="bg-gray-300 hover:bg-gray-400 text-dark px-6 py-3 rounded-full transition">Anterior</button>
+                            <button onclick="nextStep(4, 5)" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition">Siguiente</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5: Results -->
+                    <div class="consultation-step" id="step5">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">Asesoría Personalizada para <span id="finalName"></span></h3>
+                        <div id="adviceResult" class="bg-accent rounded-lg p-6 mb-6">
+                            <!-- Advice will be inserted here by JavaScript -->
+                        </div>
+                        <p class="mb-6">¿Te gustaría recibir esta asesoría por correo electrónico junto con promociones exclusivas?</p>
+                        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-6">
+                            <input type="email" id="userEmail" class="flex-grow px-4 py-3 border border-gray-300 rounded-lg" placeholder="Ingresa tu correo electrónico">
+                            <button onclick="sendAdvice()" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition">Enviar</button>
+                        </div>
+                        <div class="flex justify-center">
+                            <button onclick="restartConsultation()" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition">Realizar otra asesoría</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-primary font-serif">Lo que dicen nuestros clientes</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"El tónico herbal ha cambiado mi vida. Después de usarlo regularmente, mis dolores musculares han disminuido significativamente."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Cliente satisfecha" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">María González</h4>
+                            <p class="text-sm text-gray-500">Usuaria desde 2022</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"La asesoría personalizada fue increíblemente útil. Las recomendaciones que recibí se ajustaron perfectamente a mis necesidades."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Cliente satisfecho" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">Carlos Martínez</h4>
+                            <p class="text-sm text-gray-500">Usuaria desde 2023</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Productos de excelente calidad. Se nota que están hechos con cuidado y conocimiento. ¡Los recomiendo totalmente!"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Cliente satisfecha" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">Laura Fernández</h4>
+                            <p class="text-sm text-gray-500">Usuaria desde 2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center text-primary font-serif">Contacto</h2>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h3 class="text-xl font-bold mb-4 text-primary">Información de contacto</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mt-1 mr-3"></i>
+                            <p>Dirección: Calle Falsa 123, Ciudad, Argentina</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt text-primary mr-3"></i>
+                            <p>Teléfono: +54 9 11 2345-6789</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-primary mr-3"></i>
+                            <p>Email: info@raizsabia.com</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mt-8 mb-4 text-primary">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-primary hover:text-secondary text-2xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-primary hover:text-secondary text-2xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-primary hover:text-secondary text-2xl"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="bg-accent p-6 rounded-xl shadow-lg">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">Nombre</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">Correo electrónico</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 mb-2">Mensaje</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+                        </div>
+                        <button type="submit" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-full transition w-full">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/40" alt="Raíz Sabia Logo" class="h-8 mr-3">
+                        <a href="#" class="text-xl font-bold text-white font-serif">Raíz Sabia</a>
+                    </div>
+                    <p class="mt-2 text-gray-400">Productos herbal naturales para tu bienestar</p>
+                </div>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <p class="text-gray-400 mb-2">© 2023 Raíz Sabia. Todos los derechos reservados.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">Términos y condiciones</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Política de privacidad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Hojas flotantes
-        function createFloatingLeaves() {
-            const container = document.getElementById('floatingLeaves');
-            
-            setInterval(() => {
-                const leaf = document.createElement('div');
-                leaf.className = 'leaf';
-                leaf.style.left = Math.random() * 100 + '%';
-                leaf.style.animationDelay = Math.random() * 2 + 's';
-                leaf.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                container.appendChild(leaf);
-                
-                setTimeout(() => {
-                    leaf.remove();
-                }, 8000);
-            }, 300);
-        }
+        // Mobile menu toggle
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
         
-        // Quiz personalizado extendido
-        let currentQuestion = 0;
-        let answers = {};
-        let userName = "";
-        
-        const questions = [
-            {
-                id: 'name',
-                type: 'input',
-                text: 'Antes de comenzar, comparte tu nombre conmigo para personalizar tu experiencia',
-                placeholder: 'Escribe tu nombre aquí...',
-                validation: (value) => value.trim().length > 0
-            },
-            {
-                id: 'age_range',
-                text: '¿En qué etapa de la vida te encuentras?',
-                options: [
-                    { value: 'young', text: '🌱 18-25 años - Explorando y construyendo mi camino' },
-                    { value: 'adult', text: '🌿 26-35 años - Estableciendo mi estilo de vida' },
-                    { value: 'mature', text: '🌳 36-50 años - Priorizando mi bienestar y equilibrio' },
-                    { value: 'wise', text: '🍃 51+ años - Valorando la sabiduría y cuidado personal' }
-                ]
-            },
-            {
-                id: 'daily_routine',
-                text: '¿Cómo describirías tu rutina diaria típica?',
-                options: [
-                    { value: 'structured', text: '⏰ Muy estructurada - Horarios fijos y planificación detallada' },
-                    { value: 'flexible', text: '🌊 Flexible - Me adapto según las circunstancias del día' },
-                    { value: 'chaotic', text: '🌪️ Caótica - Cada día es diferente y lleno de sorpresas' },
-                    { value: 'relaxed', text: '🧘‍♀️ Relajada - Tomo las cosas con calma y sin prisa' }
-                ]
-            },
-            {
-                id: 'main_challenge',
-                text: '¿Cuál es tu mayor desafío de bienestar actualmente?',
-                options: [
-                    { value: 'stress_work', text: '💼 Estrés laboral - Presión, deadlines y responsabilidades' },
-                    { value: 'sleep_quality', text: '😴 Calidad del sueño - Dificultad para dormir o descansar' },
-                    { value: 'physical_pain', text: '🤕 Dolores físicos - Tensión, migrañas o molestias musculares' },
-                    { value: 'energy_fatigue', text: '⚡ Falta de energía - Cansancio constante y agotamiento' },
-                    { value: 'emotional_balance', text: '😌 Equilibrio emocional - Ansiedad, irritabilidad o cambios de humor' },
-                    { value: 'focus_concentration', text: '🎯 Concentración - Dificultad para mantener el foco y claridad mental' }
-                ]
-            },
-            {
-                id: 'symptoms_frequency',
-                text: '¿Con qué frecuencia experimentas estas molestias?',
-                options: [
-                    { value: 'daily', text: '🔄 Diariamente - Es parte constante de mi vida' },
-                    { value: 'weekly', text: '📅 Varias veces por semana - Afecta mi rutina regularmente' },
-                    { value: 'monthly', text: '🌙 Algunas veces al mes - Aparece en momentos específicos' },
-                    { value: 'occasional', text: '✨ Ocasionalmente - Solo en situaciones particulares' }
-                ]
-            },
-            {
-                id: 'preferred_timing',
-                text: '¿En qué momentos del día sientes que más necesitas bienestar?',
-                options: [
-                    { value: 'morning_start', text: '🌅 Al despertar - Para comenzar el día con energía' },
-                    { value: 'midday_boost', text: '☀️ A media mañana - Cuando pierdo el ritmo inicial' },
-                    { value: 'afternoon_crash', text: '🌤️ Media tarde - Durante la típica bajada de energía' },
-                    { value: 'evening_wind', text: '🌆 Al llegar a casa - Para desconectar del día' },
-                    { value: 'night_ritual', text: '🌙 Antes de dormir - Para relajarme y preparar el descanso' },
-                    { value: 'anytime_needed', text: '🎯 Cuando surja la necesidad - Según lo que esté sintiendo' }
-                ]
-            },
-            {
-                id: 'environment_preference',
-                text: '¿Dónde te sientes más cómodo/a realizando rituales de bienestar?',
-                options: [
-                    { value: 'home_sanctuary', text: '🏡 Mi hogar - Es mi santuario personal' },
-                    { value: 'office_space', text: '💼 Mi oficina/trabajo - Donde paso la mayor parte del día' },
-                    { value: 'outdoor_nature', text: '🌳 Al aire libre - Conectando con la naturaleza' },
-                    { value: 'private_room', text: '🚪 Un espacio privado - Donde pueda estar solo/a' },
-                    { value: 'anywhere_flexible', text: '🌍 Cualquier lugar - Me adapto a cualquier ambiente' }
-                ]
-            },
-            {
-                id: 'wellness_experience',
-                text: '¿Qué experiencia tienes con productos naturales y medicina alternativa?',
-                options: [
-                    { value: 'beginner', text: '🌱 Principiante - Estoy empezando a explorar lo natural' },
-                    { value: 'curious', text: '🔍 Curioso/a - He probado algunas cosas pero quiero aprender más' },
-                    { value: 'experienced', text: '🌿 Experimentado/a - Uso varios productos naturales regularmente' },
-                    { value: 'expert', text: '🧙‍♀️ Experto/a - La medicina natural es parte integral de mi vida' }
-                ]
-            },
-            {
-                id: 'ritual_intensity',
-                text: '¿Qué tipo de ritual de bienestar prefieres?',
-                options: [
-                    { value: 'quick_effective', text: '⚡ Rápido y efectivo - Soluciones inmediatas en pocos minutos' },
-                    { value: 'mindful_present', text: '🧘‍♀️ Mindful y presente - Tomándome tiempo para estar consciente' },
-                    { value: 'ceremonial_special', text: '🕯️ Ceremonial y especial - Creando momentos sagrados' },
-                    { value: 'integrated_daily', text: '🌊 Integrado al día - Que fluya naturalmente con mi rutina' }
-                ]
-            },
-            {
-                id: 'desired_outcome',
-                text: '¿Cuál es tu objetivo principal al usar Raíz Sabia?',
-                options: [
-                    { value: 'immediate_relief', text: '🎯 Alivio inmediato - Solucionar molestias puntuales' },
-                    { value: 'preventive_care', text: '🛡️ Cuidado preventivo - Mantener mi bienestar diario' },
-                    { value: 'emotional_support', text: '💚 Apoyo emocional - Equilibrar mi estado de ánimo' },
-                    { value: 'spiritual_connection', text: '✨ Conexión espiritual - Conectar con lo ancestral y natural' },
-                    { value: 'lifestyle_integration', text: '🌿 Integración de estilo de vida - Hacer lo natural parte de mi día' }
-                ]
-            },
-            {
-                id: 'sensitivity_level',
-                text: '¿Cómo es tu sensibilidad a aromas y texturas?',
-                options: [
-                    { value: 'highly_sensitive', text: '🌸 Muy sensible - Noto inmediatamente cambios sutiles' },
-                    { value: 'moderate_sensitive', text: '🌿 Moderadamente sensible - Aprecio los matices gradualmente' },
-                    { value: 'low_sensitive', text: '🌊 Poco sensible - Prefiero efectos más intensos y notorios' },
-                    { value: 'adaptive', text: '🎭 Adaptable - Depende del momento y mi estado' }
-                ]
-            }
-        ];
-        
-        function startPersonalizedQuiz() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('quizContainer').style.display = 'block';
-            currentQuestion = 0;
-            answers = {};
-            showQuestion();
-        }
-        
-        function showQuestion() {
-            const question = questions[currentQuestion];
-            document.getElementById('questionText').textContent = question.text;
-            
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            if (question.type === 'input') {
-                const inputDiv = document.createElement('div');
-                inputDiv.className = 'input-container';
-                inputDiv.innerHTML = `
-                    <input type="text" id="nameInput" placeholder="${question.placeholder}" 
-                           style="width: 100%; padding: 20px; border: 2px solid #dee2e6; border-radius: 15px; 
-                                  font-size: 1.1rem; margin-bottom: 20px; background: white; 
-                                  transition: border-color 0.3s ease;">
-                    <button class="btn" onclick="handleNameInput()" style="width: 100%;">Continuar</button>
-                `;
-                optionsContainer.appendChild(inputDiv);
-                
-                // Focus en el input
-                setTimeout(() => {
-                    document.getElementById('nameInput').focus();
-                }, 100);
-                
-                // Enter para continuar
-                document.getElementById('nameInput').addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        handleNameInput();
-                    }
-                });
-            } else {
-                question.options.forEach(option => {
-                    const optionDiv = document.createElement('div');
-                    optionDiv.className = 'option';
-                    optionDiv.textContent = option.text;
-                    optionDiv.onclick = () => selectOption(option.value, optionDiv);
-                    optionsContainer.appendChild(optionDiv);
-                });
-            }
-            
-            updateProgressBar();
-        }
-
-
-        function showWisdomStories() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            document.getElementById('resultTitle').textContent = "📖 Historias de Transformación";
-            document.getElementById('resultDescription').textContent = "Conoce testimonios reales de personas que han encontrado su bienestar con Raíz Sabia y la sabiduría ancestral.";
-            
-            const stepsContainer = document.getElementById('usageSteps');
-            stepsContainer.innerHTML = `
-                <h4>✨ Testimonios que inspiran:</h4>
-                <div class="step">💼 <strong>María, 34 años:</strong> "Raíz Sabia transformó mis días de trabajo. Ya no sufro de migrañas por estrés."</div>
-                <div class="step">🏃‍♀️ <strong>Carlos, 28 años:</strong> "Como deportista, el alivio muscular que me da es increíble. Es mi compañero de entrenamiento."</div>
-                <div class="step">👩‍🎓 <strong>Ana, 22 años:</strong> "Durante mis estudios universitarios, me ayuda muchísimo con la concentración. El romero es mágico."</div>
-                <div class="step">🧘‍♀️ <strong>Luis, 45 años:</strong> "Sufría de ansiedad y insomnio. Ahora tengo mis noches de paz gracias a la salvia."</div>
-                <div class="step">👵 <strong>Rosa, 58 años:</strong> "A mi edad, los dolores eran constantes. Este tónico natural me devolvió la comodidad."</div>
-            `;
-        }
-
-        function handleNameInput() {
-            const nameInput = document.getElementById('nameInput');
-            const name = nameInput.value.trim();
-            
-            if (name.length < 2) {
-                nameInput.style.borderColor = '#dc3545';
-                showNotification('Por favor ingresa un nombre válido (mínimo 2 caracteres)', 'error');
-                nameInput.focus();
-                return;
-            }
-            
-            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(name)) {
-                nameInput.style.borderColor = '#dc3545';
-                showNotification('Por favor usa solo letras en tu nombre', 'error');
-                nameInput.focus();
-                return;
-            }
-            
-            userName = name;
-            answers[questions[currentQuestion].id] = name;
-            nameInput.style.borderColor = '#4a7c59';
-            showNotification(`¡Hola ${name}! Es un placer conocerte 🌿`, 'success');
-            
-            setTimeout(() => {
-                nextQuestion();
-            }, 1000);
-        }
-        
-        function selectOption(value, element) {
-            // Remover selección anterior
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            // Seleccionar nueva opción
-            element.classList.add('selected');
-            
-            answers[questions[currentQuestion].id] = value;
-            document.getElementById('nextBtn').style.display = 'block';
-        }
-        
-        function nextQuestion() {
-            currentQuestion++;
-            if (currentQuestion < questions.length) {
-                showQuestion();
-                document.getElementById('nextBtn').style.display = 'none';
-            } else {
-                showPersonalizedResult();
-            }
-        }
-        
-        function updateProgressBar() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-        }
-        
-        function showPersonalizedResult() {
-            document.getElementById('quizContainer').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            const result = generatePersonalizedResult();
-            document.getElementById('resultTitle').textContent = result.title;
-            document.getElementById('resultDescription').textContent = result.description;
-            
-            const stepsContainer = document.getElementById('usageSteps');
-            stepsContainer.innerHTML = `
-                <h4>🌿 Tu ritual personalizado con Raíz Sabia:</h4>
-                ${result.steps.map(step => `<div class="step">${step}</div>`).join('')}
-            `;
-
-            userPreferences.completedQuizzes++;
-                showNotification(`¡Felicitaciones ${userName}! Has completado tu consulta personalizada 🌿`, 'success');
-        }
-        
-        function generatePersonalizedResult() {
-            const challenge = answers.main_challenge;
-            const timing = answers.preferred_timing;
-            const intensity = answers.ritual_intensity;
-            const outcome = answers.desired_outcome;
-            
-            let title = `🌿 ${userName}, tu fórmula personalizada`;
-            let description = "";
-            let steps = [];
-            
-            // Personalización basada en el desafío principal
-            if (challenge === 'stress_work') {
-                title = `🧘‍♀️ ${userName}, tu ritual anti-estrés laboral`;
-                description = "La salvia y romero crearán un ambiente de calma y equilibrio emocional perfecto para tu vida profesional.";
-                steps = [
-                    "🌸 Pulveriza en tu espacio de trabajo cada mañana",
-                    "🧘‍♀️ Toma 5 respiraciones profundas inhalando el aroma",
-                    "💆‍♀️ Aplica en muñecas y sienes durante reuniones estresantes",
-                    "🕯️ Úsalo como ritual de transición al llegar a casa"
-                ];
-            } else if (challenge === 'sleep_quality') {
-                title = `😴 ${userName}, tu ritual para el descanso reparador`;
-                description = "Una combinación perfecta de salvia y mentol para preparar tu mente y cuerpo para un sueño profundo.";
-                steps = [
-                    "🌙 Pulveriza en tu almohada 15 minutos antes de dormir",
-                    "🛀 Aplica en muñecas durante tu rutina nocturna",
-                    "🧘‍♀️ Practica respiraciones profundas con el aroma",
-                    "📱 Combínalo con desconexión digital para mejor efecto"
-                ];
-            } else if (challenge === 'physical_pain') {
-                title = `💪 ${userName}, tu ritual para alivio muscular`;
-                description = "El mentol y esencias naturales proporcionarán alivio inmediato y duradero a tus tensiones físicas.";
-                steps = [
-                    "🎯 Aplica directamente sobre músculos tensos",
-                    "👐 Masajea en círculos por 3-5 minutos",
-                    "❄️ Siente la frescura del mentol aliviando la tensión",
-                    "🔄 Repite 2-3 veces al día según necesidad"
-                ];
-            } else if (challenge === 'energy_fatigue') {
-                title = `⚡ ${userName}, tu ritual energizante natural`;
-                description = "El romero activará tu mente mientras el mentol despertará todos tus sentidos para el día.";
-                steps = [
-                    "🌅 Úsalo al despertar para activar tu energía",
-                    "💨 Inhala profundamente para despertar los sentidos",
-                    "👐 Aplica en nuca y muñecas para efecto duradero",
-                    "🍃 Repite en media tarde para combatir la fatiga"
-                ];
-            } else if (challenge === 'emotional_balance') {
-                title = `😌 ${userName}, tu ritual de equilibrio emocional`;
-                description = "La sabiduría ancestral de la salvia te ayudará a encontrar calma y estabilidad emocional.";
-                steps = [
-                    "🌸 Crea un momento sagrado en tu espacio personal",
-                    "🧘‍♀️ Aplica en muñecas y respira conscientemente",
-                    "💚 Úsalo cuando sientas cambios emocionales intensos",
-                    "🌙 Inclúyelo en tu rutina de autocuidado diario"
-                ];
-            } else if (challenge === 'focus_concentration') {
-                title = `🎯 ${userName}, tu ritual de claridad mental`;
-                description = "El romero, conocido como la hierba de la memoria, potenciará tu concentración y claridad mental.";
-                steps = [
-                    "📚 Aplica en sienes antes de estudiar o trabajar",
-                    "🧠 Inhala profundamente para activar la concentración",
-                    "💭 Usa durante sesiones de trabajo mental intenso",
-                    "🔄 Repite cada 2 horas para mantener el foco"
-                ];
-            }
-            
-            // Ajustes según momento preferido
-            if (timing === 'morning_start') {
-                steps.push("☀️ Perfecto para tu rutina matutina - úsalo después de despertar");
-            } else if (timing === 'evening_wind') {
-                steps.push("🌆 Ideal para tu momento de desconexión - úsalo al llegar a casa");
-            } else if (timing === 'night_ritual') {
-                steps.push("🌙 Perfecto para tu ritual nocturno - úsalo antes de tu rutina de sueño");
-            }
-            
-            // Ajuste según intensidad preferida
-            if (intensity === 'quick_effective') {
-                steps.push("⚡ Diseñado para resultados rápidos - efectos en 2-3 minutos");
-            } else if (intensity === 'ceremonial_special') {
-                steps.push("🕯️ Crea un momento especial - combínalo con música suave o meditación");
-            }
-            
-            return { title, description, steps };
-        }
-        
-        function showIngredientExplorer() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('ingredientSelector').style.display = 'block';
-        }
-        
-        function selectIngredient(ingredient) {
-            document.getElementById('ingredientSelector').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            const ingredientInfo = {
-                romero: {
-                    title: "🌿 El Poder del Romero",
-                    description: "El romero es conocido como la hierba de la memoria y la concentración. Usado desde tiempos ancestrales para estimular la mente y mejorar la claridad mental.",
-                    steps: [
-                        "💭 Inhala profundamente para mejorar la concentración",
-                        "📚 Úsalo durante sesiones de estudio o trabajo mental",
-                        "🧠 Aplica en las sienes para activar la memoria",
-                        "☀️ Ideal para uso matutino - despierta tu mente"
-                    ]
-                },
-                eucalipto: {
-                    title: "🍃 La Frescura del Eucalipto",
-                    description: "El eucalipto es el purificador natural por excelencia. Sus propiedades expectorantes y refrescantes lo convierten en el aliado perfecto para problemas respiratorios.",
-                    steps: [
-                        "🫁 Inhala para despejar vías respiratorias",
-                        "💨 Aplica en el pecho para aliviar la congestión",
-                        "🌬️ Úsalo en ambientes para purificar el aire",
-                        "🛏️ Ideal antes de dormir si tienes resfriado"
-                    ]
-                },
-                salvia: {
-                    title: "🌱 La Sabiduría de la Salvia",
-                    description: "La salvia es la planta del equilibrio emocional. Conocida por sus propiedades calmantes y su capacidad para armonizar las emociones.",
-                    steps: [
-                        "🧘‍♀️ Úsala durante momentos de meditación",
-                        "😌 Aplica en muñecas durante situaciones estresantes",
-                        "🌙 Ideal para uso nocturno - calma la mente",
-                        "💆‍♀️ Combínala con respiraciones profundas"
-                    ]
-                },
-                mentol: {
-                    title: "❄️ La Frescura del Mentol",
-                    description: "El mentol proporciona esa sensación de frescura inmediata que alivia y refresca. Es el toque perfecto para aliviar tensiones y brindar sensación de bienestar.",
-                    steps: [
-                        "💪 Aplica directamente sobre músculos tensos",
-                        "🏃‍♀️ Úsalo después del ejercicio para refrescar",
-                        "❄️ Siente la frescura inmediata al aplicar",
-                        "🔄 Repite según necesites esa sensación refrescante"
-                    ]
+        // Consultation form functionality
+        function nextStep(current, next) {
+            // Validate current step before proceeding
+            if (current === 1) {
+                const name = document.getElementById('userName').value.trim();
+                if (!name) {
+                    alert('Por favor ingresa tu nombre');
+                    return;
                 }
-            };
-            
-            const info = ingredientInfo[ingredient];
-            document.getElementById('resultTitle').textContent = info.title;
-            document.getElementById('resultDescription').textContent = info.description;
-            
-            const stepsContainer = document.getElementById('usageSteps');
-            stepsContainer.innerHTML = `
-                <h4>🌿 Cómo aprovechar este ingrediente:</h4>
-                ${info.steps.map(step => `<div class="step">${step}</div>`).join('')}
-            `;
-        }
-        
-        function showQuickUses() {
-            document.querySelector('.main-content').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            document.getElementById('resultTitle').textContent = "⚡ Usos Rápidos de Raíz Sabia";
-            document.getElementById('resultDescription').textContent = "¿Necesitas alivio inmediato? Aquí tienes las formas más efectivas de usar tu tónico según la situación:";
-            
-            const stepsContainer = document.getElementById('usageSteps');
-            stepsContainer.innerHTML = `
-                <h4>🚀 Soluciones instantáneas:</h4>
-                <div class="step">🤕 <strong>Dolor de cabeza súbito:</strong> 3 pulverizaciones en sienes + respiración profunda</div>
-                <div class="step">😰 <strong>Ataque de ansiedad:</strong> Inhala directamente del frasco por 30 segundos</div>
-                <div class="step">💪 <strong>Calambre muscular:</strong> Aplica y masajea la zona en círculos</div>
-                <div class="step">🫁 <strong>Congestión nasal:</strong> Pulveriza en pañuelo e inhala repetidamente</div>
-                <div class="step">😴 <strong>Fatiga mental:</strong> Aplica en nuca y muñecas, respira profundo</div>
-                <div class="step">🌙 <strong>Insomnio:</strong> Pulveriza en almohada 15 minutos antes de dormir</div>
-                <div class="step">💻 <strong>Cansancio visual:</strong> Aplica alrededor de los ojos (evita contacto directo)</div>
-                <div class="step">🏃‍♀️ <strong>Post-ejercicio:</strong> Usa en músculos calientes para efecto refrescante</div>
-            `;
-        }
-        
-        function hideIngredientSelector() {
-            document.getElementById('ingredientSelector').style.display = 'none';
-            document.querySelector('.main-content').style.display = 'flex';
-        }
-        
-        function restartExperience() {
-            document.getElementById('resultContainer').style.display = 'none';
-            document.querySelector('.main-content').style.display = 'flex';
-            currentQuestion = 0;
-            answers = {};
-        }
-        
-        function contactWhatsApp() {
-            const message = encodeURIComponent("¡Hola! Me interesa conocer más sobre Raíz Sabia. He completado la consulta personalizada en su página web y me gustaría hacer mi pedido. 🌿✨");
-            window.open(`https://wa.me/573001234567?text=${message}`, '_blank');
-        }
-        
-        // Efectos interactivos adicionales
-        function addInteractiveEffects() {
-            // Efecto hover en cards
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
+                document.getElementById('displayName').textContent = name;
+                document.getElementById('finalName').textContent = name;
+            } else if (current === 2) {
+                const routine = document.querySelector('input[name="routine"]:checked');
+                if (!routine) {
+                    alert('Por favor selecciona una opción');
+                    return;
+                }
+            } else if (current === 3) {
+                const sleep = document.querySelector('input[name="sleep"]:checked');
+                if (!sleep) {
+                    alert('Por favor selecciona una opción');
+                    return;
+                }
+            } else if (current === 4) {
+                const concerns = document.querySelectorAll('input[name="concerns"]:checked');
+                if (concerns.length === 0) {
+                    alert('Por favor selecciona al menos una preocupación');
+                    return;
+                }
                 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
+                // Generate personalized advice
+                generateAdvice();
+            }
+            
+            // Hide current step and show next
+            document.getElementById('step' + current).classList.remove('active');
+            document.getElementById('step' + next).classList.add('active');
+            
+            // Scroll to top of form
+            document.getElementById('consultationForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function prevStep(current, prev) {
+            document.getElementById('step' + current).classList.remove('active');
+            document.getElementById('step' + prev).classList.add('active');
+        }
+        
+        function generateAdvice() {
+            const name = document.getElementById('userName').value.trim();
+            const routine = document.querySelector('input[name="routine"]:checked').value;
+            const sleep = document.querySelector('input[name="sleep"]:checked').value;
+            const concerns = Array.from(document.querySelectorAll('input[name="concerns"]:checked')).map(el => el.value);
+            
+            let advice = `<p>Hola ${name}, basado en tus respuestas, te ofrecemos las siguientes recomendaciones:</p><ul class="mt-4 space-y-2">`;
+            
+            // Routine advice
+            if (routine === 'sedentaria') {
+                advice += `<li><strong>Para tu rutina sedentaria:</strong> Te recomendamos usar nuestro Tónico Corporal Herbal con masajes circulatorios en piernas y espalda para activar la circulación.</li>`;
+            } else if (routine === 'activa') {
+                advice += `<li><strong>Para tu rutina activa:</strong> Nuestro tónico con propiedades antiinflamatorias será ideal para recuperación muscular después del ejercicio.</li>`;
+            } else if (routine === 'estresante') {
+                advice += `<li><strong>Para manejar el estrés:</strong> Incorpora aromaterapia con nuestro tónico antes de dormir para relajarte. Aplica en sienes y cuello.</li>`;
+            }
+            
+            // Sleep advice
+            if (sleep === 'regular' || sleep === 'mala') {
+                advice += `<li><strong>Para mejorar tu sueño:</strong> Prueba nuestro ritual nocturno: diluye 10 gotas del tónico en agua caliente e inhala los vapores antes de dormir.</li>`;
+            }
+            
+            // Concerns advice
+            if (concerns.includes('estres')) {
+                advice += `<li><strong>Para el estrés:</strong> Realiza automasajes con el tónico en hombros y cuello 2 veces al día, combinado con respiraciones profundas.</li>`;
+            }
+            if (concerns.includes('dolor')) {
+                advice += `<li><strong>Para dolores musculares:</strong> Aplica el tónico directamente en las zonas afectadas con un suave masaje circular 3 veces al día.</li>`;
+            }
+            if (concerns.includes('respiratorio')) {
+                advice += `<li><strong>Para problemas respiratorios:</strong> Usa el tónico en vaporizaciones: 10 gotas en un bol de agua caliente, cubre tu cabeza con una toalla e inhala profundamente.</li>`;
+            }
+            if (concerns.includes('digestivo')) {
+                advice += `<li><strong>Para problemas digestivos:</strong> Masajea suavemente tu abdomen en sentido horario con el tónico diluido en aceite portador después de comer.</li>`;
+            }
+            if (concerns.includes('energia')) {
+                advice += `<li><strong>Para falta de energía:</strong> Aplica el tónico en las muñecas y huele profundamente cuando necesites un impulso de energía.</li>`;
+            }
+            
+            advice += `</ul><p class="mt-4 font-medium">Recuerda que nuestros productos son 100% naturales y puedes combinarlos según tus necesidades.</p>`;
+            
+            document.getElementById('adviceResult').innerHTML = advice;
+        }
+        
+        function sendAdvice() {
+            const email = document.getElementById('userEmail').value.trim();
+            if (!email) {
+                alert('Por favor ingresa tu correo electrónico');
+                return;
+            }
+            
+            // Here you would typically send the data to your server
+            alert('¡Gracias! Tu asesoría personalizada ha sido enviada a tu correo electrónico.');
+        }
+        
+        function restartConsultation() {
+            // Reset form
+            document.getElementById('userName').value = '';
+            const radioInputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+            radioInputs.forEach(input => input.checked = false);
+            document.getElementById('userEmail').value = '';
+            
+            // Go back to first step
+            document.querySelectorAll('.consultation-step').forEach(step => {
+                step.classList.remove('active');
             });
-            
-            // Efecto de escritura en el título
-            const logo = document.querySelector('.logo');
-            const originalText = logo.textContent;
-            logo.textContent = '';
-            let i = 0;
-            
-            function typeWriter() {
-                if (i < originalText.length) {
-                    logo.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 100);
-                }
-            }
-            
-            setTimeout(typeWriter, 500);
+            document.getElementById('step1').classList.add('active');
         }
-        
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
-            createFloatingLeaves();
-            addInteractiveEffects();
-            
-            // Efecto de aparición gradual
-            setTimeout(() => {
-                document.querySelector('header').style.opacity = '0';
-                document.querySelector('header').style.transform = 'translateY(-50px)';
-                document.querySelector('header').style.transition = 'all 1s ease';
-                
-                setTimeout(() => {
-                    document.querySelector('header').style.opacity = '1';
-                    document.querySelector('header').style.transform = 'translateY(0)';
-                }, 100);
-            }, 200);
-        });
-        
-        // Función para crear partículas al hacer clic
-        function createClickParticles(e) {
-            const particles = 6;
-            const colors = ['#4a7c59', '#2d5a27', '#7BA05B', '#95C471'];
-            
-            for (let i = 0; i < particles; i++) {
-                const particle = document.createElement('div');
-                particle.style.position = 'absolute';
-                particle.style.width = '6px';
-                particle.style.height = '6px';
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.borderRadius = '50%';
-                particle.style.pointerEvents = 'none';
-                particle.style.left = e.clientX + 'px';
-                particle.style.top = e.clientY + 'px';
-                particle.style.zIndex = '9999';
-                
-                document.body.appendChild(particle);
-                
-                const angle = (Math.PI * 2 * i) / particles;
-                const velocity = 2 + Math.random() * 2;
-                const life = 1000 + Math.random() * 500;
-                
-                particle.animate([
-                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-                    { 
-                        transform: `translate(${Math.cos(angle) * velocity * 20}px, ${Math.sin(angle) * velocity * 20}px) scale(0)`, 
-                        opacity: 0 
-                    }
-                ], {
-                    duration: life,
-                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                });
-                
-                setTimeout(() => particle.remove(), life);
-            }
-        }
-        
-        // Agregar partículas a los botones
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn') || e.target.classList.contains('whatsapp-btn')) {
-                createClickParticles(e);
-            }
-        });
-        
-        // Sistema de notificaciones suaves
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.innerHTML = `
-                <div style="
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${type === 'success' ? 'linear-gradient(135deg, #d4edda, #c3e6cb)' : 'linear-gradient(135deg, #f8d7da, #f5c6cb)'};
-                    color: ${type === 'success' ? '#155724' : '#721c24'};
-                    padding: 15px 25px;
-                    border-radius: 10px;
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                    z-index: 10000;
-                    font-weight: bold;
-                    animation: slideIn 0.5s ease;
-                ">
-                    ${message}
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-        
-        // Agregar estilos para animaciones
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-            
-            .pulse {
-                animation: pulse 2s infinite;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Función para mostrar consejos aleatorios
-        const tips = [
-            "💡 Tip: Mantén tu frasco en un lugar fresco para mejor conservación",
-            "🌿 Sabías que: El romero mejora la memoria según estudios científicos",
-            "✨ Consejo: Úsalo en tu espacio de trabajo para mayor concentración",
-            "🧘‍♀️ Tip: Combina con respiraciones profundas para mejor efecto",
-            "🌙 Sabías que: La salvia era considerada sagrada por los antiguos"
-        ];
-        
-        function showRandomTip() {
-            const tip = tips[Math.floor(Math.random() * tips.length)];
-            showNotification(tip, 'success');
-        }
-        
-        // Mostrar tip cada 30 segundos
-        setInterval(showRandomTip, 30000);
-        
-        // Efecto de sonido (opcional, se puede activar/desactivar)
-        function playClickSound() {
-            // Simulación de sonido con vibración en móviles
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-        }
-        
-        // Función para guardar preferencias del usuario (sin localStorage)
-        let userPreferences = {
-            completedQuizzes: 0,
-            favoriteIngredients: [],
-            visitCount: 0
-        };
-        
-        function updateUserStats() {
-            userPreferences.visitCount++;
-            if (userPreferences.visitCount === 1) {
-                setTimeout(() => {
-                    showNotification("¡Bienvenido a Raíz Sabia! 🌿 Explora todos nuestros rituales personalizados", 'success');
-                }, 2000);
-            }
-        }
-
-        
-        
-        // Función para mostrar progreso del usuario
-        function showUserProgress() {
-            const progress = document.createElement('div');
-            progress.innerHTML = `
-                <div style="
-                    position: fixed;
-                    bottom: 20px;
-                    left: 20px;
-                    background: rgba(255, 255, 255, 0.9);
-                    padding: 10px 20px;
-                    border-radius: 15px;
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                    font-size: 0.9rem;
-                    color: #2d5a27;
-                ">
-                    🌱 Consultas completadas: ${userPreferences.completedQuizzes}
-                </div>
-            `;
-            document.body.appendChild(progress);
-            
-            setTimeout(() => progress.remove(), 5000);
-        }
-        
-        // Actualizar estadísticas al cargar
-        updateUserStats();
-        
-        // Función mejorada para el botón de WhatsApp
-        function contactWhatsApp() {
-            // Crear mensaje personalizado basado en la experiencia del usuario
-            let message = "¡Hola! Me interesa Raíz Sabia 🌿✨\n\n";
-
-            if (userPreferences.completedQuizzes > 0) {
-                message += "He completado la consulta personalizada en su página web";
-            }
-
-            if (userPreferences.favoriteIngredients.length > 0) {
-                message += `Me interesa especialmente: ${userPreferences.favoriteIngredients.join(', ')}. `;
-            }
-
-            message += "\nMe gustaría hacer mi pedido y conocer más sobre sus productos naturales.";
-
-            const encodedMessage = encodeURIComponent(message);
-            const phone = "573108463165";
-
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-            if (isMobile) {
-                // Redirige usando el esquema URI directo
-                window.location.href = `whatsapp://send?phone=${phone}&text=${encodedMessage}`;
-            } else {
-                // Redirige a WhatsApp Web en escritorio
-                window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`, '_blank');
-            }
-
-            // Notificación y efecto
-            showNotification("¡Redirigiendo a WhatsApp! 📱", 'success');
-            playClickSound();
-        }
-
-       
     </script>
 </body>
 </html>
