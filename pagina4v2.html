@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raíz Sabia - Herbolaria Artesanal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Raíz Sabia - Herbolaria Artesanal</title>
+        <meta name="description" content="Productos herbolarios artesanales de calidad: tónicos, macerados y asesoría personalizada. Conecta con tu bienestar natural.">
+        <link rel="icon" href="https://via.placeholder.com/32" type="image/png">
+
+        <!-- Open Graph para redes sociales -->
+        <meta property="og:title" content="Raíz Sabia - Bienestar Natural">
+        <meta property="og:description" content="Conecta con tu bienestar natural a través de nuestros productos herbolarios artesanales.">
+        <meta property="og:image" content="https://via.placeholder.com/600x400">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://raizsabia.github.io">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
         
@@ -83,23 +94,38 @@
         </a>
     </div>
 
+    <a href="#top" class="fixed bottom-8 left-4 z-50 bg-green-700 hover:bg-green-800 text-white p-3 rounded-full shadow-lg transition hidden md:flex items-center justify-center" id="scrollTopBtn" title="Volver arriba">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </a>
+
     <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <img src="https://via.placeholder.com/50" alt="Logo Raíz Sabia" class="h-10 mr-3">
+                <img src="https://via.placeholder.com/50" alt="Logo Raíz Sabia" class="h-10 mr-3" loading="lazy">
                 <h1 class="title-font text-xl font-semibold text-green-800">Raíz Sabia</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
+                <a href="#nosotros" class="text-gray-600 hover:text-green-700 transition">Nosotros</a>
                 <a href="#tonico" class="text-gray-600 hover:text-green-700 transition">Tónico Herbal</a>
                 <a href="#macerados" class="text-gray-600 hover:text-green-700 transition">Próximos Macerados</a>
                 <a href="#asesoria" class="text-gray-600 hover:text-green-700 transition">Asesoría</a>
-                <a href="#nosotros" class="text-gray-600 hover:text-green-700 transition">Nosotros</a>
                 <a href="#faq" class="text-gray-600 hover:text-green-700 transition">Preguntas</a>
             </nav>
-            <button class="md:hidden text-gray-600">
+            <!-- Menú móvil oculto -->
+                <div id="mobileMenu" class="fixed top-16 right-4 bg-white rounded-lg shadow-md p-4 space-y-4 z-50 hidden md:hidden">
+                    <a href="#nosotros" class="block text-gray-600 hover:text-green-700">Nosotros</a>
+                    <a href="#tonico" class="block text-gray-600 hover:text-green-700">Tónico Herbal</a>
+                    <a href="#macerados" class="block text-gray-600 hover:text-green-700">Macerados</a>
+                    <a href="#asesoria" class="block text-gray-600 hover:text-green-700">Asesoría</a>
+                    <a href="#faq" class="block text-gray-600 hover:text-green-700">Preguntas</a>
+                </div>
+
+
+            <button class="md:hidden text-gray-600" id="menuToggle">
                 <i class="fas fa-bars text-xl"></i>
             </button>
+
         </div>
     </header>
 
@@ -120,6 +146,74 @@
         </div>
     </section>
 
+    <!-- Nosotros -->
+    <section id="nosotros" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="title-font text-3xl md:text-4xl font-bold text-green-900 mb-4">Nuestra Raíz</h2>
+                <div class="w-24 h-1 bg-green-700 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-12">
+                    <img src="https://via.placeholder.com/600x400" alt="Equipo Raíz Sabia" class="rounded-lg shadow-lg w-full" loading="lazy">
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="title-font text-2xl font-semibold text-green-800 mb-4">Sabiduría ancestral, calidad moderna</h3>
+                    <p class="text-gray-700 mb-6">Raíz Sabia nace de la fusión entre el conocimiento tradicional de herbolaria y los estándares actuales de calidad y seguridad. Somos un equipo de herbolarios, químicos y apasionados por el bienestar natural.</p>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-lg text-green-700 mb-3">Nuestra filosofía:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-seedling text-green-700"></i>
+                                </div>
+                                <span><strong>Plantas de origen ético:</strong> Trabajamos directamente con cultivadores locales que practican agricultura regenerativa.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-mortar-pestle text-green-700"></i>
+                                </div>
+                                <span><strong>Elaboración artesanal:</strong> Cada producto es creado en pequeños lotes con atención meticulosa a los detalles.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-flask text-green-700"></i>
+                                </div>
+                                <span><strong>Rigor científico:</strong> Combinamos tradición con análisis de laboratorio para garantizar potencia y pureza.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <i class="fas fa-heart text-green-700"></i>
+                                </div>
+                                <span><strong>Impacto positivo:</strong> Por cada producto vendido, apoyamos proyectos de conservación de plantas medicinales.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <h4 class="title-font text-lg font-semibold text-green-800 mb-3">Certificaciones y garantías:</h4>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
+                                <i class="fas fa-certificate text-green-600 mr-2"></i>
+                                <span>100% Ingredientes naturales</span>
+                            </div>
+                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
+                                <i class="fas fa-ban text-green-600 mr-2"></i>
+                                <span>Libre de crueldad animal</span>
+                            </div>
+                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
+                                <i class="fas fa-recycle text-green-600 mr-2"></i>
+                                <span>Envases reciclables</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Producto estrella: Tónico Corporal -->
     <section id="tonico" class="py-20 bg-white">
         <div class="container mx-auto px-4">
@@ -130,7 +224,7 @@
             
             <div class="flex flex-col lg:flex-row items-center lg:items-start mb-16">
                 <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-12">
-                    <img src="https://via.placeholder.com/600x600" alt="Tónico Corporal" class="rounded-lg shadow-lg w-full">
+                    <img src="https://via.placeholder.com/600x600" alt="Tónico Corporal" class="rounded-lg shadow-lg w-full" loading="lazy">
                 </div>
                 <div class="lg:w-1/2">
                     <h3 class="title-font text-2xl font-semibold text-green-800 mb-4">Elixir de bienestar para tu piel y espíritu</h3>
@@ -176,79 +270,14 @@
                             <p class="text-gray-600">Precio:</p>
                             <p class="text-2xl font-bold text-green-800">$1,890</p>
                         </div>
-                        <button class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition flex items-center">
+                        <a href="https://wa.me/5491234567890?text=Hola%2C%20quiero%20comprar%20el%20T%C3%B3nico%20Corporal%20Herbal" target="_blank" class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition flex items-center">
                             <i class="fas fa-shopping-cart mr-2"></i> Comprar ahora
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
             
-            <!-- Testimonios -->
-            <div class="mt-16">
-                <h3 class="title-font text-2xl font-semibold text-center text-green-800 mb-8">Lo que dicen nuestros clientes</h3>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                        <div class="flex items-center mb-4">
-                            <div class="text-yellow-400 mr-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 mb-4">"El tónico de Raíz Sabia ha cambiado mi rutina de cuidado personal. Después de un día estresante, aplicarlo es como un abrazo de la naturaleza."</p>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3">
-                            <div>
-                                <p class="font-medium">María G.</p>
-                                <p class="text-sm text-gray-500">Usuaria desde 2022</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                        <div class="flex items-center mb-4">
-                            <div class="text-yellow-400 mr-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 mb-4">"Como deportista, sufro de dolores musculares. Este tónico es lo único que realmente me alivia sin químicos agresivos. ¡Increíble!"</p>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3">
-                            <div>
-                                <p class="font-medium">Carlos R.</p>
-                                <p class="text-sm text-gray-500">Atleta profesional</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
-                        <div class="flex items-center mb-4">
-                            <div class="text-yellow-400 mr-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 mb-4">"Compro regularmente para toda la familia. Mi hija con piel sensible lo tolera perfectamente y a mi madre le ayuda con sus dolores articulares."</p>
-                        <div class="flex items-center">
-                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3">
-                            <div>
-                                <p class="font-medium">Ana L.</p>
-                                <p class="text-sm text-gray-500">Madre de familia</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+           
     </section>
 
     <!-- Próximamente - Macerados Alcohólicos -->
@@ -263,7 +292,7 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="product-card bg-white p-6 rounded-lg shadow-md border border-gray-100 text-center">
                     <div class="relative mb-6">
-                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Cannabis" class="rounded-lg w-full">
+                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Cannabis" class="rounded-lg w-full" loading="lazy">
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
                             <span class="text-white font-bold text-xl bg-green-700 bg-opacity-90 px-4 py-2 rounded">Próximamente</span>
                         </div>
@@ -275,7 +304,7 @@
                 
                 <div class="product-card bg-white p-6 rounded-lg shadow-md border border-gray-100 text-center">
                     <div class="relative mb-6">
-                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Romero" class="rounded-lg w-full">
+                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Romero" class="rounded-lg w-full" loading="lazy">
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
                             <span class="text-white font-bold text-xl bg-green-700 bg-opacity-90 px-4 py-2 rounded">Próximamente</span>
                         </div>
@@ -287,7 +316,7 @@
                 
                 <div class="product-card bg-white p-6 rounded-lg shadow-md border border-gray-100 text-center">
                     <div class="relative mb-6">
-                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Eucalipto" class="rounded-lg w-full">
+                        <img src="https://via.placeholder.com/300x300" alt="Macerado de Eucalipto" class="rounded-lg w-full" loading="lazy">
                         <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-lg">
                             <span class="text-white font-bold text-xl bg-green-700 bg-opacity-90 px-4 py-2 rounded">Próximamente</span>
                         </div>
@@ -319,6 +348,9 @@
                 </div>
                 
                 <div class="bg-gray-50 rounded-xl shadow-md p-6 md:p-8">
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                    <div id="formProgress" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 20%;"></div>
+                </div>
                     <div id="form-container">
                         <!-- Paso 1 -->
                         <div class="form-step active" id="step1">
@@ -410,7 +442,7 @@
                             <h3 class="title-font text-xl font-semibold text-green-800 mb-6">Sobre tu salud y estilo de vida</h3>
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2">Nivel de estrés habitual</label>
-                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" id="stress">
                                     <option value="">Selecciona una opción</option>
                                     <option value="low">Bajo - Me relajo con facilidad</option>
                                     <option value="medium">Moderado - Algún estrés ocasional</option>
@@ -441,7 +473,7 @@
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 mb-2">¿Alergias conocidas a plantas o ingredientes?</label>
-                                <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" rows="2" placeholder="Lista cualquier alergia relevante"></textarea>
+                                <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" rows="2" placeholder="Lista cualquier alergia relevante" id="allergies"></textarea>
                             </div>
                             <div class="flex justify-between mt-6">
                                 <button onclick="prevStep(3, 2)" class="text-gray-600 hover:text-green-700 font-medium flex items-center">
@@ -508,7 +540,13 @@
                                 <button onclick="prevStep(4, 3)" class="text-gray-600 hover:text-green-700 font-medium flex items-center">
                                     <i class="fas fa-arrow-left mr-2"></i> Anterior
                                 </button>
-                                <button onclick="nextStep(4, 5)" class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition">Obtener recomendación</button>
+                                <button 
+                                    type="button"
+                                    id="step4Next"
+                                    onclick="nextStep(4, 5)" 
+                                    class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition">
+                                Obtener recomendación
+                                </button>
                             </div>
                         </div>
                         
@@ -523,22 +561,22 @@
                             <div class="bg-green-50 rounded-lg p-6 mb-6">
                                 <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Producto principal recomendado:</h4>
                                 <div class="flex items-start">
-                                    <img src="https://via.placeholder.com/80" alt="Tónico recomendado" class="rounded-lg mr-4">
+                                    <img src="https://via.placeholder.com/80" alt="Tónico recomendado" class="rounded-lg mr-4" loading="lazy">
                                     <div>
-                                        <p class="font-medium">Tónico Corporal Raíz Sabia</p>
-                                        <p class="text-gray-700 text-sm">Formulado con árnica, lavanda y aceite de almendras dulces para nutrir tu piel y aliviar tensiones musculares.</p>
+                                        <p class="font-medium" id="resultado-producto"></p>
+                                            <p class="text-gray-700 text-sm" id="resultado-ingredientes"></p>
+
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="mb-6">
                                 <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Instrucciones de uso:</h4>
-                                <ul class="space-y-2 list-disc pl-5 text-gray-700">
-                                    <li>Aplicar 2-3 veces al día en las zonas de mayor tensión</li>
-                                    <li>Masajear suavemente hasta completa absorción</li>
-                                    <li>Ideal después de la ducha o antes de dormir</li>
-                                    <li>Puede usarse en compresas calientes para dolores intensos</li>
+                                <ul class="space-y-2 list-disc pl-5 text-gray-700" id="resultado-consejos">
+                                    <!-- aquí se mostrarán los consejos automáticamente -->
                                 </ul>
+
+                                <p id="resultado-frase" class="text-gray-700 mt-4 italic"></p>
                             </div>
                             
                             <div class="mb-6">
@@ -569,73 +607,74 @@
         </div>
     </section>
 
-    <!-- Nosotros -->
-    <section id="nosotros" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="title-font text-3xl md:text-4xl font-bold text-green-900 mb-4">Nuestra Raíz</h2>
-                <div class="w-24 h-1 bg-green-700 mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-12">
-                    <img src="https://via.placeholder.com/600x400" alt="Equipo Raíz Sabia" class="rounded-lg shadow-lg w-full">
-                </div>
-                <div class="lg:w-1/2">
-                    <h3 class="title-font text-2xl font-semibold text-green-800 mb-4">Sabiduría ancestral, calidad moderna</h3>
-                    <p class="text-gray-700 mb-6">Raíz Sabia nace de la fusión entre el conocimiento tradicional de herbolaria y los estándares actuales de calidad y seguridad. Somos un equipo de herbolarios, químicos y apasionados por el bienestar natural.</p>
-                    
-                    <div class="mb-6">
-                        <h4 class="font-semibold text-lg text-green-700 mb-3">Nuestra filosofía:</h4>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <div class="bg-green-100 p-2 rounded-full mr-3">
-                                    <i class="fas fa-seedling text-green-700"></i>
-                                </div>
-                                <span><strong>Plantas de origen ético:</strong> Trabajamos directamente con cultivadores locales que practican agricultura regenerativa.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 p-2 rounded-full mr-3">
-                                    <i class="fas fa-mortar-pestle text-green-700"></i>
-                                </div>
-                                <span><strong>Elaboración artesanal:</strong> Cada producto es creado en pequeños lotes con atención meticulosa a los detalles.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 p-2 rounded-full mr-3">
-                                    <i class="fas fa-flask text-green-700"></i>
-                                </div>
-                                <span><strong>Rigor científico:</strong> Combinamos tradición con análisis de laboratorio para garantizar potencia y pureza.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-green-100 p-2 rounded-full mr-3">
-                                    <i class="fas fa-heart text-green-700"></i>
-                                </div>
-                                <span><strong>Impacto positivo:</strong> Por cada producto vendido, apoyamos proyectos de conservación de plantas medicinales.</span>
-                            </li>
-                        </ul>
+     <!-- Testimonios -->
+            <div class="mt-16">
+                <h3 class="title-font text-2xl font-semibold text-center text-green-800 mb-8">Lo que dicen nuestros clientes</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">"El tónico de Raíz Sabia ha cambiado mi rutina de cuidado personal. Después de un día estresante, aplicarlo es como un abrazo de la naturaleza."</p>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3" loading="lazy">
+                            <div>
+                                <p class="font-medium">María G.</p>
+                                <p class="text-sm text-gray-500">Usuaria desde 2022</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                        <h4 class="title-font text-lg font-semibold text-green-800 mb-3">Certificaciones y garantías:</h4>
-                        <div class="flex flex-wrap gap-4">
-                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                                <i class="fas fa-certificate text-green-600 mr-2"></i>
-                                <span>100% Ingredientes naturales</span>
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
                             </div>
-                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                                <i class="fas fa-ban text-green-600 mr-2"></i>
-                                <span>Libre de crueldad animal</span>
+                        </div>
+                        <p class="text-gray-700 mb-4">"Como deportista, sufro de dolores musculares. Este tónico es lo único que realmente me alivia sin químicos agresivos. ¡Increíble!"</p>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3" loading="lazy">
+                            <div>
+                                <p class="font-medium">Carlos R.</p>
+                                <p class="text-sm text-gray-500">Atleta profesional</p>
                             </div>
-                            <div class="flex items-center bg-gray-50 px-4 py-2 rounded-lg">
-                                <i class="fas fa-recycle text-green-600 mr-2"></i>
-                                <span>Envases reciclables</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">"Compro regularmente para toda la familia. Mi hija con piel sensible lo tolera perfectamente y a mi madre le ayuda con sus dolores articulares."</p>
+                        <div class="flex items-center">
+                            <img src="https://via.placeholder.com/40" alt="Cliente" class="rounded-full mr-3" loading="lazy">
+                            <div>
+                                <p class="font-medium">Ana L.</p>
+                                <p class="text-sm text-gray-500">Madre de familia</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+
+    
 
     <!-- Preguntas frecuentes -->
     <section id="faq" class="py-20 bg-white">
@@ -761,16 +800,17 @@
                     <h4 class="title-font text-lg font-semibold mb-4">Contacto</h4>
                     <ul class="space-y-2">
                         <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2 text-green-200"></i>
-                            <span>hola@raizsabia.com</span>
+                            <!-- <i class="fas fa-envelope mr-2 text-green-200"></i> -->
+                            <i class="fa-solid fa-face-smile" style="color: #ffc107; margin-right: 8px;"></i> 
+                            <span>¡Nos llena de alegría tenerlos con nosotros!</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-phone mr-2 text-green-200"></i>
-                            <span>+54 9 11 2345-6789</span>
+                            <span>+57 3108463165</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-map-marker-alt mr-2 text-green-200"></i>
-                            <span>Buenos Aires, Argentina</span>
+                            <span>Barbosa, Antioquia</span>
                         </li>
                     </ul>
                 </div>
@@ -792,7 +832,7 @@
             </div>
             
             <div class="pt-6 border-t border-green-800 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-green-200 text-sm mb-4 md:mb-0">© 2023 Raíz Sabia. Todos los derechos reservados.</p>
+                <p class="text-green-200 text-sm mb-4 md:mb-0">© 2025 Raíz Sabia. Todos los derechos reservados.</p>
                 <div class="flex space-x-6">
                     <a href="#" class="text-green-200 hover:text-white text-sm transition">Términos de servicio</a>
                     <a href="#" class="text-green-200 hover:text-white text-sm transition">Política de privacidad</a>
@@ -832,10 +872,123 @@
             });
         });
         
-        // Menú móvil (simplificado para el ejemplo)
-        document.querySelector('header button').addEventListener('click', () => {
-            alert('Menú móvil se abriría aquí. En una implementación completa, esto mostraría un menú desplegable.');
+        // Menú móvil funcional
+            const toggleBtn = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            toggleBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+
+            // Mostrar el botón cuando el usuario baja
+        window.onscroll = function() {
+            const btn = document.getElementById("scrollTopBtn");
+            if (document.documentElement.scrollTop > 200) {
+                btn.style.display = "flex";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
+        //Barra de progreso formulario
+        function updateProgress(step) {
+            const percent = (step - 1) * 25;
+            document.getElementById("formProgress").style.width = percent + "%";
+        }
+        document.querySelectorAll('[onclick^="nextStep"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const next = btn.getAttribute("onclick").match(/\d+/g)[1];
+                updateProgress(Number(next));
+            });
         });
+        document.querySelectorAll('[onclick^="prevStep"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const prev = btn.getAttribute("onclick").match(/\d+/g)[1];
+                updateProgress(Number(prev));
+            });
+        });
+       
+        function generarRecomendacion() {
+            const nombreInput = document.getElementById('name');
+            const nombre = (nombreInput.value || '').trim() || 'Amigo';
+            const tipoPiel = document.querySelector('input[name="skin-type"]:checked')?.value;
+            const condiciones = Array.from(document.querySelectorAll('input[name="skin-conditions"]:checked')).map(c => c.value);
+            const estres = document.getElementById('stress').value;
+            const dolor = document.querySelector('input[name="pain"]:checked')?.value;
+            const aromas = Array.from(document.querySelectorAll('input[name="aromas"]:checked')).map(a => a.value);
+            const aplicacion = document.querySelector('input[name="application"]:checked')?.value;
+            const contenedorTitulo = document.querySelector('#step5 .text-center');
+            contenedorTitulo.querySelector('h3').innerText = `¡Mucho gusto, ${nombre}!`;
+
+
+
+            let producto = 'Tónico Corporal Raíz Sabia';
+            let ingredientes = ['Lavanda', 'Caléndula', 'Romero'];
+            let consejos = [];
+            let frase = '';
+
+            // Personalización por tipo de piel
+            if (tipoPiel === 'sensitive') {
+                ingredientes = ['Manzanilla', 'Caléndula', 'Aceite de almendras'];
+                consejos.push('Usa compresas frías con el tónico si tienes brotes o irritaciones.');
+                frase = 'Tu piel sensible necesita calma y protección. Hemos elegido plantas suaves pero eficaces.';
+            } else if (tipoPiel === 'oily') {
+                ingredientes = ['Lavanda', 'Romero', 'Árnica'];
+                consejos.push('Aplica poca cantidad en zonas grasas, masajeando con suavidad.');
+                frase = 'Buscaremos equilibrio y frescura sin sobrecargar tu piel.';
+            }
+
+            // Condiciones de piel
+            if (condiciones.includes('eczema')) {
+                ingredientes.push('Manzanilla', 'Aceite de almendras');
+                consejos.push('Evita aplicar el tónico en zonas con heridas abiertas.');
+            }
+
+            // Estrés
+            if (estres === 'high' || estres === 'very-high') {
+                ingredientes.push('Lavanda');
+                consejos.push('Haz una pausa diaria de 5 minutos para masajear cuello y hombros.');
+                frase = 'Sabemos que el estrés agota cuerpo y mente. Este elixir busca devolverte paz.';
+            }
+
+            // Dolor muscular
+            if (dolor === 'frequent' || dolor === 'sometimes') {
+                ingredientes.push('Árnica', 'Eucalipto');
+                consejos.push('Aplica el tónico caliente en articulaciones para mayor alivio.');
+            }
+
+            // Aromas
+            if (aromas.includes('citrus')) ingredientes.push('Bergamota');
+            if (aromas.includes('spicy')) ingredientes.push('Jengibre', 'Canela');
+
+            // Método de aplicación
+            if (aplicacion === 'massage') {
+                consejos.push('Masajea tras la ducha con movimientos circulares.');
+            } else if (aplicacion === 'spray') {
+                consejos.push('Rocía el producto sobre la piel húmeda para mejor absorción.');
+            }
+
+            // Mostrar los resultados en HTML
+            document.getElementById('resultado-producto').innerText = producto;
+            document.getElementById('resultado-ingredientes').innerText = [...new Set(ingredientes)].join(', ');
+            document.getElementById('resultado-consejos').innerHTML = consejos.map(c => `<li>${c}</li>`).join('');
+             document.getElementById('resultado-frase').innerText =
+                (frase
+                ? `${nombre}, ${frase}`
+                : `${nombre}, este plan está pensado para reconectar contigo.`);
+                    }
+
+        document
+            .getElementById('step4Next')
+            .addEventListener('click', () => {
+                // Primero avanza de paso
+                nextStep(4, 5);
+                // Después, genera la recomendación tras la animación
+                setTimeout(generarRecomendacion, 300);
+            });
+
+
+        
     </script>
 </body>
 </html>
