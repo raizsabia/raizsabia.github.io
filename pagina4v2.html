@@ -204,7 +204,7 @@
 
             <div class="flex flex-col lg:flex-row items-center gap-8 mb-16">
                 <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-12">
-                    <img src="imagenes\Tonico Venta2.png" alt="Tónico Corporal"  loading="lazy">                
+                    <img src="imagenes\Tonico Venta.png" alt="Tónico Corporal"  loading="lazy">                
                 </div>
                 <div class="lg:w-1/2">
                     <h3 class="title-font text-2xl font-semibold text-green-800 mb-4">Elixir de bienestar para tu piel y espíritu</h3>
@@ -539,40 +539,46 @@
                             </div>
                             
                             <div class="bg-green-50 rounded-lg p-6 mb-6">
-                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Producto principal recomendado:</h4>
-                                <div class="flex items-start">
-                                    <img src="imagenes\Tonico Imagen.png" alt="Tónico recomendado" class="rounded-lg shadow-xl w-64 md:w-72" loading="lazy">
-                                    <div>
-                                        <p class="font-medium" id="resultado-producto"></p>
-                                            <p class="text-gray-700 text-sm" id="resultado-ingredientes"></p>
-
+                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Producto personalizado para ti:</h4>
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <img src="imagenes\Tonico Imagen.png" alt="Tónico recomendado" class="rounded-lg shadow-xl w-32 md:w-48 mx-auto md:mx-0" loading="lazy">
+                                    <div class="flex-1">
+                                        <p class="font-medium text-lg mb-2" id="resultado-producto"></p>
+                                        <p class="text-gray-700 text-sm" id="resultado-ingredientes"></p>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="mb-6">
-                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Instrucciones de uso:</h4>
-                                <ul class="space-y-2 list-disc pl-5 text-gray-700" id="resultado-consejos">
-                                    <!-- aquí se mostrarán los consejos automáticamente -->
-                                </ul>
 
-                                <p id="resultado-frase" class="text-gray-700 mt-4 italic"></p>
-                            </div>
-                            
                             <div class="mb-6">
-                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Consejos adicionales:</h4>
+                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Instrucciones personalizadas de uso:</h4>
+                                <ul class="space-y-3 text-gray-700" id="resultado-consejos">
+                                    <!-- aquí se mostrarán las instrucciones automáticamente -->
+                                </ul>
+                            </div>
+
+                            <div class="mb-6">
+                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Consejos específicos para ti:</h4>
                                 <div class="bg-white p-4 rounded-lg border border-green-100">
-                                    <p class="text-gray-700">Para potenciar los efectos relajantes, te recomendamos combinar el uso del tónico con técnicas de respiración profunda y mantener una rutina de sueño regular. Evita aplicarlo en heridas abiertas o zonas irritadas.</p>
+                                    <p class="text-gray-700"><!-- Los consejos se llenarán automáticamente --></p>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Tu mensaje personal:</h4>
+                                <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border border-green-200">
+                                    <p id="resultado-frase" class="text-gray-800 leading-relaxed italic text-lg"></p>
                                 </div>
                             </div>
                             
                             <div class="bg-white p-6 rounded-lg border border-green-200">
-                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">¿Quieres recibir tu diagnóstico completo por email?</h4>
+                                <h4 class="title-font text-lg font-semibold text-green-700 mb-3">Déjanos tu número de WhatsApp para enviarte y guardar tu recomendación</h4>
                                 <div class="mb-4">
-                                    <label for="email" class="block text-gray-700 mb-2">Correo electrónico</label>
-                                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="tucorreo@ejemplo.com">
+                                    <label for="whatsapp" class="block text-gray-700 mb-2">Número de WhatsApp</label>
+                                    <input type="tel" id="whatsapp" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="+57 3001234567">
                                 </div>
-                                <button class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition w-full">Enviar diagnóstico</button>
+                                <button onclick="enviarYMostrarRecomendacion()" class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-medium transition w-full">
+                                    Ver mi recomendación
+                                </button>
                             </div>
                             
                             <div class="mt-6 text-center">
@@ -888,75 +894,360 @@
             });
         });
        
-        function generarRecomendacion() {
-            const nombreInput = document.getElementById('name');
-            const nombre = (nombreInput.value || '').trim() || 'Amigo';
-            const tipoPiel = document.querySelector('input[name="skin-type"]:checked')?.value;
+       /* function generarRecomendacion() {
+            // Recolectar todos los datos del formulario
+            const nombre = (document.getElementById('name').value || '').trim() || 'Querido amigo';
+            const edad = document.getElementById('age').value || '';
+            const genero = document.getElementById('gender').value || '';
+            const tipoPiel = document.querySelector('input[name="skin-type"]:checked')?.value || '';
             const condiciones = Array.from(document.querySelectorAll('input[name="skin-conditions"]:checked')).map(c => c.value);
-            const estres = document.getElementById('stress').value;
-            const dolor = document.querySelector('input[name="pain"]:checked')?.value;
+            const estres = document.getElementById('stress').value || '';
+            const dolor = document.querySelector('input[name="pain"]:checked')?.value || '';
+            const alergias = document.getElementById('allergies').value.trim();
             const aromas = Array.from(document.querySelectorAll('input[name="aromas"]:checked')).map(a => a.value);
-            const aplicacion = document.querySelector('input[name="application"]:checked')?.value;
+            const aplicacion = document.querySelector('input[name="application"]:checked')?.value || '';
+
+            // Actualizar el título personalizado
             const contenedorTitulo = document.querySelector('#step5 .text-center');
-            contenedorTitulo.querySelector('h3').innerText = `¡Mucho gusto, ${nombre}!`;
+            contenedorTitulo.querySelector('h3').innerText = `¡Hola ${nombre}! Tu plan personalizado está listo`;
 
+            // Ingredientes base del tónico
+            const ingredientesBase = ['Mentol', 'Eucalipto', 'Romero', 'Salvia', 'Menta', 'Alcohol'];
+            let ingredientesDestacados = [...ingredientesBase];
 
+            // Generar instrucciones personalizadas
+            let instrucciones = generarInstrucciones(nombre, edad, genero, tipoPiel, condiciones, estres, dolor, aplicacion, aromas);
+            
+            // Generar consejos específicos
+            let consejos = generarConsejos(nombre, tipoPiel, condiciones, estres, dolor, alergias, aromas);
+            
+            // Generar frase motivadora final
+            let fraseMotivadora = generarFraseMotivadora(nombre, edad, genero, estres, dolor, condiciones);
 
-            let producto = 'Tónico Corporal Raíz Sabia';
-            let ingredientes = ['Lavanda', 'Caléndula', 'Romero'];
-            let consejos = [];
-            let frase = '';
+            // Mostrar los resultados
+            document.getElementById('resultado-producto').innerText = 'Tónico Corporal Raíz Sabia - Fórmula personalizada para ti';
+            document.getElementById('resultado-ingredientes').innerText = `Ingredientes activos: ${ingredientesDestacados.join(', ')}`;
+            
+            // Mostrar instrucciones
+            const contenedorInstrucciones = document.querySelector('#step5 .mb-6:nth-child(3)');
+            contenedorInstrucciones.querySelector('ul').innerHTML = instrucciones.map(i => `<li>${i}</li>`).join('');
+            
+            // Mostrar consejos
+            const contenedorConsejos = document.querySelector('#step5 .mb-6:nth-child(4) .bg-white p');
+            contenedorConsejos.innerHTML = consejos.join(' ');
+            
+            // Mostrar frase motivadora
+            document.getElementById('resultado-frase').innerHTML = fraseMotivadora;
+        }
+
+        function generarInstrucciones(nombre, edad, genero, tipoPiel, condiciones, estres, dolor, aplicacion, aromas) {
+            let instrucciones = [];
+            
+            // Instrucción base personalizada por nombre y aplicación
+            if (aplicacion === 'massage') {
+                instrucciones.push(`${nombre}, aplica el tónico realizando masajes circulares suaves sobre la piel limpia y ligeramente húmeda. Dedica especial atención a las zonas de mayor tensión.`);
+            } else if (aplicacion === 'compress') {
+                instrucciones.push(`${nombre}, empapa un paño limpio con el tónico y aplícalo como compresa tibia en las áreas que necesiten alivio durante 10-15 minutos.`);
+            } else if (aplicacion === 'bath') {
+                instrucciones.push(`${nombre}, añade 2-3 cucharadas del tónico al agua tibia de tu baño y sumérgete durante 15-20 minutos para una relajación completa.`);
+            } else if (aplicacion === 'spray') {
+                instrucciones.push(`${nombre}, utiliza un atomizador para rociar el tónico sobre la piel a unos 20cm de distancia, permitiendo que se absorba naturalmente.`);
+            } else {
+                instrucciones.push(`${nombre}, aplica el tónico con movimientos suaves y ascendentes, permitiendo que tu piel absorba completamente sus propiedades naturales.`);
+            }
+
+            // Personalización por edad
+            if (edad && parseInt(edad) > 50) {
+                instrucciones.push(`Considerando tu experiencia de vida, ${nombre}, te recomendamos aplicar con movimientos muy suaves, especialmente en articulaciones donde la piel puede ser más delicada.`);
+            } else if (edad && parseInt(edad) < 30) {
+                instrucciones.push(`${nombre}, aprovecha la capacidad de regeneración de tu piel joven aplicando el tónico con masajes un poco más vigorosos para estimular la circulación.`);
+            }
 
             // Personalización por tipo de piel
             if (tipoPiel === 'sensitive') {
-                ingredientes = ['Manzanilla', 'Caléndula', 'Aceite de almendras'];
-                consejos.push('Usa compresas frías con el tónico si tienes brotes o irritaciones.');
-                frase = 'Tu piel sensible necesita calma y protección. Hemos elegido plantas suaves pero eficaces.';
+                instrucciones.push(`Dado que tienes piel sensible, ${nombre}, realiza siempre una prueba en una pequeña zona antes del primer uso completo. Aplica con toques suaves sin frotar.`);
             } else if (tipoPiel === 'oily') {
-                ingredientes = ['Lavanda', 'Romero', 'Árnica'];
-                consejos.push('Aplica poca cantidad en zonas grasas, masajeando con suavidad.');
-                frase = 'Buscaremos equilibrio y frescura sin sobrecargar tu piel.';
+                instrucciones.push(`Para tu tipo de piel grasa, ${nombre}, aplica una cantidad menor del tónico, concentrándote en las zonas problemáticas y evitando sobrecargar los poros.`);
+            } else if (tipoPiel === 'dry') {
+                instrucciones.push(`Tu piel seca necesita nutrición extra, ${nombre}. Aplica el tónico generosamente y permite que se absorba completamente antes de vestirte.`);
             }
 
-            // Condiciones de piel
-            if (condiciones.includes('eczema')) {
-                ingredientes.push('Manzanilla', 'Aceite de almendras');
-                consejos.push('Evita aplicar el tónico en zonas con heridas abiertas.');
+            // Personalización por condiciones específicas
+            if (condiciones.includes('acne')) {
+                instrucciones.push(`${nombre}, para el acné evita aplicar directamente sobre granos inflamados. Usa toques suaves alrededor de estas zonas.`);
+            }
+            if (condiciones.includes('eczema') || condiciones.includes('psoriasis')) {
+                instrucciones.push(`Con tu condición de piel, ${nombre}, aplica el tónico solo en momentos de calma, nunca durante brotes activos o en piel irritada.`);
             }
 
-            // Estrés
+            // Personalización por nivel de estrés
             if (estres === 'high' || estres === 'very-high') {
-                ingredientes.push('Lavanda');
-                consejos.push('Haz una pausa diaria de 5 minutos para masajear cuello y hombros.');
-                frase = 'Sabemos que el estrés agota cuerpo y mente. Este elixir busca devolverte paz.';
+                instrucciones.push(`${nombre}, dada tu carga de estrés, convierte la aplicación en un ritual de 10 minutos de autocuidado. Respira profundamente mientras masajeas y permite que este momento sea solo tuyo.`);
             }
 
-            // Dolor muscular
-            if (dolor === 'frequent' || dolor === 'sometimes') {
-                ingredientes.push('Árnica', 'Eucalipto');
-                consejos.push('Aplica el tónico caliente en articulaciones para mayor alivio.');
+            // Personalización por dolores
+            if (dolor === 'frequent') {
+                instrucciones.push(`Para tus dolores frecuentes, ${nombre}, aplica el tónico tibio (calientalo suavemente entre tus manos) en las zonas afectadas hasta 3 veces al día.`);
+            } else if (dolor === 'sometimes') {
+                instrucciones.push(`${nombre}, cuando sientas molestias ocasionales, aplica el tónico con masajes circulares durante 5 minutos en la zona afectada.`);
             }
 
-            // Aromas
-            if (aromas.includes('citrus')) ingredientes.push('Bergamota');
-            if (aromas.includes('spicy')) ingredientes.push('Jengibre', 'Canela');
+            return instrucciones;
+        }
 
-            // Método de aplicación
-            if (aplicacion === 'massage') {
-                consejos.push('Masajea tras la ducha con movimientos circulares.');
-            } else if (aplicacion === 'spray') {
-                consejos.push('Rocía el producto sobre la piel húmeda para mejor absorción.');
+        function generarConsejos(nombre, tipoPiel, condiciones, estres, dolor, alergias, aromas) {
+            let consejos = [];
+            
+            // Consejo principal personalizado
+            consejos.push(`${nombre}, recuerda que la constancia es clave en cualquier tratamiento natural.`);
+            
+            // Consejos por alergias
+            if (alergias) {
+                consejos.push(`Dado que mencionaste alergias a: "${alergias}", ${nombre}, te recomendamos encarecidamente consultar con un especialista antes del primer uso, ya que nuestro tónico contiene ingredientes herbales que podrían interactuar.`);
             }
+            
+            // Consejos por aromas preferidos
+            if (aromas.includes('none')) {
+                consejos.push(`${nombre}, aunque prefieres productos sin aroma, nuestro tónico tiene un olor herbal natural muy suave que se disipa rápidamente.`);
+            } else if (aromas.includes('floral')) {
+                consejos.push(`Tu preferencia por aromas florales, ${nombre}, se complementará perfectamente con las notas herbales suaves de nuestro tónico.`);
+            } else if (aromas.includes('herbal')) {
+                consejos.push(`¡Perfecto, ${nombre}! Tu amor por los aromas herbales significa que disfrutarás plenamente de la experiencia aromática de nuestro tónico.`);
+            }
+            
+            // Consejos por combinación de factores
+            if (estres === 'very-high' && (dolor === 'frequent' || dolor === 'sometimes')) {
+                consejos.push(`${nombre}, la combinación de estrés alto y dolores físicos puede crear un ciclo difícil. Nuestro tónico puede ser tu aliado, pero también considera técnicas de relajación como yoga o meditación.`);
+            }
+            
+            // Consejos por tipo de piel y condiciones
+            if (tipoPiel === 'sensitive' && condiciones.length > 0) {
+                consejos.push(`${nombre}, tu piel sensible con condiciones específicas requiere paciencia. Comienza con aplicaciones cada tercer día y aumenta gradualmente según tu tolerancia.`);
+            }
+            
+            // Consejos generales personalizados
+            if (tipoPiel === 'mixed') {
+                consejos.push(`Para tu piel mixta, ${nombre}, puedes aplicar menos cantidad en la zona T y más generosamente en mejillas y zonas secas.`);
+            }
+            
+            // Consejo de almacenamiento
+            consejos.push(`${nombre}, guarda tu tónico en un lugar fresco y seco, lejos de la luz directa, para mantener todas sus propiedades intactas.`);
+            
+            return consejos;
+        }
 
-            // Mostrar los resultados en HTML
-            document.getElementById('resultado-producto').innerText = producto;
-            document.getElementById('resultado-ingredientes').innerText = [...new Set(ingredientes)].join(', ');
-            document.getElementById('resultado-consejos').innerHTML = consejos.map(c => `<li>${c}</li>`).join('');
-             document.getElementById('resultado-frase').innerText =
-                (frase
-                ? `${nombre}, ${frase}`
-                : `${nombre}, este plan está pensado para reconectar contigo.`);
-                    }
+        function generarFraseMotivadora(nombre, edad, genero, estres, dolor, condiciones) {
+            let frases = [];
+            
+            // Base motivacional personalizada
+            let inicio = `${nombre}, `;
+            
+            // Variaciones según el perfil
+            if (estres === 'very-high' && dolor === 'frequent') {
+                frases.push(`sabemos que has estado cargando mucho peso últimamente. Entre el estrés constante y los dolores que sientes, parece que tu cuerpo te está pidiendo a gritos un respiro.`);
+                frases.push(`Este tónico no es solo un producto, ${nombre}, es nuestro abrazo herbal para ti. Cada gota lleva la intención de devolverte esa paz que mereces.`);
+                frases.push(`No esperes a mañana para comenzar a cuidarte. Tu bienestar no puede esperar más, y nosotros estaremos aquí acompañándote en cada paso de tu recuperación.`);
+            } else if (estres === 'high' || estres === 'very-high') {
+                frases.push(`tu ritmo de vida acelerado no tiene que definir cómo te sientes en tu propia piel.`);
+                frases.push(`Este tónico, ${nombre}, es tu momento de pausa diario, esos minutos sagrados donde solo existes tú y el cuidado que mereces.`);
+                frases.push(`Cada aplicación es una oportunidad de reconectarte contigo, de recordarle a tu cuerpo que está seguro y que puede relajarse.`);
+            } else if (condiciones.length > 0) {
+                frases.push(`entendemos que lidiar con condiciones de piel puede ser frustrante y a veces desalentador.`);
+                frases.push(`Pero ${nombre}, tu piel tiene una sabiduría increíble y capacidad de sanación que a veces solo necesita el apoyo adecuado.`);
+                frases.push(`Este tónico es ese apoyo gentil que tu piel ha estado esperando. No esperes más para darte esa oportunidad de sentirte cómodo en tu propia piel.`);
+            } else {
+                frases.push(`tu búsqueda de bienestar natural habla de una persona consciente que valora lo auténtico y lo genuino.`);
+                frases.push(`${nombre}, estás a punto de descubrir cómo la naturaleza puede ser tu mejor aliada en el cuidado personal.`);
+                frases.push(`No pospongas más ese bienestar que tanto mereces. Tu cuerpo y tu espíritu te lo agradecerán desde la primera aplicación.`);
+            }
+            
+            // Agregamos un toque personal final
+            if (edad && parseInt(edad) > 40) {
+                frases.push(`Tu experiencia de vida te ha enseñado el valor del autocuidado, ${nombre}. Es hora de honrar esa sabiduría.`);
+            } else if (edad && parseInt(edad) < 30) {
+                frases.push(`${nombre}, invertir en tu bienestar desde ahora es el mejor regalo que puedes darte para tu futuro.`);
+            }
+            
+            return inicio + frases.join(' ');
+        }*/
+
+        function generarRecomendacion() {
+    // Recolectar todos los datos del formulario
+    const nombre = (document.getElementById('name').value || '').trim() || 'Querido amigo';
+    const edad = document.getElementById('age').value || '';
+    const genero = document.getElementById('gender').value || '';
+    const tipoPiel = document.querySelector('input[name="skin-type"]:checked')?.value || '';
+    const condiciones = Array.from(document.querySelectorAll('input[name="skin-conditions"]:checked')).map(c => c.value);
+    const estres = document.getElementById('stress').value || '';
+    const dolor = document.querySelector('input[name="pain"]:checked')?.value || '';
+    const alergias = document.getElementById('allergies').value.trim();
+    const aromas = Array.from(document.querySelectorAll('input[name="aromas"]:checked')).map(a => a.value);
+    const aplicacion = document.querySelector('input[name="application"]:checked')?.value || '';
+
+    // Actualizar título
+    const contenedorTitulo = document.querySelector('#step5 .text-center');
+    contenedorTitulo.querySelector('h3').innerText = `¡Hola ${nombre}! Tu plan personalizado está listo`;
+
+    // Ingredientes base
+    const ingredientesBase = ['Mentol', 'Eucalipto', 'Romero', 'Salvia', 'Menta', 'Alcohol'];
+    let ingredientesDestacados = [...ingredientesBase];
+
+    // Generar todos los textos
+    let descripcionProducto = generarDescripcionProducto(nombre, dolor, estres, condiciones);
+    let instrucciones = generarInstrucciones(nombre, edad, genero, tipoPiel, condiciones, estres, dolor, aplicacion, aromas);
+    let consejos = generarConsejos(nombre, tipoPiel, condiciones, estres, dolor, alergias, aromas, edad);
+    let fraseMotivadora = generarFraseMotivadora(nombre, edad, genero, estres, dolor, condiciones);
+
+    // Mostrar resultados en HTML con los mismos IDs del código 2
+    document.getElementById('resultado-producto').innerHTML = descripcionProducto;
+    document.getElementById('resultado-ingredientes').innerText = `Ingredientes activos: ${ingredientesDestacados.join(', ')}`;
+    const contenedorInstrucciones = document.querySelector('#step5 .mb-6:nth-child(3)');
+    contenedorInstrucciones.querySelector('ul').innerHTML = instrucciones.map(i => `<li>${i}</li>`).join('');
+    const contenedorConsejos = document.querySelector('#step5 .mb-6:nth-child(4) .bg-white p');
+    contenedorConsejos.innerHTML = consejos.join(' ');
+    document.getElementById('resultado-frase').innerHTML = fraseMotivadora;
+}
+
+// Descripción extensa como en código 1
+function generarDescripcionProducto(nombre, dolor, estres, condiciones) {
+    let beneficios = [];
+
+    if (dolor === 'frequent' || dolor === 'sometimes') {
+        beneficios.push('alivio profundo y sostenido de dolores musculares y tensión acumulada');
+    }
+    if (estres === 'high' || estres === 'very-high') {
+        beneficios.push('reducción notable del estrés y promoción de calma mental');
+    }
+    if (condiciones.includes('acne') || condiciones.includes('eczema')) {
+        beneficios.push('acción antiséptica natural ideal para el cuidado diario de la piel');
+    }
+    beneficios.push('estimulación activa de la circulación y un efecto aromático revitalizante');
+
+    return `<strong>Tónico Corporal Raíz Sabia</strong><br>
+    <span class="text-sm text-gray-600">
+    ${nombre}, esta fórmula ha sido diseñada especialmente para ti, resaltando propiedades como: ${beneficios.join(', ')}. 
+    Combina ingredientes botánicos cuidadosamente seleccionados para actuar a nivel físico, emocional y sensorial, ofreciendo un cuidado integral que trasciende lo cosmético.
+    </span>`;
+}
+
+// Instrucciones completas y ramificadas
+function generarInstrucciones(nombre, edad, genero, tipoPiel, condiciones, estres, dolor, aplicacion, aromas) {
+    let instrucciones = [];
+
+    // Base por dolor
+    if (dolor === 'frequent') {
+        instrucciones.push(`${nombre}, para tus dolores musculares frecuentes, aplica el tónico 2-3 veces al día directamente sobre las zonas afectadas. El mentol y eucalipto aportarán alivio inmediato, mientras el romero activa la circulación para una recuperación más rápida.`);
+    } else if (dolor === 'sometimes') {
+        instrucciones.push(`${nombre}, cuando sientas molestias ocasionales, aplica el tónico generosamente en la zona y masajea en círculos. La combinación de menta y salvia relaja la musculatura.`);
+    } else {
+        instrucciones.push(`${nombre}, úsalo como parte de tu rutina diaria de bienestar para mantener un estado de vitalidad y relajación.`);
+    }
+
+    // Método de aplicación
+    if (aplicacion === 'massage') {
+        instrucciones.push(`Realiza masajes circulares ascendentes durante 5-10 minutos para potenciar la absorción y estimular la circulación.`);
+        if (estres === 'very-high' || estres === 'high') {
+            instrucciones.push(`Acompaña el masaje con respiraciones profundas para activar tu sistema nervioso parasimpático y reducir el cortisol.`);
+        }
+    } else if (aplicacion === 'compress') {
+        instrucciones.push(`Empapa un paño con el tónico (tibio para mayor efecto) y colócalo sobre la zona 15-20 minutos para un alivio profundo.`);
+    } else if (aplicacion === 'bath') {
+        instrucciones.push(`Agrega 3-4 cucharadas al agua tibia del baño. El vapor liberará aceites esenciales que calman mente y cuerpo.`);
+    } else if (aplicacion === 'spray') {
+        instrucciones.push(`Rocía a 20cm de distancia y deja que el alcohol favorezca la absorción rápida de los principios activos.`);
+    }
+
+    // Piel
+    if (tipoPiel === 'sensitive') {
+        instrucciones.push(`Tu piel sensible podría reaccionar al mentol. Comienza con pequeñas dosis y diluye con agua si notas irritación.`);
+    } else if (tipoPiel === 'oily') {
+        instrucciones.push(`El alcohol y salvia regulan la producción de grasa, aplicando poca cantidad en zonas más oleosas.`);
+    } else if (tipoPiel === 'dry') {
+        instrucciones.push(`Aplica sobre piel ligeramente húmeda para retener humedad y nutrir con aceites naturales.`);
+    }
+
+    // Edad
+    if (edad && parseInt(edad) > 50) {
+        instrucciones.push(`Masajea suavemente zonas con circulación lenta para reactivarla sin irritar la piel.`);
+    } else if (edad && parseInt(edad) < 30) {
+        instrucciones.push(`Ideal después del ejercicio para recuperar energía muscular rápidamente.`);
+    }
+
+    // Estrés
+    if (estres === 'very-high') {
+        instrucciones.push(`Dedica 15 minutos a cada aplicación como ritual de autocuidado e inhalación aromática calmante.`);
+    } else if (estres === 'high') {
+        instrucciones.push(`Prioriza cuello, hombros y sienes para aliviar tensión acumulada.`);
+    }
+
+    // Horario recomendado
+    if (dolor === 'frequent' || estres === 'very-high') {
+        instrucciones.push(`Aplícalo mañana y noche para equilibrar energía y relajación durante el día.`);
+    }
+
+    return instrucciones;
+}
+
+// Consejos más completos
+function generarConsejos(nombre, tipoPiel, condiciones, estres, dolor, alergias, aromas, edad) {
+    let consejos = [];
+
+    consejos.push(`${nombre}, este tónico es más que un cosmético: es un aliado terapéutico para tu cuerpo y mente.`);
+    if (alergias) {
+        consejos.push(`Debido a tus alergias ("${alergias}"), verifica ingredientes y consulta con un especialista antes de usarlo.`);
+    }
+    if (dolor === 'frequent' && estres === 'very-high') {
+        consejos.push(`El alivio físico reduce el estrés, y la calma mental relaja músculos tensos por ansiedad.`);
+    }
+    if (aromas.includes('herbal')) {
+        consejos.push(`Disfrutarás del bouquet herbal: menta refresca, eucalipto despeja, romero estimula y salvia equilibra.`);
+    } else if (aromas.includes('none')) {
+        consejos.push(`Aunque prefieres sin aroma, el perfil herbal es natural y terapéutico, y se disipa rápido.`);
+    }
+    if (estres === 'high' || estres === 'very-high') {
+        consejos.push(`El mentol combate la sensación de calor interno asociada al estrés.`);
+    }
+    if (condiciones.includes('acne')) {
+        consejos.push(`El alcohol y salvia controlan bacterias sin químicos agresivos.`);
+    }
+    if (condiciones.includes('eczema') || condiciones.includes('psoriasis')) {
+        consejos.push(`Usa solo en periodos sin brote activo.`);
+    }
+    if (edad && parseInt(edad) > 40) {
+        consejos.push(`La estimulación de la circulación ayuda a combatir fatiga acumulada.`);
+    }
+    consejos.push(`Guárdalo en lugar fresco y refrigéralo brevemente en días calurosos para potenciar su frescor.`);
+
+    return consejos;
+}
+
+// Frase motivadora extensa
+function generarFraseMotivadora(nombre, edad, genero, estres, dolor, condiciones) {
+    let frases = [];
+    let inicio = `${nombre}, `;
+
+    if (dolor === 'frequent' && (estres === 'high' || estres === 'very-high')) {
+        frases.push(`cargar con dolor constante y estrés elevado desgasta cuerpo y alma. Este tónico está formulado para que alivio físico y emocional trabajen juntos.`);
+        frases.push(`Cada aplicación es un respiro: el mentol calma músculos, la salvia tranquiliza la mente.`);
+    } else if (estres === 'very-high') {
+        frases.push(`vivir con estrés constante es como llevar un peso invisible. Este tónico es tu espacio diario de paz.`);
+    } else if (dolor === 'frequent') {
+        frases.push(`los dolores recurrentes no deben ser tu normalidad. Con este tónico, tu cuerpo recupera su capacidad natural de sanación.`);
+    } else if (condiciones.length > 0) {
+        frases.push(`cuidar tu piel también es cuidar tu autoestima. Este tónico devuelve equilibrio natural y bienestar emocional.`);
+    } else {
+        frases.push(`tu búsqueda de bienestar natural es un reflejo de tu conexión contigo mismo.`);
+    }
+
+    if (edad && parseInt(edad) > 40) {
+        frases.push(`Honra tu experiencia de vida priorizando el autocuidado.`);
+    } else if (edad && parseInt(edad) < 30) {
+        frases.push(`Invertir en bienestar hoy es el mejor regalo para tu futuro.`);
+    }
+
+    return inicio + frases.join(' ');
+}
+
 
         document
             .getElementById('step4Next')
@@ -967,9 +1258,52 @@
                 setTimeout(generarRecomendacion, 300);
             });
 
+            
+function enviarYMostrarRecomendacion() {
+    const whatsapp = document.getElementById('whatsapp').value.trim();
+    if (!whatsapp) {
+        alert("Por favor, ingresa tu número de WhatsApp.");
+        return;
+    }
+
+    // Generar la recomendación como antes
+    generarRecomendacion();
+
+    // Enviar datos a Google Sheets
+    enviarDatosGoogleSheets();
+
+    alert("Tu recomendación se ha generado y tus datos han sido guardados.");
+}
+
+function enviarDatosGoogleSheets() {
+    const data = {
+        nombre: document.getElementById('name').value,
+        edad: document.getElementById('age').value,
+        genero: document.getElementById('gender').value,
+        tipoPiel: document.querySelector('input[name="skin-type"]:checked')?.value || '',
+        condiciones: Array.from(document.querySelectorAll('input[name="skin-conditions"]:checked')).map(c => c.value),
+        estres: document.getElementById('stress').value,
+        dolor: document.querySelector('input[name="pain"]:checked')?.value || '',
+        alergias: document.getElementById('allergies').value,
+        aromas: Array.from(document.querySelectorAll('input[name="aromas"]:checked')).map(a => a.value),
+        aplicacion: document.querySelector('input[name="application"]:checked')?.value || '',
+        whatsapp: document.getElementById('whatsapp').value
+    };
+
+    fetch("TU_URL_DE_GOOGLE_APPS_SCRIPT", {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).catch(err => console.error("Error enviando datos a Google Sheets:", err));
+}
+
 
         
     </script>
+
+
+
 </body>
 </html>
 
