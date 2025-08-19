@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Granizados - POS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-item {
+            transition: background-color 0.2s ease;
+        }
+        
+        .order-item:hover {
+            background-color: #f0fdf4;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background-color: white !important;
+            }
+            
+            .print-area {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90 z-50">
+        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Sistema Granizados</h1>
+            <div class="mb-6">
+                <label for="username" class="block text-gray-700 font-medium mb-2">Usuario</label>
+                <input type="text" id="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-gray-700 font-medium mb-2">Contraseña</label>
+                <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <button id="login-btn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 font-medium">Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" class="hidden">
+        <!-- Sidebar -->
+        <div class="sidebar fixed left-0 top-0 bottom-0 w-64 bg-white shadow-md z-40">
+            <div class="p-4 border-b border-gray-200">
+                <h2 class="text-xl font-bold text-gray-800">Granizados POS</h2>
+                <p id="current-user" class="text-sm text-gray-600">Usuario: <span class="font-medium"></span></p>
+                <p id="current-role" class="text-sm text-gray-600">Rol: <span class="font-medium"></span></p>
+            </div>
+            <nav class="mt-4">
+                <ul>
+                    <li>
+                        <a href="#" id="cashier-link" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            Punto de Venta
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="kitchen-link" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+                            </svg>
+                            Área de Elaboración
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" id="admin-link" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            Panel Administrativo
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+                <button id="logout-btn" class="w-full flex items-center justify-center text-gray-700 hover:text-red-600 transition duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="ml-64 p-6">
+            <!-- Cashier View -->
+            <div id="cashier-view" class="hidden">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Product Selection -->
+                    <div class="w-full lg:w-2/3">
+                        <div class="bg-white rounded-lg shadow p-6">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">Selección de Productos</h2>
+                            
+                            <!-- Product Categories -->
+                            <div class="flex overflow-x-auto mb-6 pb-2">
+                                <button class="category-btn active px-4 py-2 mr-2 bg-blue-600 text-white rounded-lg whitespace-nowrap" data-category="all">Todos</button>
+                                <button class="category-btn px-4 py-2 mr-2 bg-gray-200 text-gray-700 rounded-lg whitespace-nowrap" data-category="granizados">Granizados</button>
+                                <button class="category-btn px-4 py-2 mr-2 bg-gray-200 text-gray-700 rounded-lg whitespace-nowrap" data-category="bebidas">Bebidas</button>
+                                <button class="category-btn px-4 py-2 mr-2 bg-gray-200 text-gray-700 rounded-lg whitespace-nowrap" data-category="cervezas">Cervezas</button>
+                                <button class="category-btn px-4 py-2 mr-2 bg-gray-200 text-gray-700 rounded-lg whitespace-nowrap" data-category="energizantes">Energizantes</button>
+                            </div>
+                            
+                            <!-- Product Grid -->
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="product-grid">
+                                <!-- Products will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div class="w-full lg:w-1/3">
+                        <div class="bg-white rounded-lg shadow p-6 sticky top-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-xl font-bold text-gray-800">Orden Actual</h2>
+                                <span class="text-sm text-gray-500">#<span id="order-number">--</span></span>
+                            </div>
+                            
+                            <div class="border-b border-gray-200 pb-4 mb-4">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-600">Fecha:</span>
+                                    <span class="font-medium" id="order-date">--/--/----</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Cajero:</span>
+                                    <span class="font-medium" id="order-cashier">--</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4 max-h-96 overflow-y-auto" id="order-items">
+                                <!-- Order items will be added here -->
+                                <div class="text-center text-gray-500 py-8">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    <p class="mt-2">No hay productos en la orden</p>
+                                </div>
+                            </div>
+                            
+                            <div class="border-t border-gray-200 pt-4">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-600">Subtotal:</span>
+                                    <span class="font-medium">$<span id="order-subtotal">0.00</span></span>
+                                </div>
+                                <div class="flex justify-between mb-4">
+                                    <span class="text-gray-600">IVA (12%):</span>
+                                    <span class="font-medium">$<span id="order-tax">0.00</span></span>
+                                </div>
+                                <div class="flex justify-between text-lg font-bold">
+                                    <span>Total:</span>
+                                    <span>$<span id="order-total">0.00</span></span>
+                                </div>
+                                
+                                <div class="mt-6 space-y-3">
+                                    <button id="complete-order-btn" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200 font-medium">
+                                        Completar Orden
+                                    </button>
+                                    <button id="clear-order-btn" class="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition duration-200 font-medium">
+                                        Limpiar Orden
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kitchen View -->
+            <div id="kitchen-view" class="hidden">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Órdenes Pendientes</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pending-orders">
+                        <!-- Pending orders will be loaded here -->
+                        <div class="text-center text-gray-500 py-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <p class="mt-4 text-lg">No hay órdenes pendientes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin View -->
+            <div id="admin-view" class="hidden">
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Dashboard Administrativo</h2>
+                    
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-600 mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Ventas Hoy</p>
+                                    <p class="text-2xl font-bold">$<span id="sales-today">0.00</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100 text-green-600 mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Ventas Semana</p>
+                                    <p class="text-2xl font-bold">$<span id="sales-week">0.00</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-purple-50 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-100 text-purple-600 mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Órdenes Hoy</p>
+                                    <p class="text-2xl font-bold"><span id="orders-today">0</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 rounded-lg p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-100 text-yellow-600 mr-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Tiempo Promedio</p>
+                                    <p class="text-2xl font-bold"><span id="avg-time">0</span> min</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h3 class="font-medium text-gray-800 mb-4">Ventas por Categoría</h3>
+                            <canvas id="salesByCategoryChart" height="250"></canvas>
+                        </div>
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h3 class="font-medium text-gray-800 mb-4">Ventas por Cajero</h3>
+                            <canvas id="salesByCashierChart" height="250"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-6 mb-8">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h3 class="font-medium text-gray-800 mb-4">Ventas Diarias (Últimos 7 días)</h3>
+                            <canvas id="dailySalesChart" height="300"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Orders -->
+                    <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                            <h3 class="font-medium text-gray-800">Órdenes Recientes</h3>
+                            <div class="flex items-center">
+                                <label for="order-filter" class="mr-2 text-sm text-gray-600">Filtrar:</label>
+                                <select id="order-filter" class="border border-gray-300 rounded px-3 py-1 text-sm">
+                                    <option value="all">Todas</option>
+                                    <option value="today">Hoy</option>
+                                    <option value="week">Esta semana</option>
+                                    <option value="month">Este mes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"># Orden</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cajero</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Productos</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" id="recent-orders">
+                                    <!-- Recent orders will be loaded here -->
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">Cargando órdenes...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inventory Management -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Gestión de Inventario</h2>
+                    
+                    <div class="mb-6 flex justify-between items-center">
+                        <div>
+                            <h3 class="font-medium text-gray-800">Productos con bajo stock</h3>
+                            <p class="text-sm text-gray-500">Productos con menos de 10 unidades en inventario</p>
+                        </div>
+                        <button id="refresh-inventory-btn" class="flex items-center text-blue-600 hover:text-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Actualizar
+                        </button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock Actual</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock Mínimo</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="inventory-items">
+                                <!-- Inventory items will be loaded here -->
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">Cargando inventario...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Receipt Modal -->
+    <div id="receipt-modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md print-area">
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <h2 class="text-xl font-bold">Granizados Deliciosos</h2>
+                    <p class="text-sm text-gray-600">Av. Principal 123, Ciudad</p>
+                    <p class="text-sm text-gray-600">Tel: 0991234567</p>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4 mb-4">
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-600">Orden #:</span>
+                        <span class="font-medium" id="receipt-order-number">--</span>
+                    </div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-gray-600">Fecha:</span>
+                        <span class="font-medium" id="receipt-order-date">--/--/---- --:--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Cajero:</span>
+                        <span class="font-medium" id="receipt-cashier">--</span>
+                    </div>
+                </div>
+                
+                <div class="mb-4" id="receipt-items">
+                    <!-- Receipt items will be added here -->
+                </div>
+                
+                <div class="border-t border-gray-200 pt-4">
+                    <div class="flex justify-between mb-1">
+                        <span>Subtotal:</span>
+                        <span>$<span id="receipt-subtotal">0.00</span></span>
+                    </div>
+                    <div class="flex justify-between mb-1">
+                        <span>IVA (12%):</span>
+                        <span>$<span id="receipt-tax">0.00</span></span>
+                    </div>
+                    <div class="flex justify-between font-bold">
+                        <span>Total:</span>
+                        <span>$<span id="receipt-total">0.00</span></span>
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-center text-sm text-gray-500">
+                    <p>¡Gracias por su compra!</p>
+                    <p>Vuelva pronto</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 px-6 py-4 flex justify-end space-x-3 no-print">
+                <button id="print-receipt-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Imprimir Comanda
+                </button>
+                <button id="close-receipt-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold" id="modal-product-name">Producto</h2>
+                    <button id="close-product-modal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-700 mb-2">Seleccione las opciones:</p>
+                    
+                    <div id="product-options">
+                        <!-- Product options will be added here -->
+                    </div>
+                    
+                    <div class="mt-4">
+                        <label for="product-notes" class="block text-sm font-medium text-gray-700 mb-1">Notas adicionales:</label>
+                        <textarea id="product-notes" rows="2" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center justify-between">
+                        <span class="text-lg font-bold">$<span id="modal-product-price">0.00</span></span>
+                        <div class="flex items-center">
+                            <button id="decrease-qty" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-l">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                                </svg>
+                            </button>
+                            <span id="product-qty" class="bg-gray-100 px-4 py-1">1</span>
+                            <button id="increase-qty" class="bg-gray-200 text-gray-700 px-3 py-1 rounded-r">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button id="cancel-product-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button id="add-to-order-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Agregar a Orden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Inventory Update Modal -->
+    <div id="inventory-modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Actualizar Inventario</h2>
+                    <button id="close-inventory-modal" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <p class="text-gray-700 mb-2">Producto: <span id="inventory-product-name" class="font-medium"></span></p>
+                    <p class="text-gray-700 mb-4">Stock actual: <span id="current-stock" class="font-medium"></span></p>
+                    
+                    <div class="mb-4">
+                        <label for="update-type" class="block text-sm font-medium text-gray-700 mb-1">Tipo de actualización:</label>
+                        <select id="update-type" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="add">Agregar stock</option>
+                            <option value="set">Establecer stock</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="update-amount" class="block text-sm font-medium text-gray-700 mb-1">Cantidad:</label>
+                        <input type="number" id="update-amount" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" min="1" value="1">
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button id="cancel-inventory-btn" class="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300">
+                        Cancelar
+                    </button>
+                    <button id="update-inventory-btn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Google Apps Script Endpoint (Replace with your actual Apps Script URL)
+        const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        
+        // Sample users (in a real app, these would be stored securely)
+        const users = [
+            { id: 1, username: 'cajero1', password: 'cajero123', role: 'cashier', name: 'Juan Pérez' },
+            { id: 2, username: 'cajero2', password: 'cajero456', role: 'cashier', name: 'María Gómez' },
+            { id: 3, username: 'elaborador1', password: 'elaborador123', role: 'kitchen', name: 'Carlos Rodríguez' },
+            { id: 4, username: 'elaborador2', password: 'elaborador456', role: 'kitchen', name: 'Ana Martínez' },
+            { id: 5, username: 'admin', password: 'admin123', role: 'admin', name: 'Administrador' }
+        ];
+        
+        // Sample product categories
+        const categories = [
+            { id: 'granizados', name: 'Granizados', icon: '🍧' },
+            { id: 'bebidas', name: 'Bebidas', icon: '🥤' },
+            { id: 'cervezas', name: 'Cervezas', icon: '🍺' },
+            { id: 'energizantes', name: 'Energizantes', icon: '⚡' }
+        ];
+        
+        // Current application state
+        let currentUser = null;
+        let currentOrder = {
+            items: [],
+            subtotal: 0,
+            tax: 0,
+            total: 0
+        };
+        let selectedProduct = null;
+        let selectedInventoryItem = null;
+        let charts = {};
+        
+        // DOM Elements
+        const loginScreen = document.getElementById('login-screen');
+        const appContainer = document.getElementById('app-container');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const currentUserSpan = document.querySelector('#current-user span');
+        const currentRoleSpan = document.querySelector('#current-role span');
+        
+        // View links
+        const cashierLink = document.getElementById('cashier-link');
+        const kitchenLink = document.getElementById('kitchen-link');
+        const adminLink = document.getElementById('admin-link');
+        
+        // Views
+        const cashierView = document.getElementById('cashier-view');
+        const kitchenView = document.getElementById('kitchen-view');
+        const adminView = document.getElementById('admin-view');
+        
+        // Cashier view elements
+        const productGrid = document.getElementById('product-grid');
+        const orderItems = document.getElementById('order-items');
+        const orderNumber = document.getElementById('order-number');
+        const orderDate = document.getElementById('order-date');
+        const orderCashier = document.getElementById('order-cashier');
+        const orderSubtotal = document.getElementById('order-subtotal');
+        const orderTax = document.getElementById('order-tax');
+        const orderTotal = document.getElementById('order-total');
+        const completeOrderBtn = document.getElementById('complete-order-btn');
+        const clearOrderBtn = document.getElementById('clear-order-btn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        
+        // Product modal elements
+        const productModal = document.getElementById('product-modal');
+        const modalProductName = document.getElementById('modal-product-name');
+        const modalProductPrice = document.getElementById('modal-product-price');
+        const productOptions = document.getElementById('product-options');
+        const productNotes = document.getElementById('product-notes');
+        const productQty = document.getElementById('product-qty');
+        const decreaseQty = document.getElementById('decrease-qty');
+        const increaseQty = document.getElementById('increase-qty');
+        const cancelProductBtn = document.getElementById('cancel-product-btn');
+        const addToOrderBtn = document.getElementById('add-to-order-btn');
+        const closeProductModal = document.getElementById('close-product-modal');
+        
+        // Receipt modal elements
+        const receiptModal = document.getElementById('receipt-modal');
+        const receiptOrderNumber = document.getElementById('receipt-order-number');
+        const receiptOrderDate = document.getElementById('receipt-order-date');
+        const receiptCashier = document.getElementById('receipt-cashier');
+        const receiptItems = document.getElementById('receipt-items');
+        const receiptSubtotal = document.getElementById('receipt-subtotal');
+        const receiptTax = document.getElementById('receipt-tax');
+        const receiptTotal = document.getElementById('receipt-total');
+        const printReceiptBtn = document.getElementById('print-receipt-btn');
+        const closeReceiptBtn = document.getElementById('close-receipt-btn');
+        
+        // Kitchen view elements
+        const pendingOrders = document.getElementById('pending-orders');
+        
+        // Admin view elements
+        const salesToday = document.getElementById('sales-today');
+        const salesWeek = document.getElementById('sales-week');
+        const ordersToday = document.getElementById('orders-today');
+        const avgTime = document.getElementById('avg-time');
+        const recentOrders = document.getElementById('recent-orders');
+        const orderFilter = document.getElementById('order-filter');
+        const inventoryItems = document.getElementById('inventory-items');
+        const refreshInventoryBtn = document.getElementById('refresh-inventory-btn');
+        
+        // Inventory modal elements
+        const inventoryModal = document.getElementById('inventory-modal');
+        const inventoryProductName = document.getElementById('inventory-product-name');
+        const currentStock = document.getElementById('current-stock');
+        const updateType = document.getElementById('update-type');
+        const updateAmount = document.getElementById('update-amount');
+        const cancelInventoryBtn = document.getElementById('cancel-inventory-btn');
+        const updateInventoryBtn = document.getElementById('update-inventory-btn');
+        const closeInventoryModal = document.getElementById('close-inventory-modal');
+        
+        // Charts
+        const salesByCategoryChart = document.getElementById('salesByCategoryChart');
+        const salesByCashierChart = document.getElementById('salesByCashierChart');
+        const dailySalesChart = document.getElementById('dailySalesChart');
+        
+        // Initialize the application
+        function init() {
+            // Event listeners
+            loginBtn.addEventListener('click', handleLogin);
+            logoutBtn.addEventListener('click', handleLogout);
+            cashierLink.addEventListener('click', () => showView('cashier'));
+            kitchenLink.addEventListener('click', () => showView('kitchen'));
+            adminLink.addEventListener('click', () => showView('admin'));
+            
+            // Cashier view events
+            completeOrderBtn.addEventListener('click', completeOrder);
+            clearOrderBtn.addEventListener('click', clearOrder);
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => filterProductsByCategory(btn));
+            });
+            
+            // Product modal events
+            decreaseQty.addEventListener('click', () => updateQuantity(-1));
+            increaseQty.addEventListener('click', () => updateQuantity(1));
+            cancelProductBtn.addEventListener('click', closeModal);
+            addToOrderBtn.addEventListener('click', addToOrder);
+            closeProductModal.addEventListener('click', closeModal);
+            
+            // Receipt modal events
+            printReceiptBtn.addEventListener('click', printReceipt);
+            closeReceiptBtn.addEventListener('click', () => receiptModal.classList.add('hidden'));
+            
+            // Admin view events
+            orderFilter.addEventListener('change', loadRecentOrders);
+            refreshInventoryBtn.addEventListener('click', loadInventory);
+            
+            // Inventory modal events
+            cancelInventoryBtn.addEventListener('click', () => inventoryModal.classList.add('hidden'));
+            updateInventoryBtn.addEventListener('click', updateInventory);
+            closeInventoryModal.addEventListener('click', () => inventoryModal.classList.add('hidden'));
+            
+            // Initialize with login screen
+            loginScreen.classList.remove('hidden');
+            appContainer.classList.add('hidden');
+            
+            // For demo purposes, we'll use mock data
+            // In a real app, you would fetch this from Google Sheets via Apps Script
+            loadSampleProducts();
+            generateOrderNumber();
+            updateOrderDateTime();
+        }
+        
+        // Handle login
+        function handleLogin() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            if (!username || !password) {
+                alert('Por favor ingrese usuario y contraseña');
+                return;
+            }
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                loginScreen.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                
+                // Update user info in sidebar
+                currentUserSpan.textContent = user.name;
+                currentRoleSpan.textContent = user.role === 'cashier' ? 'Cajero' : 
+                                             user.role === 'kitchen' ? 'Elaborador' : 'Administrador';
+                
+                // Show appropriate view based on role
+                if (user.role === 'cashier') {
+                    showView('cashier');
+                } else if (user.role === 'kitchen') {
+                    showView('kitchen');
+                    loadPendingOrders();
+                } else if (user.role === 'admin') {
+                    showView('admin');
+                    loadAdminData();
+                }
+                
+                // Update order cashier
+                orderCashier.textContent = user.name;
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            currentUser = null;
+            usernameInput.value = '';
+            passwordInput.value = '';
+            loginScreen.classList.remove('hidden');
+            appContainer.classList.add('hidden');
+            clearOrder();
+        }
+        
+        // Show specific view based on user role
+        function showView(view) {
+            cashierView.classList.add('hidden');
+            kitchenView.classList.add('hidden');
+            adminView.classList.add('hidden');
+            
+            cashierLink.classList.remove('bg-blue-50', 'text-blue-600');
+            kitchenLink.classList.remove('bg-blue-50', 'text-blue-600');
+            adminLink.classList.remove('bg-blue-50', 'text-blue-600');
+            
+            if (view === 'cashier') {
+                cashierView.classList.remove('hidden');
+                cashierLink.classList.add('bg-blue-50', 'text-blue-600');
+            } else if (view === 'kitchen') {
+                kitchenView.classList.remove('hidden');
+                kitchenLink.classList.add('bg-blue-50', 'text-blue-600');
+            } else if (view === 'admin') {
+                adminView.classList.remove('hidden');
+                adminLink.classList.add('bg-blue-50', 'text-blue-600');
+            }
+        }
+        
+        // Load sample products (in a real app, this would come from Google Sheets)
+        function loadSampleProducts() {
+            // Clear existing products
+            productGrid.innerHTML = '';
+            
+            // Sample products data
+            const products = [
+                { id: 1, name: 'Granizado Tradicional', category: 'granizados', price: 2.50, options: { size: ['Pequeño', 'Mediano', 'Grande'], flavor: ['Fresa', 'Mora', 'Piña', 'Melón', 'Sandía'] } },
+                { id: 2, name: 'Granizado con Licor', category: 'granizados', price: 3.50, options: { size: ['Pequeño', 'Mediano', 'Grande'], flavor: ['Fresa', 'Mora', 'Piña', 'Melón', 'Sandía'], liquor: ['Ron', 'Vodka', 'Tequila', 'Whisky'] } },
+                { id: 3, name: 'Cerveza Nacional', category: 'cervezas', price: 2.00, options: { size: ['Botella', 'Lata'] } },
+                { id: 4, name: 'Cerveza Importada', category: 'cervezas', price: 3.00, options: { size: ['Botella', 'Lata'], brand: ['Heineken', 'Budweiser', 'Corona', 'Stella Artois'] } },
+                { id: 5, name: 'Gaseosa', category: 'bebidas', price: 1.50, options: { size: ['Pequeño', 'Mediano', 'Grande'], flavor: ['Cola', 'Naranja', 'Lima', 'Uva'] } },
+                { id: 6, name: 'Jugo Natural', category: 'bebidas', price: 2.00, options: { size: ['Pequeño', 'Mediano', 'Grande'], flavor: ['Naranja', 'Maracuyá', 'Piña', 'Mango'] } },
+                { id: 7, name: 'Energizante', category: 'energizantes', price: 2.50, options: { size: ['Pequeño', 'Grande'], brand: ['Red Bull', 'Monster', 'Burn'] } },
+                { id: 8, name: 'Agua Mineral', category: 'bebidas', price: 1.00, options: { size: ['Pequeño', 'Grande'] } }
+            ];
+            
+            // Create product cards
+            products.forEach(product => {
+                const categoryInfo = categories.find(c => c.id === product.category);
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-lg shadow p-4 cursor-pointer transition duration-200';
+                productCard.innerHTML = `
+                    <div class="flex items-center mb-2">
+                        <span class="text-2xl mr-2">${categoryInfo?.icon || '🍹'}</span>
+                        <h3 class="font-medium">${product.name}</h3>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600 text-sm">${categoryInfo?.name || 'Bebida'}</span>
+                        <span class="font-bold">$${product.price.toFixed(2)}</span>
+                    </div>
+                `;
+                
+                productCard.addEventListener('click', () => openProductModal(product));
+                productGrid.appendChild(productCard);
+            });
+        }
+        
+        // Filter products by category
+        function filterProductsByCategory(btn) {
+            const category = btn.dataset.category;
+            
+            // Update active button
+            categoryBtns.forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
+            categoryBtns.forEach(b => b.classList.add('bg-gray-200', 'text-gray-700'));
+            
+            btn.classList.remove('bg-gray-200', 'text-gray-700');
+            btn.classList.add('active', 'bg-blue-600', 'text-white');
+            
+            // Show all products if "all" is selected
+            if (category === 'all') {
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.classList.remove('hidden');
+                });
+                return;
+            }
+            
+            // Filter products by category
+            document.querySelectorAll('.product-card').forEach((card, index) => {
+                // In a real app, we would check the product's actual category
+                // For this demo, we'll just use the index to simulate categories
+                let productCategory;
+                
+                if (index < 2) productCategory = 'granizados';
+                else if (index < 4) productCategory = 'cervezas';
+                else if (index < 6) productCategory = 'bebidas';
+                else productCategory = 'energizantes';
+                
+                if (productCategory === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Open product modal
+        function openProductModal(product) {
+            selectedProduct = product;
+            
+            // Update modal content
+            modalProductName.textContent = product.name;
+            modalProductPrice.textContent = product.price.toFixed(2);
+            productQty.textContent = '1';
+            productNotes.value = '';
+            
+            // Create options form
+            productOptions.innerHTML = '';
+            
+            for (const [optionName, values] of Object.entries(product.options)) {
+                const optionGroup = document.createElement('div');
+                optionGroup.className = 'mb-4';
+                
+                const label = document.createElement('label');
+                label.className = 'block text-sm font-medium text-gray-700 mb-1 capitalize';
+                label.textContent = optionName;
+                
+                const select = document.createElement('select');
+                select.className = 'w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500';
+                select.dataset.option = optionName;
+                
+                values.forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = value;
+                    select.appendChild(option);
+                });
+                
+                optionGroup.appendChild(label);
+                optionGroup.appendChild(select);
+                productOptions.appendChild(optionGroup);
+            }
+            
+            // Show modal
+            productModal.classList.remove('hidden');
+        }
+        
+        // Close modal
+        function closeModal() {
+            productModal.classList.add('hidden');
+            inventoryModal.classList.add('hidden');
+        }
+        
+        // Update product quantity
+        function updateQuantity(change) {
+            let qty = parseInt(productQty.textContent);
+            qty += change;
+            
+            if (qty < 1) qty = 1;
+            if (qty > 99) qty = 99;
+            
+            productQty.textContent = qty;
+            
+            // Update price if quantity affects it
+            if (selectedProduct.pricePerUnit) {
+                modalProductPrice.textContent = (selectedProduct.price * qty).toFixed(2);
+            }
+        }
+        
+        // Add product to current order
+        function addToOrder() {
+            if (!selectedProduct) return;
+            
+            const qty = parseInt(productQty.textContent);
+            const notes = productNotes.value.trim();
+            
+            // Get selected options
+            const options = {};
+            const selects = productOptions.querySelectorAll('select');
+            selects.forEach(select => {
+                options[select.dataset.option] = select.value;
+            });
+            
+            // Create order item
+            const item = {
+                id: Date.now(), // Unique ID for this item in the order
+                productId: selectedProduct.id,
+                name: selectedProduct.name,
+                price: selectedProduct.price,
+                quantity: qty,
+                options: options,
+                notes: notes,
+                subtotal: selectedProduct.price * qty
+            };
+            
+            // Add to current order
+            currentOrder.items.push(item);
+            currentOrder.subtotal += item.subtotal;
+            currentOrder.tax = currentOrder.subtotal * 0.12; // 12% IVA
+            currentOrder.total = currentOrder.subtotal + currentOrder.tax;
+            
+            // Update order display
+            updateOrderDisplay();
+            
+            // Close modal
+            closeModal();
+        }
+        
+        // Update order display
+        function updateOrderDisplay() {
+            // Clear existing items
+            orderItems.innerHTML = '';
+            
+            if (currentOrder.items.length === 0) {
+                orderItems.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <p class="mt-2">No hay productos en la orden</p>
+                    </div>
+                `;
+            } else {
+                currentOrder.items.forEach(item => {
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'order-item flex justify-between items-start py-3 border-b border-gray-200';
+                    
+                    // Item details
+                    const itemDetails = document.createElement('div');
+                    itemDetails.className = 'flex-1';
+                    
+                    const itemName = document.createElement('h4');
+                    itemName.className = 'font-medium';
+                    itemName.textContent = item.name;
+                    
+                    const itemOptions = document.createElement('p');
+                    itemOptions.className = 'text-sm text-gray-600 mt-1';
+                    
+                    // Format options
+                    let optionsText = '';
+                    for (const [key, value] of Object.entries(item.options)) {
+                        optionsText += `${key}: ${value}, `;
+                    }
+                    optionsText = optionsText.slice(0, -2); // Remove trailing comma
+                    
+                    itemOptions.textContent = optionsText;
+                    
+                    // Item notes
+                    if (item.notes) {
+                        const itemNotes = document.createElement('p');
+                        itemNotes.className = 'text-xs text-gray-500 mt-1 italic';
+                        itemNotes.textContent = `Notas: ${item.notes}`;
+                        itemDetails.appendChild(itemNotes);
+                    }
+                    
+                    itemDetails.appendChild(itemName);
+                    itemDetails.appendChild(itemOptions);
+                    
+                    // Item price and quantity
+                    const itemPrice = document.createElement('div');
+                    itemPrice.className = 'text-right';
+                    
+                    const itemQuantity = document.createElement('span');
+                    itemQuantity.className = 'text-gray-700 mr-2';
+                    itemQuantity.textContent = `x${item.quantity}`;
+                    
+                    const itemSubtotal = document.createElement('span');
+                    itemSubtotal.className = 'font-medium';
+                    itemSubtotal.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+                    
+                    // Remove button
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'ml-2 text-red-500 hover:text-red-700';
+                    removeBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    `;
+                    removeBtn.addEventListener('click', () => removeItemFromOrder(item.id));
+                    
+                    itemPrice.appendChild(itemQuantity);
+                    itemPrice.appendChild(itemSubtotal);
+                    itemPrice.appendChild(removeBtn);
+                    
+                    orderItem.appendChild(itemDetails);
+                    orderItem.appendChild(itemPrice);
+                    
+                    orderItems.appendChild(orderItem);
+                });
+            }
+            
+            // Update totals
+            orderSubtotal.textContent = currentOrder.subtotal.toFixed(2);
+            orderTax.textContent = currentOrder.tax.toFixed(2);
+            orderTotal.textContent = currentOrder.total.toFixed(2);
+        }
+        
+        // Remove item from order
+        function removeItemFromOrder(itemId) {
+            const itemIndex = currentOrder.items.findIndex(item => item.id === itemId);
+            
+            if (itemIndex !== -1) {
+                const item = currentOrder.items[itemIndex];
+                
+                // Update order totals
+                currentOrder.subtotal -= item.subtotal;
+                currentOrder.tax = currentOrder.subtotal * 0.12;
+                currentOrder.total = currentOrder.subtotal + currentOrder.tax;
+                
+                // Remove item
+                currentOrder.items.splice(itemIndex, 1);
+                
+                // Update display
+                updateOrderDisplay();
+            }
+        }
+        
+        // Generate order number
+        function generateOrderNumber() {
+            // In a real app, this would come from the server/Google Sheets
+            const randomNum = Math.floor(Math.random() * 1000) + 100;
+            orderNumber.textContent = randomNum;
+            return randomNum;
+        }
+        
+        // Update order date and time
+        function updateOrderDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            orderDate.textContent = `${dateStr} ${timeStr}`;
+        }
+        
+        // Clear current order
+        function clearOrder() {
+            currentOrder = {
+                items: [],
+                subtotal: 0,
+                tax: 0,
+                total: 0
+            };
+            
+            updateOrderDisplay();
+            generateOrderNumber();
+            updateOrderDateTime();
+        }
+        
+        // Complete current order
+        function completeOrder() {
+            if (currentOrder.items.length === 0) {
+                alert('No hay productos en la orden');
+                return;
+            }
+            
+            // In a real app, this would send the order to Google Sheets via Apps Script
+            // For this demo, we'll just show the receipt
+            
+            // Update receipt modal
+            receiptOrderNumber.textContent = orderNumber.textContent;
+            receiptOrderDate.textContent = orderDate.textContent;
+            receiptCashier.textContent = orderCashier.textContent;
+            
+            // Add items to receipt
+            receiptItems.innerHTML = '';
+            currentOrder.items.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'mb-2 pb-2 border-b border-gray-200';
+                
+                const itemName = document.createElement('div');
+                itemName.className = 'font-medium';
+                itemName.textContent = `${item.quantity}x ${item.name}`;
+                
+                const itemOptions = document.createElement('div');
+                itemOptions.className = 'text-sm text-gray-600';
+                
+                // Format options
+                let optionsText = '';
+                for (const [key, value] of Object.entries(item.options)) {
+                    optionsText += `${key}: ${value}, `;
+                }
+                optionsText = optionsText.slice(0, -2); // Remove trailing comma
+                
+                itemOptions.textContent = optionsText;
+                
+                const itemPrice = document.createElement('div');
+                itemPrice.className = 'text-right font-medium';
+                itemPrice.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+                
+                if (item.notes) {
+                    const itemNotes = document.createElement('div');
+                    itemNotes.className = 'text-xs text-gray-500 italic';
+                    itemNotes.textContent = `Notas: ${item.notes}`;
+                    itemElement.appendChild(itemNotes);
+                }
+                
+                itemElement.appendChild(itemName);
+                itemElement.appendChild(itemOptions);
+                itemElement.appendChild(itemPrice);
+                
+                receiptItems.appendChild(itemElement);
+            });
+            
+            // Update receipt totals
+            receiptSubtotal.textContent = currentOrder.subtotal.toFixed(2);
+            receiptTax.textContent = currentOrder.tax.toFixed(2);
+            receiptTotal.textContent = currentOrder.total.toFixed(2);
+            
+            // Show receipt modal
+            receiptModal.classList.remove('hidden');
+            
+            // In a real app, here you would:
+            // 1. Send the order to Google Sheets via Apps Script
+            // 2. Update inventory in Google Sheets
+            // 3. Notify the kitchen area via real-time updates
+            
+            // For demo purposes, we'll just clear the order after showing the receipt
+            setTimeout(() => {
+                clearOrder();
+            }, 3000);
+        }
+        
+        // Print receipt
+        function printReceipt() {
+            window.print();
+        }
+        
+        // Load pending orders for kitchen view
+        function loadPendingOrders() {
+            // In a real app, this would fetch from Google Sheets via Apps Script
+            // For demo purposes, we'll use mock data
+            
+            pendingOrders.innerHTML = '';
+            
+            // Sample pending orders
+            const mockOrders = [
+                {
+                    id: 101,
+                    number: 'ORD-101',
+                    date: '10/05/2023 14:30',
+                    items: [
+                        { name: 'Granizado Tradicional', quantity: 2, options: { size: 'Grande', flavor: 'Fresa' } },
+                        { name: 'Cerveza Nacional', quantity: 1, options: { size: 'Botella' } }
+                    ],
+                    status: 'pending',
+                    cashier: 'Juan Pérez'
+                },
+                {
+                    id: 102,
+                    number: 'ORD-102',
+                    date: '10/05/2023 14:45',
+                    items: [
+                        { name: 'Granizado con Licor', quantity: 1, options: { size: 'Mediano', flavor: 'Mora', liquor: 'Ron' } }
+                    ],
+                    status: 'preparing',
+                    cashier: 'María Gómez'
+                },
+                {
+                    id: 103,
+                    number: 'ORD-103',
+                    date: '10/05/2023 15:00',
+                    items: [
+                        { name: 'Energizante', quantity: 3, options: { size: 'Grande', brand: 'Red Bull' } },
+                        { name: 'Jugo Natural', quantity: 1, options: { size: 'Pequeño', flavor: 'Naranja' } }
+                    ],
+                    status: 'pending',
+                    cashier: 'Juan Pérez'
+                }
+            ];
+            
+            if (mockOrders.length === 0) {
+                pendingOrders.innerHTML = `
+                    <div class="text-center text-gray-500 py-12">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        <p class="mt-4 text-lg">No hay órdenes pendientes</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            mockOrders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'bg-white rounded-lg shadow overflow-hidden border-l-4';
+                
+                // Set border color based on status
+                if (order.status === 'pending') {
+                    orderCard.classList.add('border-yellow-500');
+                } else if (order.status === 'preparing') {
+                    orderCard.classList.add('border-blue-500');
+                } else {
+                    orderCard.classList.add('border-gray-300');
+                }
+                
+                // Order header
+                const orderHeader = document.createElement('div');
+                orderHeader.className = 'bg-gray-50 px-4 py-3 flex justify-between items-center border-b border-gray-200';
+                
+                const orderTitle = document.createElement('div');
+                orderTitle.innerHTML = `
+                    <h3 class="font-medium">Orden #${order.number}</h3>
+                    <p class="text-sm text-gray-600">${order.date} • ${order.cashier}</p>
+                `;
+                
+                const orderStatus = document.createElement('div');
+                orderStatus.className = 'flex items-center';
+                
+                let statusText, statusColor;
+                if (order.status === 'pending') {
+                    statusText = 'Pendiente';
+                    statusColor = 'bg-yellow-100 text-yellow-800';
+                } else if (order.status === 'preparing') {
+                    statusText = 'En preparación';
+                    statusColor = 'bg-blue-100 text-blue-800';
+                } else {
+                    statusText = 'Completado';
+                    statusColor = 'bg-green-100 text-green-800';
+                }
+                
+                orderStatus.innerHTML = `
+                    <span class="px-2 py-1 text-xs rounded-full ${statusColor}">${statusText}</span>
+                `;
+                
+                orderHeader.appendChild(orderTitle);
+                orderHeader.appendChild(orderStatus);
+                
+                // Order items
+                const orderItems = document.createElement('div');
+                orderItems.className = 'p-4';
+                
+                order.items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'mb-3 last:mb-0';
+                    
+                    const itemName = document.createElement('div');
+                    itemName.className = 'font-medium';
+                    itemName.textContent = `${item.quantity}x ${item.name}`;
+                    
+                    const itemOptions = document.createElement('div');
+                    itemOptions.className = 'text-sm text-gray-600 ml-4 mt-1';
+                    
+                    // Format options
+                    let optionsText = '';
+                    for (const [key, value] of Object.entries(item.options)) {
+                        optionsText += `${key}: ${value}, `;
+                    }
+                    optionsText = optionsText.slice(0, -2); // Remove trailing comma
+                    
+                    itemOptions.textContent = optionsText;
+                    
+                    itemElement.appendChild(itemName);
+                    itemElement.appendChild(itemOptions);
+                    orderItems.appendChild(itemElement);
+                });
+                
+                // Order actions
+                const orderActions = document.createElement('div');
+                orderActions.className = 'px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-end space-x-2';
+                
+                if (order.status === 'pending') {
+                    const startBtn = document.createElement('button');
+                    startBtn.className = 'px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700';
+                    startBtn.textContent = 'Comenzar';
+                    startBtn.addEventListener('click', () => updateOrderStatus(order.id, 'preparing'));
+                    orderActions.appendChild(startBtn);
+                } else if (order.status === 'preparing') {
+                    const completeBtn = document.createElement('button');
+                    completeBtn.className = 'px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700';
+                    completeBtn.textContent = 'Completar';
+                    completeBtn.addEventListener('click', () => updateOrderStatus(order.id, 'completed'));
+                    orderActions.appendChild(completeBtn);
+                }
+                
+                orderCard.appendChild(orderHeader);
+                orderCard.appendChild(orderItems);
+                orderCard.appendChild(orderActions);
+                
+                pendingOrders.appendChild(orderCard);
+            });
+        }
+
+        // Cambiar estado de una orden (para vista de cocina)
+            function updateOrderStatus(orderId, newStatus) {
+                console.log(`Orden ${orderId} cambiada a estado: ${newStatus}`);
+                // En una app real aquí actualizarías Google Sheets o tu backend
+                // Luego vuelves a recargar órdenes pendientes
+                loadPendingOrders();
+            }
+
+            // Cargar datos del admin (estadísticas y gráficas)
+            function loadAdminData() {
+                console.log("Cargando datos administrativos...");
+                
+                // Demo: poner valores aleatorios
+                salesToday.textContent = (Math.random() * 200).toFixed(2);
+                salesWeek.textContent = (Math.random() * 1000).toFixed(2);
+                ordersToday.textContent = Math.floor(Math.random() * 50);
+                avgTime.textContent = Math.floor(Math.random() * 15) + 1;
+
+                // Gráficos de demo
+                charts.salesByCategory = new Chart(salesByCategoryChart, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Granizados', 'Bebidas', 'Cervezas', 'Energizantes'],
+                        datasets: [{
+                            data: [120, 80, 60, 40],
+                            backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444']
+                        }]
+                    }
+                });
+
+                charts.salesByCashier = new Chart(salesByCashierChart, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Juan Pérez','María Gómez'],
+                        datasets: [{
+                            label: 'Ventas',
+                            data: [300, 450],
+                            backgroundColor: ['#3b82f6','#10b981']
+                        }]
+                    }
+                });
+
+                charts.dailySales = new Chart(dailySalesChart, {
+                    type: 'line',
+                    data: {
+                        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+                        datasets: [{
+                            label: 'Ventas',
+                            data: [50, 100, 80, 120, 60, 90, 110],
+                            borderColor: '#3b82f6',
+                            fill: false
+                        }]
+                    }
+                });
+
+                // Recientes (mock)
+                loadRecentOrders();
+                loadInventory();
+            }
+
+            // Cargar órdenes recientes
+            function loadRecentOrders() {
+                console.log("Cargando órdenes recientes...");
+                recentOrders.innerHTML = `
+                    <tr>
+                        <td class="px-6 py-4">ORD-001</td>
+                        <td class="px-6 py-4">19/08/2025</td>
+                        <td class="px-6 py-4">Juan Pérez</td>
+                        <td class="px-6 py-4">Granizado Tradicional</td>
+                        <td class="px-6 py-4">$2.50</td>
+                        <td class="px-6 py-4">Completada</td>
+                    </tr>
+                `;
+            }
+
+            // Cargar inventario
+            function loadInventory() {
+                console.log("Cargando inventario...");
+                inventoryItems.innerHTML = `
+                    <tr>
+                        <td class="px-6 py-4">Granizado Tradicional</td>
+                        <td class="px-6 py-4">Granizados</td>
+                        <td class="px-6 py-4">8</td>
+                        <td class="px-6 py-4">10</td>
+                        <td class="px-6 py-4">
+                            <button class="bg-blue-600 text-white px-3 py-1 rounded"
+                                onclick="openInventoryModal('Granizado Tradicional', 8)">
+                                Actualizar
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            // Abrir modal de inventario
+            function openInventoryModal(productName, stock) {
+                inventoryProductName.textContent = productName;
+                currentStock.textContent = stock;
+                inventoryModal.classList.remove('hidden');
+            }
+
+            // Actualizar inventario (demo)
+            function updateInventory() {
+                const amount = parseInt(updateAmount.value);
+                console.log(`Inventario actualizado: ${inventoryProductName.textContent} → ${amount}`);
+                inventoryModal.classList.add('hidden');
+                loadInventory();
+            }
+        
+        window.addEventListener("DOMContentLoaded", init);
+
+        </script>
+     
+</body>
+</html>
